@@ -260,56 +260,25 @@
       const table = document.getElementById("uganda-data-table");
       const tbody = document.getElementById("uganda-data-body");
 
+      // NEW: Human-readable location names
+      const deviceNames = [
+        "Kamwokya Oldkiira",
+        "Kitintale Ntensibe",
+        "Rustic Expeditions Muyenga",
+        "Bulange Mengo",
+        "Mbuya Nadiope",
+        "Katwe 1, Makindye",
+        "Kabalagala Town, Makindye",
+        "Kansanga Seed Secondary School",
+        "Wabigalo",
+        "St. Ponsiano Primary School, Makindye",
+        "Ggaba, Makindye",
+        "Busabala, Wakiso",
+        "Mbuya II, Nakawa",
+        "Luwafu, Makindye",
+        "Makindye, Lukuli Makindye"
+      ];
+
       try {
-        const response = await fetch("https://api.airqo.net/api/v2/devices/measurements/cohorts/68d4e669670d2e0013c85375?token=V6ZFRJXEAGRKRSYU");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
+        const response = await fetch("https://api.airqo.net/api/v2/device
 
-        const measurements = data.measurements || data.results || [];
-        if (!measurements.length) {
-          statusEl.textContent = "No recent measurements available.";
-          return;
-        }
-
-        const recent = measurements.slice(0, 15);
-        tbody.innerHTML = "";
-
-        recent.forEach(item => {
-          const tr = document.createElement("tr");
-
-          const device = item.device || item.device_id || "Unknown";
-          const time = item.time || item.created_at || "";
-          const pm25 = item.pm2_5 && item.pm2_5.value !== undefined ? item.pm2_5.value : "";
-          const pm10 = item.pm10 && item.pm10.value !== undefined ? item.pm10.value : "";
-          const category = item.category || (item.health_tips && item.health_tips.category) || "";
-
-          function fmt(val) {
-            if (val === "" || val === null || val === undefined) return "";
-            const num = Number(val);
-            if (isNaN(num)) return val;
-            return num.toFixed(1);
-          }
-
-          tr.innerHTML = `
-            <td>${device}</td>
-            <td>${time}</td>
-            <td>${fmt(pm25)}</td>
-            <td>${fmt(pm10)}</td>
-            <td>${category}</td>
-          `;
-          tbody.appendChild(tr);
-        });
-
-        statusEl.textContent = "";
-        table.style.display = "";
-      } catch (err) {
-        statusEl.textContent = "Could not load data from AirQo right now.";
-      }
-    }
-
-    loadUgandaData();
-  </script>
-</body>
-</html>
