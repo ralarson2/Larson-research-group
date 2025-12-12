@@ -195,6 +195,7 @@
       margin-top: 2rem;
     }
 
+    /* Force centered footer on all screen sizes */
     .footer-inner {
       max-width: 960px;
       margin: 0 auto;
@@ -250,7 +251,7 @@
           <thead>
             <tr>
               <th>Location</th>
-              <th>Date &amp; time (Africa/Kampala)</th>
+              <th>Date &amp; time (EAT, Africa/Kampala)</th>
               <th>PM2.5 (µg/m³)</th>
               <th>PM10 (µg/m³)</th>
             </tr>
@@ -263,30 +264,12 @@
             Row and marker shading based on WHO PM2.5 (24-hour) guideline and interim targets
           </div>
           <div class="legend-items">
-            <div class="legend-item">
-              <span class="swatch" style="background:#eef7f1;"></span>
-              ≤15 µg/m³ — Good
-            </div>
-            <div class="legend-item">
-              <span class="swatch" style="background:#f6f7e8;"></span>
-              15–25 µg/m³ — Moderate
-            </div>
-            <div class="legend-item">
-              <span class="swatch" style="background:#fff2e2;"></span>
-              25–37.5 µg/m³ — Elevated
-            </div>
-            <div class="legend-item">
-              <span class="swatch" style="background:#ffe6e6;"></span>
-              37.5–50 µg/m³ — High
-            </div>
-            <div class="legend-item">
-              <span class="swatch" style="background:#f1e6ff;"></span>
-              50–75 µg/m³ — Very high
-            </div>
-            <div class="legend-item">
-              <span class="swatch" style="background:#e2e2e2;"></span>
-              &gt;75 µg/m³ — Extremely high
-            </div>
+            <div class="legend-item"><span class="swatch" style="background:#eef7f1;"></span>≤15 µg/m³ — Good</div>
+            <div class="legend-item"><span class="swatch" style="background:#f6f7e8;"></span>15–25 µg/m³ — Moderate</div>
+            <div class="legend-item"><span class="swatch" style="background:#fff2e2;"></span>25–37.5 µg/m³ — Elevated</div>
+            <div class="legend-item"><span class="swatch" style="background:#ffe6e6;"></span>37.5–50 µg/m³ — High</div>
+            <div class="legend-item"><span class="swatch" style="background:#f1e6ff;"></span>50–75 µg/m³ — Very high</div>
+            <div class="legend-item"><span class="swatch" style="background:#e2e2e2;"></span>&gt;75 µg/m³ — Extremely high</div>
           </div>
         </div>
       </div>
@@ -337,6 +320,7 @@
     };
 
     function whoClassFromPM25(pm25) {
+      if (!Number.isFinite(pm25)) return "";
       if (pm25 <= 15) return "aq_who_g1";
       if (pm25 <= 25) return "aq_who_it4";
       if (pm25 <= 37.5) return "aq_who_it3";
@@ -378,24 +362,14 @@
 
     function extractLatLon(obj) {
       const latCandidates = [
-        obj?.latitude,
-        obj?.lat,
-        obj?.approximate_latitude,
-        obj?.location?.latitude,
-        obj?.location?.lat,
-        obj?.site?.approximate_latitude,
-        obj?.site?.latitude
+        obj?.latitude, obj?.lat, obj?.approximate_latitude,
+        obj?.location?.latitude, obj?.location?.lat,
+        obj?.site?.approximate_latitude, obj?.site?.latitude
       ];
       const lonCandidates = [
-        obj?.longitude,
-        obj?.lon,
-        obj?.lng,
-        obj?.approximate_longitude,
-        obj?.location?.longitude,
-        obj?.location?.lon,
-        obj?.location?.lng,
-        obj?.site?.approximate_longitude,
-        obj?.site?.longitude
+        obj?.longitude, obj?.lon, obj?.lng, obj?.approximate_longitude,
+        obj?.location?.longitude, obj?.location?.lon, obj?.location?.lng,
+        obj?.site?.approximate_longitude, obj?.site?.longitude, obj?.site?.lng
       ];
 
       const lat = latCandidates.map(Number).find(v => Number.isFinite(v));
@@ -454,23 +428,24 @@
 
         measurements.forEach(item => {
           const deviceName = String(item.device || item.device_id || item.name || "");
-          const label = locationLabels[deviceName] || { name: deviceName || "Unknown", district: "" };
+          const label = locationLabels[deviceName] || { name: deviceName || "Unknown", district: "Kampala" };
 
           const pm25 = Number(item?.pm2_5?.value);
           const pm10 = Number(item?.pm10?.value);
           const when = fmtDateTimeKampala(item.time || item.created_at || item.timestamp);
 
           const tr = document.createElement("tr");
-          if (Number.isFinite(pm25)) tr.className = whoClassFromPM25(pm25);
+          const cls = whoClassFromPM25(pm25);
+          tr.className = cls;
 
           tr.innerHTML = `
             <td>
               <div>${label.name}</div>
-              <div style="font-size:0.8em;color:#4b5c67;">${label.district ? (label.district + ", Uganda") : "Uganda"}</div>
+              <div style="font-size:0.8em;color:#4b5c67;">${label.district}, Uganda</div>
             </td>
             <td>${when}</td>
-            <td>${Number.isFinite(pm25) ? pm25.toFixed(1) : ""}</td>
-            <td>${Number.isFinite(pm10) ? pm10.toFixed(1) : ""}</td>
+            <td>${fmtNumber(pm25)}</td>
+            <td>${fmtNumber(pm10)}</td>
           `;
           tbody.appendChild(tr);
 
@@ -478,28 +453,24 @@
           const coord = extractLatLon(meta) || extractLatLon(item);
 
           if (coord && Number.isFinite(coord.lat) && Number.isFinite(coord.lon) && Number.isFinite(pm25)) {
-            const cls = whoClassFromPM25(pm25);
             const fill = whoColorFromClass(cls);
 
-            const marker = L.circleMarker([coord.lat, coord.lon], {
+            L.circleMarker([coord.lat, coord.lon], {
               radius: 10,
               color: "#6b7c88",
               weight: 1,
               fillColor: fill,
               fillOpacity: 0.95
-            });
-
-            const popupHtml = `
+            }).bindPopup(`
               <div style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
                 <div style="color:#143541; margin-bottom:4px;">${label.name}</div>
-                <div style="color:#4b5c67; font-size:12px; margin-bottom:6px;">${label.district ? (label.district + ", Uganda") : "Uganda"}</div>
+                <div style="color:#4b5c67; font-size:12px; margin-bottom:6px;">${label.district}, Uganda</div>
                 <div style="font-size:13px;">PM2.5: ${fmtNumber(pm25)} µg/m³</div>
                 <div style="font-size:13px;">PM10: ${fmtNumber(pm10)} µg/m³</div>
-                <div style="color:#4b5c67; font-size:12px; margin-top:6px;">${when} (Africa/Kampala)</div>
+                <div style="color:#4b5c67; font-size:12px; margin-top:6px;">${when} (EAT)</div>
               </div>
-            `;
-            marker.bindPopup(popupHtml);
-            marker.addTo(markersLayer);
+            `).addTo(markersLayer);
+
             bounds.push([coord.lat, coord.lon]);
           }
         });
@@ -524,5 +495,6 @@
   </script>
 </body>
 </html>
+
 
 
