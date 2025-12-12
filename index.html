@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Larson Research Group | Sustainable Systems & Climate</title>
+  <title>Larson Research Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Larson Research Group at UW–Madison: sustainable agriculture, manure management, short-lived climate pollutants, and environmental systems analysis." />
   <style>
     :root {
       --accent: #1b7c6d;
@@ -38,16 +37,15 @@
     }
 
     header {
+      background: var(--card);
+      border-bottom: 1px solid #dde3ea;
       position: sticky;
       top: 0;
-      z-index: 100;
-      background: rgba(247, 249, 251, 0.95);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid #dde3ea;
+      z-index: 10;
     }
 
     .nav-inner {
-      max-width: 1080px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 0.75rem 1rem;
       display: flex;
@@ -56,20 +54,19 @@
       gap: 1rem;
     }
 
-    .nav-brand {
+    .nav-title {
       font-size: 1rem;
-      letter-spacing: 0.04em;
       text-transform: uppercase;
+      letter-spacing: 0.08em;
       color: var(--dark);
       white-space: nowrap;
     }
 
     .nav-links {
       display: flex;
-      gap: 1.25rem;
-      font-size: 0.95rem;
       flex-wrap: wrap;
-      justify-content: flex-end;
+      gap: 1rem;
+      font-size: 0.9rem;
     }
 
     .nav-links a {
@@ -88,126 +85,39 @@
     }
 
     .hero-inner {
-      max-width: 1080px;
+      max-width: 960px;
       margin: 0 auto;
-      padding: 3rem 1rem 2.5rem 1rem;
-      display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1.5fr);
-      gap: 2.5rem;
-      align-items: center;
+      padding: 2.5rem 1rem 2.5rem 1rem;
     }
 
     .hero-title {
-      font-size: clamp(2.1rem, 3vw, 2.6rem);
+      font-size: clamp(2rem, 3vw, 2.4rem);
       color: var(--dark);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
     }
 
     .hero-subtitle {
       font-size: 1.05rem;
-      max-width: 34rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.75rem;
-    }
-
-    .tag {
-      font-size: 0.78rem;
-      padding: 0.3rem 0.55rem;
-      border-radius: 999px;
-      background: #ffffff;
-      border: 1px solid #c7d4dd;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: #4b5c67;
-    }
-
-    .hero-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-
-    .button-primary,
-    .button-ghost {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.95rem;
-      padding: 0.55rem 1rem;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .button-primary {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
-    }
-
-    .button-primary:hover {
-      opacity: 0.92;
-      text-decoration: none;
-    }
-
-    .button-ghost {
-      background: transparent;
-      color: var(--dark);
-      border-color: #c7d4dd;
-    }
-
-    .button-ghost:hover {
-      background: #eef3f7;
-      text-decoration: none;
-    }
-
-    .hero-side {
-      background: var(--card);
-      border-radius: 1rem;
-      padding: 1.5rem;
-      border: 1px solid #dde3ea;
-      box-shadow: 0 12px 30px rgba(15, 35, 52, 0.06);
-    }
-
-    .hero-side-title {
-      font-size: 1rem;
-      color: var(--dark);
-      margin-bottom: 0.75rem;
-    }
-
-    .hero-stat {
-      font-size: 0.9rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .hero-stat span {
-      color: var(--dark);
+      max-width: 36rem;
+      margin-bottom: 1rem;
     }
 
     .hero-note {
-      font-size: 0.85rem;
-      margin-top: 0.75rem;
+      font-size: 0.9rem;
       color: #4b5c67;
     }
 
     main {
-      max-width: 1080px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 2.5rem 1rem 3rem 1rem;
       display: flex;
       flex-direction: column;
-      gap: 3rem;
+      gap: 2.5rem;
     }
 
     section {
-      scroll-margin-top: 5rem;
+      scroll-margin-top: 4.5rem;
     }
 
     .section-title {
@@ -216,129 +126,77 @@
       margin-bottom: 0.5rem;
     }
 
-    .section-intro {
-      font-size: 0.98rem;
-      max-width: 40rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .two-column {
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
-      gap: 2rem;
-      align-items: flex-start;
+    .section-text {
+      font-size: 0.96rem;
+      margin-bottom: 0.8rem;
+      max-width: 44rem;
     }
 
     .card {
       background: var(--card);
-      border-radius: 1rem;
-      padding: 1.25rem;
-      border: 1px solid #dde3ea;
-      box-shadow: 0 10px 24px rgba(15, 35, 52, 0.04);
-      font-size: 0.95rem;
-    }
-
-    .card + .card {
-      margin-top: 0.9rem;
-    }
-
-    .pill-label {
-      display: inline-block;
-      font-size: 0.8rem;
-      padding: 0.15rem 0.5rem;
-      border-radius: 999px;
-      background: var(--accent-light);
-      color: var(--dark);
-      margin-bottom: 0.45rem;
-    }
-
-    .people-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 1.2rem;
-    }
-
-    .person-card {
-      background: var(--card);
       border-radius: 0.9rem;
-      padding: 1.1rem;
       border: 1px solid #dde3ea;
-      box-shadow: 0 8px 18px rgba(15, 35, 52, 0.04);
-      font-size: 0.9rem;
+      padding: 1.1rem 1.25rem;
+      box-shadow: 0 8px 20px rgba(15, 35, 52, 0.04);
+      font-size: 0.95rem;
+      margin-top: 0.6rem;
     }
 
-    .person-name {
-      font-size: 1rem;
-      color: var(--dark);
-    }
-
-    .person-role {
-      font-size: 0.85rem;
-      color: #4b5c67;
+    .fact-list a {
+      display: block;
       margin-bottom: 0.25rem;
+      font-size: 0.94rem;
     }
 
-    .person-meta {
-      font-size: 0.82rem;
+    .small-note {
+      font-size: 0.84rem;
       color: #4b5c67;
-      margin-top: 0.3rem;
+      margin-top: 0.4rem;
     }
 
-    .pub-list {
+    #uganda-data-table {
+      width: 100%;
+      border-collapse: collapse;
       font-size: 0.9rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
+      margin-top: 0.5rem;
     }
 
-    .pub-item span {
-      color: var(--dark);
+    #uganda-data-table th,
+    #uganda-data-table td {
+      border: 1px solid #dde3ea;
+      padding: 0.4rem 0.5rem;
+      text-align: left;
+      white-space: nowrap;
     }
 
-    .contact-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
-      gap: 1.5rem;
-      align-items: flex-start;
+    #uganda-data-table th {
+      background: #eef3f7;
+      font-weight: 500;
     }
 
-    .contact-field {
-      font-size: 0.92rem;
-      margin-bottom: 0.35rem;
-    }
-
-    .contact-field span {
-      color: var(--dark);
+    #uganda-status {
+      font-size: 0.88rem;
+      margin-top: 0.4rem;
+      color: #4b5c67;
     }
 
     footer {
       border-top: 1px solid #dde3ea;
-      padding: 1.25rem 1rem 2rem 1rem;
+      padding: 1.2rem 1rem 2rem 1rem;
       font-size: 0.8rem;
       color: #6b7c88;
     }
 
     .footer-inner {
-      max-width: 1080px;
+      max-width: 960px;
       margin: 0 auto;
       display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
-      gap: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.6rem;
     }
 
-    @media (max-width: 780px) {
-      .hero-inner {
-        grid-template-columns: minmax(0, 1fr);
-        padding-top: 2.2rem;
-      }
-      .two-column,
-      .contact-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .hero-side {
-        order: -1;
-      }
+    @media (max-width: 720px) {
       .nav-inner {
         flex-direction: column;
         align-items: flex-start;
@@ -352,203 +210,163 @@
 <body>
   <header>
     <div class="nav-inner">
-      <div class="nav-brand">Larson Research Group</div>
+      <div class="nav-title">Larson Research Group</div>
       <nav class="nav-links">
-        <a href="#research">Research</a>
-        <a href="#people">People</a>
-        <a href="#publications">Publications</a>
-        <a href="#teaching">Teaching & outreach</a>
+        <a href="#about">About</a>
+        <a href="#uganda">Uganda air quality</a>
+        <a href="#factsheets">Fact sheets</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
   </header>
 
-  <section class="hero">
+  <section class="hero" id="about">
     <div class="hero-inner">
-      <div>
-        <div class="hero-title">Sustainable systems, agriculture, and short-lived climate pollutants</div>
-        <p class="hero-subtitle">
-          We develop decision-support tools, field studies, and systems analyses to reduce emissions and improve resource use in agriculture, waste management, and energy systems.
-        </p>
-        <div class="hero-tags">
-          <div class="tag">manure systems</div>
-          <div class="tag">short-lived climate forcers</div>
-          <div class="tag">life cycle assessment</div>
-          <div class="tag">decision support</div>
-        </div>
-        <div class="hero-buttons">
-          <a href="#research" class="button-primary">Explore our research</a>
-          <a href="#people" class="button-ghost">Meet the group</a>
-        </div>
-      </div>
-
-      <aside class="hero-side">
-        <div class="hero-side-title">At a glance</div>
-        <p class="hero-stat"><span>University:</span> University of Wisconsin–Madison</p>
-        <p class="hero-stat"><span>Department:</span> Chemical and Biological Engineering</p>
-        <p class="hero-stat"><span>Focus areas:</span> manure management, air quality, plastic waste, systems modeling</p>
-        <p class="hero-note">
-          We work with partners across disciplines, agencies, and communities to translate science into practical guidance for policymakers, farmers, and practitioners.
-        </p>
-      </aside>
+      <div class="hero-title">Sustainable systems, agriculture, and air quality</div>
+      <p class="hero-subtitle">
+        Research on manure and waste systems, waste to energy systems, sustainable agricuture, manure management, and decision-support tools that connect science with practice.
+      </p>
+      <p class="hero-note">
+        This site is under active construction. Content and links will be updated over time.
+      </p>
     </div>
   </section>
 
   <main>
-    <section id="research">
-      <div class="section-title">Research</div>
-      <p class="section-intro">
-        Our work spans experimental measurements, modeling, and stakeholder engagement to understand and reduce emissions while maintaining productive, resilient systems.
-      </p>
-
-      <div class="two-column">
-        <div>
-          <div class="card">
-            <div class="pill-label">Manure and nutrient management</div>
-            We study advanced manure processing and land-application strategies, quantifying greenhouse gas and ammonia emissions, nutrient losses, and recovery opportunities. Our projects evaluate multi-stage separation systems, acidification, and anaerobic digestion, linking on-farm measurements with life cycle assessment.
-          </div>
-          <div class="card">
-            <div class="pill-label">Short-lived climate pollutants</div>
-            We evaluate mitigation strategies for methane and other short-lived climate forcers across livestock systems, waste management, and energy. Our work connects feed interventions, storage and application practices, and improved combustion with climate modeling and air quality outcomes.
-          </div>
-        </div>
-
-        <div>
-          <div class="card">
-            <div class="pill-label">Decision-support and systems modeling</div>
-            We build tools and frameworks that make complex tradeoffs transparent for decision makers. This includes optimization of plastic waste management pathways, integration of farm-level tools such as COMET-Farm with detailed LCAs, and scenario analysis for policy and investment decisions.
-          </div>
-          <div class="card">
-            <div class="pill-label">Collaboration and outreach</div>
-            We work with farmers, agencies, NGOs, and international partners to co-develop research questions, interpret results in context, and design pragmatic solutions that can actually be implemented.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="people">
-      <div class="section-title">People</div>
-      <p class="section-intro">
-        We are an interdisciplinary team of engineers, scientists, and students working across laboratory, field, and modeling scales.
-      </p>
-
-      <div class="people-grid">
-        <article class="person-card">
-          <div class="person-name">Rebecca A. Larson</div>
-          <div class="person-role">Principal Investigator</div>
-          <p>
-            Professor of Biological Systems Engineering at the University of Wisconsin–Madison. Rebecca's work focuses on manure management systems, greenhouse gas and air emissions, and the design of decision-support tools that connect research with policy and practice.
-          </p>
-          <p class="person-meta">
-            Email: <a href="mailto:your-email@wisc.edu">your-email@wisc.edu</a>
-          </p>
-        </article>
-
-        <article class="person-card">
-          <div class="person-name">Graduate students</div>
-          <div class="person-role">PhD and MS researchers</div>
-          <p>
-            Our graduate students lead projects on advanced manure separation, methane and ammonia measurements, life cycle assessment of waste systems, and tool development for farm and policy decisions.
-          </p>
-          <p class="person-meta">
-            Add individual profiles and photos here.
-          </p>
-        </article>
-
-        <article class="person-card">
-          <div class="person-name">Undergraduate researchers</div>
-          <div class="person-role">Research assistants</div>
-          <p>
-            Undergraduate students contribute through lab and field measurements, data analysis, and model development, often leading independent projects connected to our core themes.
-          </p>
-          <p class="person-meta">
-            Include opportunities and how to apply here.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <section id="publications">
-      <div class="section-title">Selected publications</div>
-      <p class="section-intro">
-        A sample of recent work. Replace or expand this list with links to the full publication list, Google Scholar, or CV.
+    <section id="uganda">
+      <div class="section-title">Uganda air quality project</div>
+      <p class="section-text">
+        This project uses low-cost sensors and modeling to understand air quality in Uganda.
+        The section below pulls recent measurements from the AirQo API for the project cohort.
       </p>
 
       <div class="card">
-        <div class="pub-list">
-          <div class="pub-item">
-            <span>Aguirre-Villegas, H. A., & Larson, R. A.</span> (2017). Evaluating greenhouse gas emissions from dairy manure management practices using survey data and lifecycle tools. Journal of Cleaner Production, 143, 169–179.
-          </div>
-          <div class="pub-item">
-            <span>Aguirre-Villegas, H. A., Passos-Fonseca, T. H., Reinemann, D. J., Armentano, L. E., Wattiaux, M. A., Cabrera, V. E., Norman, J. M., & Larson, R. A.</span> (2015). Green cheese: Partial life cycle assessment of greenhouse gas emissions and energy intensity of integrated dairy production and bioenergy systems. Journal of Dairy Science, 98(3), 1571–1592.
-          </div>
-          <div class="pub-item">
-            <span>Larson, R. A. et al.</span> Advanced manure solid–liquid separation systems: performance, emissions, and implications for integration. Journal details and link to be added.
-          </div>
+        <p>Recent measurements (example view of a few devices, latest values):</p>
+        <div id="uganda-status">Loading data from AirQo…</div>
+        <div style="overflow-x:auto; margin-top:0.5rem;">
+          <table id="uganda-data-table" style="display:none;">
+            <thead>
+              <tr>
+                <th>Device</th>
+                <th>Time</th>
+                <th>PM2.5</th>
+                <th>PM10</th>
+                <th>AQI category</th>
+              </tr>
+            </thead>
+            <tbody id="uganda-data-body"></tbody>
+          </table>
         </div>
-        <p style="margin-top:0.8rem; font-size:0.86rem;">
-          For a complete list of publications, see Google Scholar or contact the group.
+        <p class="small-note">
+          Data source: AirQo network API for the Uganda cohort. This view is for demonstration and can be customized later.
         </p>
       </div>
     </section>
 
-    <section id="teaching">
-      <div class="section-title">Teaching and outreach</div>
-      <p class="section-intro">
-        We connect research with classroom teaching and stakeholder training, emphasizing systems thinking and practical decision support.
+    <section id="factsheets">
+      <div class="section-title">Fact sheets and resources</div>
+      <p class="section-text">
+        This section will link to downloadable fact sheets on manure management, sustainable agricuture, dairy systems, manure safety, 
+        and related topics. Replace the example links below with your real URLs.
       </p>
 
       <div class="card">
-        <p>
-          Courses include environmental metrics and systems-focused design in agricultural and environmental engineering. Outreach activities involve workshops with farmers and advisors on manure management, short-lived climate pollutants, and integrated waste and energy systems.
-        </p>
-        <p style="margin-top:0.6rem;">
-          We also contribute to legislative briefings, technical trainings, and collaborative projects with local and international partners to translate research into policy-relevant insights.
+        <div class="fact-list">
+          <a href="https://cdn.shopify.com/s/files/1/0145/8808/4272/files/A4192-001.pdf" target="_blank" rel="noopener">
+            Anaerobic Digestion from Animal Manure
+          </a>
+          <a href="https://cdn.shopify.com/s/files/1/0145/8808/4272/files/A4192-001.pdf" target="_blank" rel="noopener">
+            Struvite Recovery from Manure
+          </a>
+          <a href="https://example.com/factsheets/short-lived-climate-pollutants.pdf" target="_blank" rel="noopener">
+            Example fact sheet: Short-lived climate pollutants
+          </a>
+        </div>
+        <p class="small-note">
+          To add your real fact sheets, upload them somewhere stable (for example UW, Box, or another host)
+          and replace the example URLs above with your actual links. You can add as many fact sheets as you need
+          by copying one of the lines and changing the link and text.
         </p>
       </div>
     </section>
 
     <section id="contact">
       <div class="section-title">Contact</div>
-      <p class="section-intro">
-        For collaboration, student opportunities, or more information about our work, please get in touch.
+      <p class="section-text">
+        Brief contact information can go here. Replace the placeholders with your details.
       </p>
 
-      <div class="contact-grid">
-        <div class="card">
-          <p class="contact-field">
-            <span>Email:</span> <a href="mailto:your-email@wisc.edu">your-email@wisc.edu</a>
-          </p>
-          <p class="contact-field">
-            <span>Office:</span> Add building and room, University of Wisconsin–Madison
-          </p>
-          <p class="contact-field">
-            <span>Mailing address:</span> Department and full campus address
-          </p>
-          <p class="contact-field">
-            <span>Prospective students:</span> Include a short note on what materials to send and any expectations.
-          </p>
-        </div>
-
-        <div>
-          <div class="card">
-            <div class="pill-label">Group news</div>
-            Add short updates here, such as new papers, student defenses, open positions, or upcoming talks.
-          </div>
-        </div>
+      <div class="card">
+        <p>Email: <a href="rebecca.larson@wisc.edu">rebecca.larson@wisc.edu</a></p>
+        <p>Affiliation: University of Wisconsin–Madison</p>
+        <p>Notes for students or collaborators can go here.</p>
       </div>
     </section>
   </main>
 
   <footer>
     <div class="footer-inner">
-      <div>
-        Larson Research Group · University of Wisconsin–Madison
-      </div>
-      <div>
-        Last updated: Month Year
-      </div>
+      <div>Larson Research Group · University of Wisconsin–Madison</div>
+      <div>Hosted on GitHub Pages</div>
     </div>
   </footer>
+
+  <script>
+    async function loadUgandaData() {
+      const statusEl = document.getElementById("uganda-status");
+      const table = document.getElementById("uganda-data-table");
+      const tbody = document.getElementById("uganda-data-body");
+
+      try {
+        const response = await fetch("https://api.airqo.net/api/v2/devices/measurements/cohorts/68d4e669670d2e0013c85375?token=V6ZFRJXEAGRKRSYU");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+
+        const measurements = data.measurements || data.results || [];
+        if (!measurements.length) {
+          statusEl.textContent = "No recent measurements available.";
+          return;
+        }
+
+        const recent = measurements.slice(0, 10);
+        tbody.innerHTML = "";
+
+        recent.forEach(item => {
+          const tr = document.createElement("tr");
+
+          const device = item.device || item.device_id || "Unknown";
+          const time = item.time || item.created_at || "";
+          const pm25 = item.pm2_5 && item.pm2_5.value !== undefined ? item.pm2_5.value : "";
+          const pm10 = item.pm10 && item.pm10.value !== undefined ? item.pm10.value : "";
+          const category = item.category || (item.health_tips && item.health_tips.category) || "";
+
+          function fmt(val) {
+            if (val === "" || val === null || val === undefined) return "";
+            const num = Number(val);
+            if (isNaN(num)) return val;
+            return num.toFixed(1);
+          }
+
+          tr.innerHTML = `
+            <td>${device}</td>
+            <td>${time}</td>
+            <td>${fmt(pm25)}</td>
+            <td>${fmt(pm10)}</td>
+            <td>${category}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        statusEl.textContent = "";
+        table.style.display = "";
+      } catch (err) {
+        statusEl.textContent = "Could not load data from AirQo right now.";
+      }
+    }
+
+    loadUgandaData();
+  </script>
 </body>
 </html>
