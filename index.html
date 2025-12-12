@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Larson Research Group | Sustainable Systems & Climate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Larson Research Group at UW–Madison: sustainable agriculture, manure management, short-lived climate pollutants, and environmental systems analysis." />
+  <style>
+    :root {
+      --accent: #1b7c6d;
+      --accent-light: #e2f3f0;
+      --dark: #143541;
+      --text: #222222;
+      --bg: #f7f9fb;
+      --card: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(247, 249, 251, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #dde3ea;
+    }
+
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-brand {
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--dark);
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      font-size: 0.95rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      padding-bottom: 0.15rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links a:hover {
+      border-color: var(--accent);
+      text-decoration: none;
+    }
+
+    .hero {
+      background: radial-gradient(circle at top left, var(--accent-light), var(--bg));
+      border-bottom: 1px solid #dde3ea;
+    }
+
+    .hero-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 3rem 1rem 2.5rem 1rem;
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.5fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 3vw, 2.6rem);
+      color: var(--dark);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      max-width: 34rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .tag {
+      font-size: 0.78rem;
+      padding: 0.3rem 0.55rem;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid #c7d4dd;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #4b5c67;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .button-primary,
+    .button-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .button-primary {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .button-primary:hover {
+      opacity: 0.92;
+      text-decoration: none;
+    }
+
+    .button-ghost {
+      background: transparent;
+      color: var(--dark);
+      border-color: #c7d4dd;
+    }
+
+    .button-ghost:hover {
+      background: #eef3f7;
+      text-decoration: none;
+    }
+
+    .hero-side {
+      background: var(--card);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      border: 1px solid #dde3ea;
+      box-shadow: 0 12px 30px rgba(15, 35, 52, 0.06);
+    }
+
+    .hero-side-title {
+      font-size: 1rem;
+      color: var(--dark);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-stat {
+      font-size: 0.9rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-stat span {
+      color: var(--dark);
+    }
+
+    .hero-note {
+      font-size: 0.85rem;
+      margin-top: 0.75rem;
+      color: #4b5c67;
+    }
+
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 2.5rem 1rem 3rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    section {
+      scroll-margin-top: 5rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-intro {
+      font-size: 0.98rem;
+      max-width: 40rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 1rem;
+      padding: 1.25rem;
+      border: 1px solid #dde3ea;
+      box-shadow: 0 10px 24px rgba(15, 35, 52, 0.04);
+      font-size: 0.95rem;
+    }
+
+    .card + .card {
+      margin-top: 0.9rem;
+    }
+
+    .pill-label {
+      display: inline-block;
+      font-size: 0.8rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background: var(--accent-light);
+      color: var(--dark);
+      margin-bottom: 0.45rem;
+    }
+
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .person-card {
+      background: var(--card);
+      border-radius: 0.9rem;
+      padding: 1.1rem;
+      border: 1px solid #dde3ea;
+      box-shadow: 0 8px 18px rgba(15, 35, 52, 0.04);
+      font-size: 0.9rem;
+    }
+
+    .person-name {
+      font-size: 1rem;
+      color: var(--dark);
+    }
+
+    .person-role {
+      font-size: 0.85rem;
+      color: #4b5c67;
+      margin-bottom: 0.25rem;
+    }
+
+    .person-meta {
+      font-size: 0.82rem;
+      color: #4b5c67;
+      margin-top: 0.3rem;
+    }
+
+    .pub-list {
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .pub-item span {
+      color: var(--dark);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .contact-field {
+      font-size: 0.92rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .contact-field span {
+      color: var(--dark);
+    }
+
+    footer {
+      border-top: 1px solid #dde3ea;
+      padding: 1.25rem 1rem 2rem 1rem;
+      font-size: 0.8rem;
+      color: #6b7c88;
+    }
+
+    .footer-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 780px) {
+      .hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+        padding-top: 2.2rem;
+      }
+      .two-column,
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-side {
+        order: -1;
+      }
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-links {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-inner">
+      <div class="nav-brand">Larson Research Group</div>
+      <nav class="nav-links">
+        <a href="#research">Research</a>
+        <a href="#people">People</a>
+        <a href="#publications">Publications</a>
+        <a href="#teaching">Teaching & outreach</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-title">Sustainable systems, agriculture, and short-lived climate pollutants</div>
+        <p class="hero-subtitle">
+          We develop decision-support tools, field studies, and systems analyses to reduce emissions and improve resource use in agriculture, waste management, and energy systems.
+        </p>
+        <div class="hero-tags">
+          <div class="tag">manure systems</div>
+          <div class="tag">short-lived climate forcers</div>
+          <div class="tag">life cycle assessment</div>
+          <div class="tag">decision support</div>
+        </div>
+        <div class="hero-buttons">
+          <a href="#research" class="button-primary">Explore our research</a>
+          <a href="#people" class="button-ghost">Meet the group</a>
+        </div>
+      </div>
+
+      <aside class="hero-side">
+        <div class="hero-side-title">At a glance</div>
+        <p class="hero-stat"><span>University:</span> University of Wisconsin–Madison</p>
+        <p class="hero-stat"><span>Department:</span> Chemical and Biological Engineering</p>
+        <p class="hero-stat"><span>Focus areas:</span> manure management, air quality, plastic waste, systems modeling</p>
+        <p class="hero-note">
+          We work with partners across disciplines, agencies, and communities to translate science into practical guidance for policymakers, farmers, and practitioners.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <main>
+    <section id="research">
+      <div class="section-title">Research</div>
+      <p class="section-intro">
+        Our work spans experimental measurements, modeling, and stakeholder engagement to understand and reduce emissions while maintaining productive, resilient systems.
+      </p>
+
+      <div class="two-column">
+        <div>
+          <div class="card">
+            <div class="pill-label">Manure and nutrient management</div>
+            We study advanced manure processing and land-application strategies, quantifying greenhouse gas and ammonia emissions, nutrient losses, and recovery opportunities. Our projects evaluate multi-stage separation systems, acidification, and anaerobic digestion, linking on-farm measurements with life cycle assessment.
+          </div>
+          <div class="card">
+            <div class="pill-label">Short-lived climate pollutants</div>
+            We evaluate mitigation strategies for methane and other short-lived climate forcers across livestock systems, waste management, and energy. Our work connects feed interventions, storage and application practices, and improved combustion with climate modeling and air quality outcomes.
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="pill-label">Decision-support and systems modeling</div>
+            We build tools and frameworks that make complex tradeoffs transparent for decision makers. This includes optimization of plastic waste management pathways, integration of farm-level tools such as COMET-Farm with detailed LCAs, and scenario analysis for policy and investment decisions.
+          </div>
+          <div class="card">
+            <div class="pill-label">Collaboration and outreach</div>
+            We work with farmers, agencies, NGOs, and international partners to co-develop research questions, interpret results in context, and design pragmatic solutions that can actually be implemented.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="people">
+      <div class="section-title">People</div>
+      <p class="section-intro">
+        We are an interdisciplinary team of engineers, scientists, and students working across laboratory, field, and modeling scales.
+      </p>
+
+      <div class="people-grid">
+        <article class="person-card">
+          <div class="person-name">Rebecca A. Larson</div>
+          <div class="person-role">Principal Investigator</div>
+          <p>
+            Professor of Biological Systems Engineering at the University of Wisconsin–Madison. Rebecca's work focuses on manure management systems, greenhouse gas and air emissions, and the design of decision-support tools that connect research with policy and practice.
+          </p>
+          <p class="person-meta">
+            Email: <a href="mailto:your-email@wisc.edu">your-email@wisc.edu</a>
+          </p>
+        </article>
+
+        <article class="person-card">
+          <div class="person-name">Graduate students</div>
+          <div class="person-role">PhD and MS researchers</div>
+          <p>
+            Our graduate students lead projects on advanced manure separation, methane and ammonia measurements, life cycle assessment of waste systems, and tool development for farm and policy decisions.
+          </p>
+          <p class="person-meta">
+            Add individual profiles and photos here.
+          </p>
+        </article>
+
+        <article class="person-card">
+          <div class="person-name">Undergraduate researchers</div>
+          <div class="person-role">Research assistants</div>
+          <p>
+            Undergraduate students contribute through lab and field measurements, data analysis, and model development, often leading independent projects connected to our core themes.
+          </p>
+          <p class="person-meta">
+            Include opportunities and how to apply here.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="publications">
+      <div class="section-title">Selected publications</div>
+      <p class="section-intro">
+        A sample of recent work. Replace or expand this list with links to the full publication list, Google Scholar, or CV.
+      </p>
+
+      <div class="card">
+        <div class="pub-list">
+          <div class="pub-item">
+            <span>Aguirre-Villegas, H. A., & Larson, R. A.</span> (2017). Evaluating greenhouse gas emissions from dairy manure management practices using survey data and lifecycle tools. Journal of Cleaner Production, 143, 169–179.
+          </div>
+          <div class="pub-item">
+            <span>Aguirre-Villegas, H. A., Passos-Fonseca, T. H., Reinemann, D. J., Armentano, L. E., Wattiaux, M. A., Cabrera, V. E., Norman, J. M., & Larson, R. A.</span> (2015). Green cheese: Partial life cycle assessment of greenhouse gas emissions and energy intensity of integrated dairy production and bioenergy systems. Journal of Dairy Science, 98(3), 1571–1592.
+          </div>
+          <div class="pub-item">
+            <span>Larson, R. A. et al.</span> Advanced manure solid–liquid separation systems: performance, emissions, and implications for integration. Journal details and link to be added.
+          </div>
+        </div>
+        <p style="margin-top:0.8rem; font-size:0.86rem;">
+          For a complete list of publications, see Google Scholar or contact the group.
+        </p>
+      </div>
+    </section>
+
+    <section id="teaching">
+      <div class="section-title">Teaching and outreach</div>
+      <p class="section-intro">
+        We connect research with classroom teaching and stakeholder training, emphasizing systems thinking and practical decision support.
+      </p>
+
+      <div class="card">
+        <p>
+          Courses include environmental metrics and systems-focused design in agricultural and environmental engineering. Outreach activities involve workshops with farmers and advisors on manure management, short-lived climate pollutants, and integrated waste and energy systems.
+        </p>
+        <p style="margin-top:0.6rem;">
+          We also contribute to legislative briefings, technical trainings, and collaborative projects with local and international partners to translate research into policy-relevant insights.
+        </p>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-title">Contact</div>
+      <p class="section-intro">
+        For collaboration, student opportunities, or more information about our work, please get in touch.
+      </p>
+
+      <div class="contact-grid">
+        <div class="card">
+          <p class="contact-field">
+            <span>Email:</span> <a href="mailto:your-email@wisc.edu">your-email@wisc.edu</a>
+          </p>
+          <p class="contact-field">
+            <span>Office:</span> Add building and room, University of Wisconsin–Madison
+          </p>
+          <p class="contact-field">
+            <span>Mailing address:</span> Department and full campus address
+          </p>
+          <p class="contact-field">
+            <span>Prospective students:</span> Include a short note on what materials to send and any expectations.
+          </p>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="pill-label">Group news</div>
+            Add short updates here, such as new papers, student defenses, open positions, or upcoming talks.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        Larson Research Group · University of Wisconsin–Madison
+      </div>
+      <div>
+        Last updated: Month Year
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
