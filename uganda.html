@@ -214,8 +214,7 @@
             <th>Time</th>
             <th>PM2.5 (µg/m³)</th>
             <th>PM10 (µg/m³)</th>
-            <th>Temperature (°C)</th>
-          </tr>
+           </tr>
         </thead>
         <tbody id="uganda-data-body"></tbody>
       </table>
@@ -318,7 +317,7 @@ async function loadUgandaData() {
     const parts = loc.split(",");
 
     const pm10Val = item.pm10?.value;
-    const tempVal = item.temperature?.value;
+  
 
     tr.innerHTML = `
       <td>
@@ -328,7 +327,6 @@ async function loadUgandaData() {
       <td>${item.time || item.created_at || ""}</td>
       <td>${isNaN(pm25) ? "" : pm25.toFixed(1)}</td>
       <td>${(typeof pm10Val === "number") ? pm10Val.toFixed(1) : ""}</td>
-      <td>${(typeof tempVal === "number") ? tempVal.toFixed(1) : ""}</td>
     `;
     tbody.appendChild(tr);
   });
