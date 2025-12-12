@@ -150,12 +150,13 @@
       color: #4b5c67;
     }
 
-    tr.aq_who_g1 td { background: #eef7f1; }   /* ≤15 */
-    tr.aq_who_it4 td { background: #f6f7e8; }  /* 15–25 */
-    tr.aq_who_it3 td { background: #fff2e2; }  /* 25–37.5 */
-    tr.aq_who_it2 td { background: #ffe6e6; }  /* 37.5–50 */
-    tr.aq_who_it1 td { background: #f1e6ff; }  /* 50–75 */
-    tr.aq_who_high td { background: #e2e2e2; } /* >75 */
+  /* WHO PM2.5 (24-hour) guideline + interim targets – darker palette */
+tr.aq_who_g1 td { background: #cfe8dd; }   /* ≤15 Good */
+tr.aq_who_it4 td { background: #e3e6b8; }  /* 15–25 Moderate */
+tr.aq_who_it3 td { background: #f4d1a3; }  /* 25–37.5 Elevated */
+tr.aq_who_it2 td { background: #f2a6a6; }  /* 37.5–50 High */
+tr.aq_who_it1 td { background: #c9b6e4; }  /* 50–75 Very high */
+tr.aq_who_high td { background: #b5b5b5; } /* >75 Extremely high */
 
     .legend {
       margin-top: 0.85rem;
@@ -276,12 +277,12 @@
         <div class="legend" aria-label="PM2.5 legend">
           <div class="legend-title">Row and marker colors use WHO PM2.5 (24-hour) guideline and interim targets</div>
           <div class="legend-items">
-            <div class="legend-item"><span class="swatch" style="background:#eef7f1;"></span>≤15 µg/m³ — Good</div>
-            <div class="legend-item"><span class="swatch" style="background:#f6f7e8;"></span>15–25 µg/m³ — Moderate</div>
-            <div class="legend-item"><span class="swatch" style="background:#fff2e2;"></span>25–37.5 µg/m³ — Elevated</div>
-            <div class="legend-item"><span class="swatch" style="background:#ffe6e6;"></span>37.5–50 µg/m³ — High</div>
-            <div class="legend-item"><span class="swatch" style="background:#f1e6ff;"></span>50–75 µg/m³ — Very high</div>
-            <div class="legend-item"><span class="swatch" style="background:#e2e2e2;"></span>&gt;75 µg/m³ — Extremely high</div>
+            <div class="legend-item"><span class="swatch" style="background:#cfe8dd;"></span>≤15 µg/m³ — Good</div>
+            <div class="legend-item"><span class="swatch" style="background:#e3e6b8;"></span>15–25 µg/m³ — Moderate</div>
+            <div class="legend-item"><span class="swatch" style="background:#f4d1a3;"></span>25–37.5 µg/m³ — Elevated</div>
+            <div class="legend-item"><span class="swatch" style="background:#f2a6a6;"></span>37.5–50 µg/m³ — High</div>
+            <div class="legend-item"><span class="swatch" style="background:#c9b6e4;"></span>50–75 µg/m³ — Very high</div>
+            <div class="legend-item"><span class="swatch" style="background:#b5b5b5;"></span>&gt;75 µg/m³ — Extremely high</div>
           </div>
         </div>
       </div>
