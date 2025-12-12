@@ -98,7 +98,7 @@
 
     .hero-subtitle {
       font-size: 1.0rem;
-      max-width: 60rem;
+      max-width: 40rem;
     }
 
     main {
@@ -258,15 +258,14 @@
                 <th>Time</th>
                 <th>PM2.5</th>
                 <th>PM10</th>
-                <th>AQI category</th>
+                <th>Temperature (°C)</th>
               </tr>
             </thead>
             <tbody id="uganda-data-body"></tbody>
           </table>
         </div>
         <p class="small-note">
-          Data source: AirQo network API for the Uganda cohort. This view can be refined later
-          to focus on specific locations or time ranges.
+          Data source: AirQo network API for the Uganda cohort. Some devices may not report temperature.
         </p>
       </div>
 
@@ -293,23 +292,23 @@
       const tbody = document.getElementById("uganda-data-body");
 
       // Map device IDs to "neighborhood, district"
-const locationMap = {
-  "airqo_g5563": "Bulange Mengo, Kampala",
-  "airqo_g5567": "Kamwokya Oldkiira, Kampala",
-  "aq_43": "Makindye, Lukuli Makindye",
-  "aq_72": "Luwafu, Makindye",
-  "aq_g520": "Wabigalo, Kampala",
-  "airqo_g5548": "Mbuya Nadiope, Kampala",
-  "airqo_g5438": "St.Ponsiano Primary School, Makindye",
-  "airqo_g5446": "Kitintale Ntensibe, Kampala",
-  "airqo_g5564": "Busabala, Wakiso",
-  "aq_g5_43": "Katwe 1, Makindye",
-  "aq_g5_46": "Ggaba, Makindye",
-  "aq_g5_48": "Kabalagala Town, Makindye",
-  "aq_g5_53": "Kansanga Seed Secondary School, Kampala",
-  "aq_g5_97": "Mbuya Ii, Nakawa",
-  "airqo_g5449": "Rustic Expeditions Muyenga, Kampala"
-};
+      const locationMap = {
+        "airqo_g5563": "Bulange Mengo, Kampala",
+        "airqo_g5567": "Kamwokya Oldkiira, Kampala",
+        "aq_43": "Makindye, Lukuli Makindye",
+        "aq_72": "Luwafu, Makindye",
+        "aq_g520": "Wabigalo, Kampala",
+        "airqo_g5548": "Mbuya Nadiope, Kampala",
+        "airqo_g5438": "St.Ponsiano Primary School, Makindye",
+        "airqo_g5446": "Kitintale Ntensibe, Kampala",
+        "airqo_g5564": "Busabala, Wakiso",
+        "aq_g5_43": "Katwe 1, Makindye",
+        "aq_g5_46": "Ggaba, Makindye",
+        "aq_g5_48": "Kabalagala Town, Makindye",
+        "aq_g5_53": "Kansanga Seed Secondary School, Kampala",
+        "aq_g5_97": "Mbuya Ii, Nakawa",
+        "airqo_g5449": "Rustic Expeditions Muyenga, Kampala"
+      };
 
       try {
         const response = await fetch("https://api.airqo.net/api/v2/devices/measurements/cohorts/68d4e669670d2e0013c85375?token=V6ZFRJXEAGRKRSYU");
@@ -344,13 +343,23 @@ const locationMap = {
           const time = item.time || item.created_at || "";
           const pm25 = item.pm2_5?.value ?? "";
           const pm10 = item.pm10?.value ?? "";
-          const category = item.category || item.health_tips?.category || "";
+
+          // Try several possible temperature fields; if none exist, stays blank
+          const tempRaw =
+            (item.temperature && item.temperature.value !== undefined ? item.temperature.value : null) ??
+            (item.temp && item.temp.value !== undefined ? item.temp.value : null) ??
+            (item.temp !== undefined ? item.temp : null) ??
+            (item.internal_temperature && item.internal_temperature.value !== undefined
+              ? item.internal_temperature.value
+              : null);
 
           function fmt(val) {
             if (val === "" || val === null || val === undefined) return "";
             const num = Number(val);
             return isNaN(num) ? val : num.toFixed(1);
           }
+
+          const temp = fmt(tempRaw);
 
           tr.innerHTML = `
             <td>
@@ -360,7 +369,7 @@ const locationMap = {
             <td>${time}</td>
             <td>${fmt(pm25)}</td>
             <td>${fmt(pm10)}</td>
-            <td>${category}</td>
+            <td>${temp}</td>
           `;
           tbody.appendChild(tr);
         });
@@ -386,3 +395,4 @@ const locationMap = {
   </script>
 </body>
 </html>
+
