@@ -151,12 +151,12 @@
     }
 
   /* WHO PM2.5 (24-hour) guideline + interim targets – darker palette */
-tr.aq_who_g1 td { background: #cfe8dd; }   /* ≤15 Good */
-tr.aq_who_it4 td { background: #e3e6b8; }  /* 15–25 Moderate */
-tr.aq_who_it3 td { background: #f4d1a3; }  /* 25–37.5 Elevated */
-tr.aq_who_it2 td { background: #f2a6a6; }  /* 37.5–50 High */
-tr.aq_who_it1 td { background: #c9b6e4; }  /* 50–75 Very high */
-tr.aq_who_high td { background: #b5b5b5; } /* >75 Extremely high */
+tr.aq_who_g1 td { background: #c8f7c8; }   /* ≤15 Good */
+tr.aq_who_it4 td { background: #fff7b3; }  /* 15–25 Moderate */
+tr.aq_who_it3 td { background: #ffd3a8; }  /* 25–37.5 Elevated */
+tr.aq_who_it2 td { background: #ffb3b3; }  /* 37.5–50 High */
+tr.aq_who_it1 td { background: #e0c2ff; }  /* 50–75 Very high */
+tr.aq_who_high td { background: #d9b2bf; } /* >75 Extremely high */
 
     .legend {
       margin-top: 0.85rem;
@@ -277,12 +277,12 @@ tr.aq_who_high td { background: #b5b5b5; } /* >75 Extremely high */
         <div class="legend" aria-label="PM2.5 legend">
           <div class="legend-title">Row and marker colors use WHO PM2.5 (24-hour) guideline and interim targets</div>
           <div class="legend-items">
-            <div class="legend-item"><span class="swatch" style="background:#cfe8dd;"></span>≤15 µg/m³ — Good</div>
-            <div class="legend-item"><span class="swatch" style="background:#e3e6b8;"></span>15–25 µg/m³ — Moderate</div>
-            <div class="legend-item"><span class="swatch" style="background:#f4d1a3;"></span>25–37.5 µg/m³ — Elevated</div>
-            <div class="legend-item"><span class="swatch" style="background:#f2a6a6;"></span>37.5–50 µg/m³ — High</div>
-            <div class="legend-item"><span class="swatch" style="background:#c9b6e4;"></span>50–75 µg/m³ — Very high</div>
-            <div class="legend-item"><span class="swatch" style="background:#b5b5b5;"></span>&gt;75 µg/m³ — Extremely high</div>
+            <div class="legend-item"><span class="swatch" style="background:#c8f7c8;"></span>≤15 µg/m³ — Good</div>
+            <div class="legend-item"><span class="swatch" style="background:#fff7b3;"></span>15–25 µg/m³ — Moderate</div>
+            <div class="legend-item"><span class="swatch" style="background:#ffd3a8;"></span>25–37.5 µg/m³ — Elevated</div>
+            <div class="legend-item"><span class="swatch" style="background:#ffb3b3;"></span>37.5–50 µg/m³ — High</div>
+            <div class="legend-item"><span class="swatch" style="background:#e0c2ff;"></span>50–75 µg/m³ — Very high</div>
+            <div class="legend-item"><span class="swatch" style="background:#d9b2bf;"></span>&gt;75 µg/m³ — Extremely high</div>
           </div>
         </div>
       </div>
@@ -313,192 +313,189 @@ tr.aq_who_high td { background: #b5b5b5; } /* >75 Extremely high */
     </div>
   </footer>
 
-  <script>
-    const TOKEN = "V6ZFRJXEAGRKRSYU";
-    const COHORT_ID = "68d4e669670d2e0013c85375";
-    const COHORT_URL = `https://api.airqo.net/api/v2/devices/measurements/cohorts/${COHORT_ID}?token=${encodeURIComponent(TOKEN)}`;
+<script>
+  const TOKEN = "V6ZFRJXEAGRKRSYU";
+  const COHORT_ID = "68d4e669670d2e0013c85375";
+  const COHORT_URL = `https://api.airqo.net/api/v2/devices/measurements/cohorts/${COHORT_ID}?token=${encodeURIComponent(TOKEN)}`;
 
-    function normalizeDeviceId(raw) {
-      if (!raw) return "";
-      const s = String(raw).trim().toLowerCase();
+  function normalizeDeviceId(raw) {
+    if (!raw) return "";
+    const s = String(raw).trim().toLowerCase();
+    if (s.startsWith("aq_g5_")) return s;
+    if (s.startsWith("aq_g")) return s;
+    if (s.startsWith("aq_")) return s;
+    if (s.startsWith("airqo_g")) return s;
+    return s.replace(/[^a-z0-9_]/g, "_");
+  }
 
-      if (s.startsWith("aq_g")) return s;                 // aq_g520
-      if (s.startsWith("aq_g5_")) return s;               // aq_g5_43
-      if (s.startsWith("aq_")) return s;                  // aq_43 / aq_72
-      if (s.startsWith("airqo_g")) return s;              // airqo_g5563
+  const sites = {
+    "airqo_g5564": { name: "Busabala, Makindye", district: "Kampala", lat: 0.2182, lon: 32.6176 },
+    "aq_72":       { name: "Luwafu, Makindye", district: "Kampala", lat: 0.2689, lon: 32.588 },
+    "aq_43":       { name: "Lukuli, Makindye", district: "Kampala", lat: 0.28904, lon: 32.58958 },
+    "aq_g520":     { name: "Mbogo Road, Wabigalo", district: "Kampala", lat: 0.30991, lon: 32.60045 },
+    "aq_g5_97":    { name: "Mbuya II, Nakawa", district: "Kampala", lat: 0.325346, lon: 32.632288 },
+    "aq_g5_46":    { name: "Ggaba Bypass, Makindye", district: "Kampala", lat: 0.25776, lon: 32.63686 },
+    "airqo_g5438": { name: "Salaama Rd, Makindye", district: "Kampala", lat: 0.258119, lon: 32.609112 },
+    "aq_g5_53":    { name: "Kansanga, Makindye", district: "Kampala", lat: 0.28863, lon: 32.60297 },
+    "aq_g5_48":    { name: "Kabalagala, Makindye", district: "Kampala", lat: 0.29833, lon: 32.60074 },
+    "aq_g5_43":    { name: "Katwe 1, Makindye", district: "Kampala", lat: 0.30047, lon: 32.5794 },
+    "airqo_g5548": { name: "Nadiope Rd Mbuya, Nakawa", district: "Kampala", lat: 0.323201, lon: 32.631972 },
+    "airqo_g5567": { name: "Old Kira Rd Kamwokya, Kampala Central", district: "Kampala", lat: 0.346826, lon: 32.589047 },
+    "airqo_g5563": { name: "Bulange, Rubaga", district: "Kampala", lat: 0.311874, lon: 32.562351 },
+    "airqo_g5449": { name: "Forest Village Muyenga, Makindye", district: "Kampala", lat: 0.287828, lon: 32.624583 },
+    "airqo_g5446": { name: "Kitintale, Nakawa", district: "Kampala", lat: 0.315679, lon: 32.635063 }
+  };
 
-      const cleaned = s.replace(/[^a-z0-9_]/g, "_");
-      return cleaned;
-    }
+  function fmtNumber(v) {
+    const n = Number(v);
+    if (!Number.isFinite(n)) return "";
+    return n.toFixed(1);
+  }
 
-    const sites = {
-      "airqo_g5564": { name: "Busabala, Makindye", district: "Kampala", lat: 0.2182, lon: 32.6176 },
-      "aq_72":       { name: "Luwafu, Makindye", district: "Kampala", lat: 0.2689, lon: 32.588 },
-      "aq_43":       { name: "Lukuli, Makindye", district: "Kampala", lat: 0.28904, lon: 32.58958 },
-      "aq_g520":     { name: "Mbogo Road, Wabigalo", district: "Kampala", lat: 0.30991, lon: 32.60045 },
-      "aq_g5_97":    { name: "Mbuya II, Nakawa", district: "Kampala", lat: 0.325346, lon: 32.632288 },
-      "aq_g5_46":    { name: "Ggaba Bypass, Makindye", district: "Kampala", lat: 0.25776, lon: 32.63686 },
-      "airqo_g5438": { name: "Salaama Rd, Makindye", district: "Kampala", lat: 0.258119, lon: 32.609112 },
-      "aq_g5_53":    { name: "Kansanga, Makindye", district: "Kampala", lat: 0.28863, lon: 32.60297 },
-      "aq_g5_48":    { name: "Kabalagala, Makindye", district: "Kampala", lat: 0.29833, lon: 32.60074 },
-      "aq_g5_43":    { name: "Katwe 1, Makindye", district: "Kampala", lat: 0.30047, lon: 32.5794 },
-      "airqo_g5548": { name: "Nadiope Rd Mbuya, Nakawa", district: "Kampala", lat: 0.323201, lon: 32.631972 },
-      "airqo_g5567": { name: "Old Kira Rd Kamwokya, Kampala Central", district: "Kampala", lat: 0.346826, lon: 32.589047 },
-      "airqo_g5563": { name: "Bulange, Rubaga", district: "Kampala", lat: 0.311874, lon: 32.562351 },
-      "airqo_g5449": { name: "Forest Village Muyenga, Makindye", district: "Kampala", lat: 0.287828, lon: 32.624583 },
-      "airqo_g5446": { name: "Kitintale, Nakawa", district: "Kampala", lat: 0.315679, lon: 32.635063 }
-    };
+  function fmtDateTimeKampala(isoLike) {
+    if (!isoLike) return "";
+    const d = new Date(isoLike);
+    if (isNaN(d.getTime())) return String(isoLike);
+    return d.toLocaleString("en-GB", {
+      timeZone: "Africa/Kampala",
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false
+    }).replace(",", "");
+  }
 
-    function fmtNumber(v) {
-      const n = Number(v);
-      if (!Number.isFinite(n)) return "";
-      return n.toFixed(1);
-    }
+  // WHO thresholds but "typical AQI colors" (green/yellow/orange/red/purple/maroon)
+  function whoClass(pm25) {
+    if (!Number.isFinite(pm25)) return "";
+    if (pm25 <= 15) return "aq_who_g1";
+    if (pm25 <= 25) return "aq_who_it4";
+    if (pm25 <= 37.5) return "aq_who_it3";
+    if (pm25 <= 50) return "aq_who_it2";
+    if (pm25 <= 75) return "aq_who_it1";
+    return "aq_who_high";
+  }
 
-    function fmtDateTimeKampala(isoLike) {
-      if (!isoLike) return "";
-      const d = new Date(isoLike);
-      if (isNaN(d.getTime())) return String(isoLike);
+  function aqiFillColor(cls) {
+    if (cls === "aq_who_g1") return "#00e400";   // green
+    if (cls === "aq_who_it4") return "#ffff00";  // yellow
+    if (cls === "aq_who_it3") return "#ff7e00";  // orange
+    if (cls === "aq_who_it2") return "#ff0000";  // red
+    if (cls === "aq_who_it1") return "#8f3f97";  // purple
+    return "#7e0023";                            // maroon
+  }
 
-      return d.toLocaleString("en-GB", {
-        timeZone: "Africa/Kampala",
-        year: "numeric",
-        month: "short",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false
-      }).replace(",", "");
-    }
+  function whoLabel(pm25) {
+    if (!Number.isFinite(pm25)) return "No category";
+    if (pm25 <= 15) return "Good";
+    if (pm25 <= 25) return "Moderate";
+    if (pm25 <= 37.5) return "Elevated";
+    if (pm25 <= 50) return "High";
+    if (pm25 <= 75) return "Very high";
+    return "Extremely high";
+  }
 
-    function whoClass(pm25) {
-      if (!Number.isFinite(pm25)) return "";
-      if (pm25 <= 15) return "aq_who_g1";
-      if (pm25 <= 25) return "aq_who_it4";
-      if (pm25 <= 37.5) return "aq_who_it3";
-      if (pm25 <= 50) return "aq_who_it2";
-      if (pm25 <= 75) return "aq_who_it1";
-      return "aq_who_high";
-    }
+  let map;
+  let markersLayer;
 
-    function whoColor(cls) {
-      if (cls === "aq_who_g1") return "#eef7f1";
-      if (cls === "aq_who_it4") return "#f6f7e8";
-      if (cls === "aq_who_it3") return "#fff2e2";
-      if (cls === "aq_who_it2") return "#ffe6e6";
-      if (cls === "aq_who_it1") return "#f1e6ff";
-      return "#e2e2e2";
-    }
+  function initMap() {
+    map = L.map("uganda-map").setView([0.3136, 32.5811], 12);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(map);
+    markersLayer = L.layerGroup().addTo(map);
+  }
 
-    function whoLabel(pm25) {
-      if (!Number.isFinite(pm25)) return "No category";
-      if (pm25 <= 15) return "Good";
-      if (pm25 <= 25) return "Moderate";
-      if (pm25 <= 37.5) return "Elevated";
-      if (pm25 <= 50) return "High";
-      if (pm25 <= 75) return "Very high";
-      return "Extremely high";
-    }
+  async function loadUgandaData() {
+    const tbody = document.getElementById("uganda-data-body");
+    const statusEl = document.getElementById("uganda-status");
+    const table = document.getElementById("uganda-data-table");
 
-    let map;
-    let markersLayer;
+    try {
+      const res = await fetch(COHORT_URL);
+      if (!res.ok) throw new Error("Request failed");
+      const data = await res.json();
 
-    function initMap() {
-      map = L.map("uganda-map").setView([0.3136, 32.5811], 12);
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "&copy; OpenStreetMap contributors"
-      }).addTo(map);
-
-      markersLayer = L.layerGroup().addTo(map);
-    }
-
-    async function loadUgandaData() {
-      const tbody = document.getElementById("uganda-data-body");
-      const statusEl = document.getElementById("uganda-status");
-      const table = document.getElementById("uganda-data-table");
-
-      try {
-        const res = await fetch(COHORT_URL);
-        if (!res.ok) throw new Error("Request failed");
-        const data = await res.json();
-
-        const measurements = (data.measurements || data.results || []).slice(0, 15);
-        if (!measurements.length) {
-          statusEl.textContent = "No recent measurements available.";
-          return;
-        }
-
-        tbody.innerHTML = "";
-        markersLayer.clearLayers();
-
-        const bounds = [];
-
-        measurements.forEach(item => {
-          const rawId = item.device || item.device_id || item.deviceId || item.name || "";
-          const id = normalizeDeviceId(rawId);
-
-          const site = sites[id] || { name: (rawId || "Unknown"), district: "Kampala" };
-
-          const pm25 = Number(item?.pm2_5?.value);
-          const pm10 = Number(item?.pm10?.value);
-          const when = fmtDateTimeKampala(item.time || item.created_at || item.createdAt || item.timestamp);
-
-          const tr = document.createElement("tr");
-          const cls = whoClass(pm25);
-          tr.className = cls;
-
-          tr.innerHTML = `
-            <td>
-              <div>${site.name}</div>
-              <div style="font-size:0.8em;color:#4b5c67;">${site.district}, Uganda</div>
-            </td>
-            <td>${when}</td>
-            <td>${fmtNumber(pm25)}</td>
-            <td>${fmtNumber(pm10)}</td>
-          `;
-          tbody.appendChild(tr);
-
-          if (Number.isFinite(site.lat) && Number.isFinite(site.lon) && Number.isFinite(pm25)) {
-            const fill = whoColor(cls);
-
-            const popupHtml = `
-              <div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
-                <div style="color:#143541; margin-bottom:4px;">${site.name}</div>
-                <div style="color:#4b5c67; font-size:12px; margin-bottom:6px;">${site.district}, Uganda</div>
-                <div style="font-size:13px;">PM2.5: ${fmtNumber(pm25)} µg/m³ (${whoLabel(pm25)})</div>
-                <div style="font-size:13px;">PM10: ${fmtNumber(pm10)} µg/m³</div>
-                <div style="color:#4b5c67; font-size:12px; margin-top:6px;">${when} (EAT)</div>
-              </div>
-            `;
-
-            L.circleMarker([site.lat, site.lon], {
-              radius: 10,
-              color: "#6b7c88",
-              weight: 1,
-              fillColor: fill,
-              fillOpacity: 0.95
-            }).bindPopup(popupHtml).addTo(markersLayer);
-
-            bounds.push([site.lat, site.lon]);
-          }
-        });
-
-        statusEl.textContent = "";
-        table.style.display = "";
-
-        if (bounds.length >= 2) {
-          map.fitBounds(bounds, { padding: [25, 25] });
-        } else if (bounds.length === 1) {
-          map.setView(bounds[0], 13);
-        }
-      } catch (e) {
-        statusEl.textContent = "Could not load data from AirQo right now.";
+      const measurements = (data.measurements || data.results || []).slice(0, 15);
+      if (!measurements.length) {
+        statusEl.textContent = "No recent measurements available.";
+        return;
       }
-    }
 
-    initMap();
-    loadUgandaData();
-  </script>
+      tbody.innerHTML = "";
+      markersLayer.clearLayers();
+
+      const bounds = [];
+
+      measurements.forEach(item => {
+        const rawId = item.device || item.device_id || item.deviceId || item.name || "";
+        const id = normalizeDeviceId(rawId);
+
+        const site = sites[id] || { name: (rawId || "Unknown"), district: "Kampala" };
+
+        const pm25 = Number(item?.pm2_5?.value);
+        const pm10 = Number(item?.pm10?.value);
+        const when = fmtDateTimeKampala(item.time || item.created_at || item.createdAt || item.timestamp);
+
+        const tr = document.createElement("tr");
+        const cls = whoClass(pm25);
+        tr.className = cls;
+
+        tr.innerHTML = `
+          <td>
+            <div>${site.name}</div>
+            <div style="font-size:0.8em;color:#4b5c67;">${site.district}, Uganda</div>
+          </td>
+          <td>${when}</td>
+          <td>${fmtNumber(pm25)}</td>
+          <td>${fmtNumber(pm10)}</td>
+        `;
+        tbody.appendChild(tr);
+
+        if (Number.isFinite(site.lat) && Number.isFinite(site.lon) && Number.isFinite(pm25)) {
+          const fill = aqiFillColor(cls);
+
+          const popupHtml = `
+            <div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+              <div style="color:#143541; margin-bottom:4px;">${site.name}</div>
+              <div style="color:#4b5c67; font-size:12px; margin-bottom:6px;">${site.district}, Uganda</div>
+              <div style="font-size:13px;">PM2.5: ${fmtNumber(pm25)} µg/m³ (${whoLabel(pm25)})</div>
+              <div style="font-size:13px;">PM10: ${fmtNumber(pm10)} µg/m³</div>
+              <div style="color:#4b5c67; font-size:12px; margin-top:6px;">${when} (EAT)</div>
+            </div>
+          `;
+
+          L.circleMarker([site.lat, site.lon], {
+            radius: 10,
+            color: "#333",
+            weight: 1,
+            fillColor: fill,
+            fillOpacity: 0.9
+          }).bindPopup(popupHtml).addTo(markersLayer);
+
+          bounds.push([site.lat, site.lon]);
+        }
+      });
+
+      statusEl.textContent = "";
+      table.style.display = "";
+
+      if (bounds.length >= 2) {
+        map.fitBounds(bounds, { padding: [25, 25] });
+      } else if (bounds.length === 1) {
+        map.setView(bounds[0], 13);
+      }
+    } catch (e) {
+      statusEl.textContent = "Could not load data from AirQo right now.";
+    }
+  }
+
+  initMap();
+  loadUgandaData();
+</script>
+
 </body>
 </html>
 
