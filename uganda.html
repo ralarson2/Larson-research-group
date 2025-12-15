@@ -256,6 +256,16 @@
       text-align: center;
     }
 
+   .pm25-chart-wrap {
+      height: 520px;
+      width: 100%;
+    }
+    
+    #pm25-chart {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
     @media (max-width: 720px) {
       .nav-inner { flex-direction: column; align-items: flex-start; }
       .nav-links { justify-content: flex-start; }
@@ -345,10 +355,10 @@
           <button class="btn" id="download-csv" type="button" disabled>Download historical PM2.5 (CSV)</button>
           <div class="small-muted" id="hist-meta"></div>
         </div>
-
-        <div style="margin-top:0.85rem;">
-          <canvas id="pm25-chart" height="120"></canvas>
-        </div>
+        
+          <div class="pm25-chart-wrap" style="margin-top:0.85rem;">
+            <canvas id="pm25-chart"></canvas>
+          </div>
       </div>
 
       <div class="card" style="margin-top:1.2rem; font-size:0.9rem;">
@@ -656,44 +666,56 @@
 
     return datasets;
   }
+function renderChart() {
+  const canvas = document.getElementById("pm25-chart");
+  if (!canvas) return;
 
-  function renderChart() {
-    const canvas = document.getElementById("pm25-chart");
-    if (!canvas) return;
+  const datasets = buildDatasets();
 
-    const datasets = buildDatasets();
+  // compute y max from the plotted points
+  const allY = datasets.flatMap(ds => (ds.data || []).map(p => p.y)).filter(Number.isFinite);
+  const maxY = allY.length ? Math.max(...allY) : 0;
+  const suggestedMax = maxY > 0 ? Math.ceil(maxY * 1.15) : 100;
 
-    if (pm25Chart) pm25Chart.destroy();
+  if (pm25Chart) pm25Chart.destroy();
 
-    pm25Chart = new Chart(canvas, {
-      type: "line",
-      data: { datasets },
-      options: {
-        responsive: true,
-        parsing: false,
-        maintainAspectRatio: false,
-        interaction: { mode: "nearest", intersect: false },
-        scales: {
-          x: {
-            type: "linear",
-            ticks: { callback: (value) => formatKampalaTick(value) },
-            title: { display: true, text: "Date & time (EAT, UTC+3)" }
-          },
-          y: {
-            title: { display: true, text: "PM2.5 (µg/m³)" }
-          }
+  pm25Chart = new Chart(canvas, {
+    type: "line",
+    data: { datasets },
+    options: {
+      responsive: true,
+      parsing: false,
+      maintainAspectRatio: false,
+      interaction: { mode: "nearest", intersect: false },
+      layout: { padding: { top: 10, right: 12, bottom: 18, left: 12 } },
+      scales: {
+        x: {
+          type: "linear",
+          ticks: { callback: (value) => formatKampalaTick(value) },
+          title: { display: true, text: "Date & time (EAT, UTC+3)" }
         },
-        plugins: {
-          legend: { display: true, position: "bottom" },
-          tooltip: {
-            callbacks: {
-              title: (items) => items.length ? formatKampalaTick(items[0].parsed.x) : ""
-            }
+        y: {
+          beginAtZero: true,
+          suggestedMax,
+          title: { display: true, text: "PM2.5 (µg/m³)" }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: "top",
+          labels: { padding: 14, boxWidth: 12 }
+        },
+        tooltip: {
+          callbacks: {
+            title: (items) => items.length ? formatKampalaTick(items[0].parsed.x) : ""
           }
         }
       }
-    });
-  }
+    }
+  });
+}
+
 
   function updateDownloadButton() {
     const btn = document.getElementById("download-csv");
