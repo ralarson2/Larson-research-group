@@ -701,9 +701,12 @@ function renderChart() {
       scales: {
         x: {
           type: "linear",
+          min: Date.parse(`${START_DATE}T00:00:00+03:00`), // force axis start (EAT)
+          max: Date.parse(`${END_DATE}T23:59:59+03:00`),   // optional, keeps axis bounded
           ticks: { callback: (value) => formatKampalaTick(value) },
           title: { display: true, text: "Date & time (EAT, UTC+3)" }
         },
+
         y: {
           beginAtZero: true,
           suggestedMax,
@@ -829,6 +832,13 @@ async function loadHistoricalFromAirQo() {
       statusEl.textContent = `Loading historical data… (${p}/${pages})`;
       const next = await fetchPage(p);
       const items = next.measurements || next.results || next.data || [];
+      console.log("historical meta:", data.meta);
+      const times = items
+        .map(it => parseTimeMs(it.time || it.created_at || it.createdAt || it.timestamp))
+        .filter(ms => ms !== null);
+      console.log("historical earliest:", times.length ? new Date(Math.min(...times)).toISOString() : "none");
+      console.log("historical latest:", times.length ? new Date(Math.max(...times)).toISOString() : "none");
+      console.log("requested window:", START_DATE, "to", END_DATE);
       if (Array.isArray(items) && items.length) allItems.push(...items);
     }
 
