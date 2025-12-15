@@ -798,69 +798,92 @@ function renderChart() {
     return out;
   }
 
-  async function loadHistoricalFromAirQo() {
-    const statusEl = document.getElementById("hist-status");
-    const metaEl = document.getElementById("hist-meta");
-    const controls = document.getElementById("hist-controls");
+async function loadHistoricalFromAirQo() {
+  const statusEl = document.getElementById("hist-status");
+  const metaEl = document.getElementById("hist-meta");
+  const controls = document.getElementById("hist-controls");
 
-    try {
-      statusEl.textContent = "Loading historical data from AirQo…";
-      if (controls) controls.style.display = "none";
-      if (metaEl) metaEl.textContent = "";
+  try {
+    statusEl.textContent = "Loading historical data from AirQo…";
+    if (controls) controls.style.display = "none";
+    if (metaEl) metaEl.textContent = "";
 
-      const res = await fetch(HIST_URL);
-      if (!res.ok) throw new Error("Historical request failed");
-      const data = await res.json();
-
-      const items = data.measurements || data.results || data.data || data || [];
-      if (!Array.isArray(items) || items.length === 0) {
-        statusEl.textContent = "No historical data returned from AirQo.";
-        return;
-      }
-
-      const series = {};
-      items.forEach(item => {
-        const rawId = item.device || item.device_id || item.deviceId || item.name || "";
-        const id = normalizeDeviceId(rawId);
-        if (!series[id]) series[id] = [];
-
-        const t = item.time || item.created_at || item.createdAt || item.timestamp;
-        const pm25 = item?.pm2_5?.value ?? item?.pm25 ?? item?.pm2_5;
-
-        if (!t) return;
-        const v = Number(pm25);
-        if (!Number.isFinite(v)) return;
-
-        series[id].push({ t, pm25: v });
-      });
-
-      Object.keys(series).forEach(id => {
-        series[id].sort((a,b) => (parseTimeMs(a.t) ?? 0) - (parseTimeMs(b.t) ?? 0));
-      });
-
-      histSeries = series;
-      lastFlattenedRows = flattenForDownload(series);
-
-      statusEl.textContent = "";
-      buildControls();
-      renderChart();
-      updateDownloadButton();
-
-      const allTimes = [];
-      Object.values(series).forEach(arr => arr.forEach(p => {
-        const ms = parseTimeMs(p.t);
-        if (ms !== null) allTimes.push(ms);
-      }));
-      if (allTimes.length && metaEl) {
-        const min = new Date(Math.min(...allTimes));
-        const max = new Date(Math.max(...allTimes));
-        metaEl.textContent = `Time range: ${fmtDateTimeKampala(min.toISOString())} to ${fmtDateTimeKampala(max.toISOString())} (EAT)`;
-      }
-    } catch (e) {
-      statusEl.textContent = "Could not load historical data from AirQo right now.";
-      updateDownloadButton();
+    // helper to fetch a specific page
+    async function fetchPage(pageNum) {
+      const url = HIST_URL + `&page=${pageNum}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Historical request failed (page ${pageNum})`);
+      return await res.json();
     }
+
+    // fetch page 1 to learn how many pages exist
+    const first = await fetchPage(1);
+
+    const firstItems = first.measurements || first.results || first.data || [];
+    const firstMeta = first.meta || {};
+    const pages = Number(firstMeta.pages) || 1;
+
+    // pull all pages (sequential to be gentle)
+    const allItems = Array.isArray(firstItems) ? [...firstItems] : [];
+    for (let p = 2; p <= pages; p++) {
+      statusEl.textContent = `Loading historical data… (${p}/${pages})`;
+      const next = await fetchPage(p);
+      const items = next.measurements || next.results || next.data || [];
+      if (Array.isArray(items) && items.length) allItems.push(...items);
+    }
+
+    if (!allItems.length) {
+      statusEl.textContent = "No historical data returned from AirQo.";
+      return;
+    }
+
+    // build series
+    const series = {};
+    allItems.forEach(item => {
+      const rawId = item.device || item.device_id || item.deviceId || item.name || "";
+      const id = normalizeDeviceId(rawId);
+      if (!series[id]) series[id] = [];
+
+      const t = item.time || item.created_at || item.createdAt || item.timestamp;
+      const pm25 = item?.pm2_5?.value ?? item?.pm25 ?? item?.pm2_5;
+
+      if (!t) return;
+      const v = Number(pm25);
+      if (!Number.isFinite(v)) return;
+
+      series[id].push({ t, pm25: v });
+    });
+
+    Object.keys(series).forEach(id => {
+      series[id].sort((a,b) => (parseTimeMs(a.t) ?? 0) - (parseTimeMs(b.t) ?? 0));
+    });
+
+    histSeries = series;
+    lastFlattenedRows = flattenForDownload(series);
+
+    statusEl.textContent = "";
+    buildControls();
+    renderChart();
+    updateDownloadButton();
+
+    // update time range label
+    const allTimes = [];
+    Object.values(series).forEach(arr => arr.forEach(p => {
+      const ms = parseTimeMs(p.t);
+      if (ms !== null) allTimes.push(ms);
+    }));
+    if (allTimes.length && metaEl) {
+      const min = new Date(Math.min(...allTimes));
+      const max = new Date(Math.max(...allTimes));
+      metaEl.textContent = `Time range: ${fmtDateTimeKampala(min.toISOString())} to ${fmtDateTimeKampala(max.toISOString())} (EAT)`;
+    }
+  } catch (e) {
+    statusEl.textContent = "Could not load historical data from AirQo right now.";
+    updateDownloadButton();
+    console.error(e);
   }
+}
+
 
   // run
   initMap();
