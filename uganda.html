@@ -408,7 +408,15 @@
   const COHORT_ID = "68d4e669670d2e0013c85375";
 
   const COHORT_URL = `https://api.airqo.net/api/v2/devices/measurements/cohorts/${COHORT_ID}?token=${encodeURIComponent(TOKEN)}`;
-  const HIST_URL  = `https://api.airqo.net/api/v2/devices/measurements/cohorts/${COHORT_ID}/historical?token=${encodeURIComponent(TOKEN)}`;
+  const START_DATE = "2025-11-01"; // change year if you meant a different Nov 1
+  const END_DATE = new Date().toISOString().slice(0, 10);
+
+const HIST_URL =
+  `https://api.airqo.net/api/v2/devices/measurements/cohorts/${COHORT_ID}/historical` +
+  `?token=${encodeURIComponent(TOKEN)}` +
+  `&startTime=${encodeURIComponent(START_DATE)}` +
+  `&endTime=${encodeURIComponent(END_DATE)}`;
+
 
   function normalizeDeviceId(raw) {
     if (!raw) return "";
@@ -710,6 +718,16 @@ function renderChart() {
           callbacks: {
             title: (items) => items.length ? formatKampalaTick(items[0].parsed.x) : ""
           }
+          datasets.push({
+            label: siteLabel(id),
+            data: points,
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.2,
+            spanGaps: true,
+            showLine: true
+          });
+
         }
       }
     }
