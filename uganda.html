@@ -869,15 +869,14 @@ async function loadHistoricalFromCSV() {
     const idxPm25Archive = header.indexOf("pm2_5_ug_m3");
 
     const idxDeviceName = header.indexOf("device_name");
-    const idxDatetime = header.indexOf("datetime");
+const idxDatetime   = header.indexOf("datetime");
 
-        const idxPm25 = header.indexOf("pm2_5_calibrated_value") >= 0
-      ? header.indexOf("pm2_5_calibrated_value")
-      : header.indexOf("pm2_5");
+const idxPm25 = header.indexOf("pm2_5_calibrated_value");
+const idxPm10 = header.indexOf("pm10_calibrated_value");
 
-    const idxPm10 = header.indexOf("pm10_calibrated_value") >= 0
-      ? header.indexOf("pm10_calibrated_value")
-      : header.indexOf("pm10");
+if (idxDeviceName < 0 || idxDatetime < 0 || idxPm25 < 0 || idxPm10 < 0) {
+  throw new Error("CSV is missing required calibrated PM2.5 / PM10 columns");
+}
 
     const usingArchiveFormat = (idxDeviceId >= 0 && idxTimestamp >= 0 && idxPm25Archive >= 0);
     const usingAirQoExportFormat = (idxDeviceName >= 0 && idxDatetime >= 0 && idxPm25 >= 0);
