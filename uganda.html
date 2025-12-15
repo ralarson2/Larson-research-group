@@ -150,15 +150,13 @@
       color: #4b5c67;
     }
 
-  /* WHO PM2.5 (24-hour) guideline + interim targets – darker palette */
-td.pm25.aq_who_g1 { background:  #00e400; color:#000;}   /* ≤15 Good */
-td.pm25.aq_who_it4  { background: #ffff00; color:#000;}  /* 15–25 Moderate */
-td.pm25.aq_who_it3   { background: #ff7e00; color:#000;}  /* 25–37.5 Elevated */
-td.pm25.aq_who_it2 { background: #ff0000; color:#fff;}  /* 37.5–50 High */
-td.pm25.aq_who_it1 { background: #8f3f97; color:#fff;}  /* 50–75 Very high */
-td.pm25.aq_who_high { background: #7e0023; color:#fff;} /* >75 Extremely high */
-*/
-
+    /* color only the PM2.5 cell */
+    td.pm25.aq_who_g1   { background: #00e400; color:#000; }
+    td.pm25.aq_who_it4  { background: #ffff00; color:#000; }
+    td.pm25.aq_who_it3  { background: #ff7e00; color:#000; }
+    td.pm25.aq_who_it2  { background: #ff0000; color:#fff; }
+    td.pm25.aq_who_it1  { background: #8f3f97; color:#fff; }
+    td.pm25.aq_who_high { background: #7e0023; color:#fff; }
 
     .legend {
       margin-top: 0.85rem;
@@ -205,6 +203,41 @@ td.pm25.aq_who_high { background: #7e0023; color:#fff;} /* >75 Extremely high */
       border: 1px solid #dde3ea;
     }
 
+    /* historical chart UI */
+    .hist-controls {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.35rem 0.75rem;
+      margin-top: 0.6rem;
+    }
+    .hist-controls label {
+      display: flex;
+      gap: 0.45rem;
+      align-items: flex-start;
+      font-size: 0.9rem;
+      color: #2f3e47;
+    }
+    .hist-toolbar {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-top: 0.85rem;
+    }
+    .btn {
+      appearance: none;
+      border: 1px solid #cfd8e3;
+      background: #ffffff;
+      color: #143541;
+      border-radius: 0.7rem;
+      padding: 0.55rem 0.8rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .btn:hover { border-color: #98a9b8; }
+    .small-muted { color: #4b5c67; font-size: 0.88rem; }
+
     footer {
       border-top: 1px solid #dde3ea;
       padding: 1.2rem 1rem 2rem 1rem;
@@ -227,11 +260,13 @@ td.pm25.aq_who_high { background: #7e0023; color:#fff;} /* >75 Extremely high */
       .nav-inner { flex-direction: column; align-items: flex-start; }
       .nav-links { justify-content: flex-start; }
       #uganda-data-table th, #uganda-data-table td { white-space: normal; }
+      .hist-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
   </style>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 
 <body>
@@ -277,15 +312,14 @@ td.pm25.aq_who_high { background: #7e0023; color:#fff;} /* >75 Extremely high */
         </div>
 
         <div class="legend" aria-label="PM2.5 legend">
-          <div class="legend-title">Row and marker colors use WHO PM2.5 (24-hour) guideline and interim targets</div>
+          <div class="legend-title">PM2.5 category colors (WHO thresholds, classic AQI color palette)</div>
           <div class="legend-items">
-           <div class="legend-item"><span class="swatch" style="background:#00e400;"></span>≤15 µg/m³ — Good</div>
-<div class="legend-item"><span class="swatch" style="background:#ffff00;"></span>15–25 µg/m³ — Moderate</div>
-<div class="legend-item"><span class="swatch" style="background:#ff7e00;"></span>25–37.5 µg/m³ — Elevated</div>
-<div class="legend-item"><span class="swatch" style="background:#ff0000;"></span>37.5–50 µg/m³ — High</div>
-<div class="legend-item"><span class="swatch" style="background:#8f3f97;"></span>50–75 µg/m³ — Very high</div>
-<div class="legend-item"><span class="swatch" style="background:#7e0023;"></span>&gt;75 µg/m³ — Extremely high</div>
-
+            <div class="legend-item"><span class="swatch" style="background:#00e400;"></span>≤15 µg/m³ — Good</div>
+            <div class="legend-item"><span class="swatch" style="background:#ffff00;"></span>15–25 µg/m³ — Moderate</div>
+            <div class="legend-item"><span class="swatch" style="background:#ff7e00;"></span>25–37.5 µg/m³ — Elevated</div>
+            <div class="legend-item"><span class="swatch" style="background:#ff0000;"></span>37.5–50 µg/m³ — High</div>
+            <div class="legend-item"><span class="swatch" style="background:#8f3f97;"></span>50–75 µg/m³ — Very high</div>
+            <div class="legend-item"><span class="swatch" style="background:#7e0023;"></span>&gt;75 µg/m³ — Extremely high</div>
           </div>
         </div>
       </div>
@@ -293,46 +327,46 @@ td.pm25.aq_who_high { background: #7e0023; color:#fff;} /* >75 Extremely high */
 
     <section>
       <div class="section-title">Map of PM2.5 (µg/m³) concentrations</div>
-      <p class="section-text">Markers use the fixed sensor coordinates and are colored by PM2.5 category.</p>
+      <p class="section-text">Markers use fixed sensor coordinates and are colored by PM2.5 category.</p>
 
       <div id="uganda-map"></div>
-      
-<div class="card" style="margin-top:1.2rem; font-size:0.9rem;">
-  <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">
-    Data description and licensing
-  </div>
-  <div style="color:#4b5c67;">
-    PM2.5 concentrations shown here represent short-term (minute-scale) averaged
-    measurements as reported by the AirQo monitoring network and are provided at
-    sub-daily resolution in near-real time.
-    <br><br>
-    Air quality monitoring data displayed on this page are provided by AirQo and are
-    made available under the Creative Commons Attribution 4.0 International
-    (CC BY 4.0) license.
-  </div>
-</div>
 
       <div class="card" style="margin-top:1.2rem; font-size:0.9rem;">
-  <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">
-    Sensor locations
-  </div>
-  <div style="color:#4b5c67;">
-    Geographic coordinates for all monitoring locations shown on this page are available for download as a CSV file:
-    <br><br>
-    <a href="sensor_locations_kampala.csv" download>
-      Download sensor coordinates (CSV)
-    </a>
-  </div>
-</div>
+        <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Historical data</div>
+        <div class="small-muted">
+          Select sensors to show/hide on the chart. Use the download button to export the same plotted data as CSV.
+        </div>
 
+        <div id="hist-status" class="small-muted" style="margin-top:0.5rem;">Loading historical data…</div>
+
+        <div id="hist-controls" class="hist-controls" aria-label="Sensor selection" style="display:none;"></div>
+
+        <div class="hist-toolbar">
+          <button class="btn" id="download-csv" type="button" disabled>Download historical PM2.5 (CSV)</button>
+          <div class="small-muted" id="hist-meta"></div>
+        </div>
+
+        <div style="margin-top:0.85rem;">
+          <canvas id="pm25-chart" height="120"></canvas>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1.2rem; font-size:0.9rem;">
+        <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Data description and licensing</div>
+        <div style="color:#4b5c67;">
+          PM2.5 concentrations shown here represent short-term (minute-scale) averaged measurements as reported by the AirQo monitoring network and are provided at sub-daily resolution in near-real time.
+          <br><br>
+          Air quality monitoring data displayed on this page are provided by AirQo and are made available under the Creative Commons Attribution 4.0 International (CC BY 4.0) license.
+        </div>
+      </div>
 
       <div class="card" style="margin-top:1.2rem; font-size:0.9rem;">
         <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Funding and data acknowledgment</div>
-               <div style="color:#4b5c67;">
-              This work is supported by the Energy Policy Institute at the University of Chicago (EPIC).<br><br>
-              Air quality monitoring data are provided by AirQo through its open data access program.
-              <a href="https://airqo.africa" target="_blank">https://airqo.africa</a><br>
-              We acknowledge AirQo (Makerere University) for access to air quality monitoring data on this website.
+        <div style="color:#4b5c67;">
+          This work is supported by the Energy Policy Institute at the University of Chicago (EPIC).<br><br>
+          Air quality monitoring data are provided by AirQo through its open data access program.
+          <a href="https://airqo.africa" target="_blank">https://airqo.africa</a><br>
+          We acknowledge AirQo (Makerere University) for access to air quality monitoring data on this website.
         </div>
       </div>
     </section>
@@ -348,7 +382,9 @@ td.pm25.aq_who_high { background: #7e0023; color:#fff;} /* >75 Extremely high */
 <script>
   const TOKEN = "V6ZFRJXEAGRKRSYU";
   const COHORT_ID = "68d4e669670d2e0013c85375";
+
   const COHORT_URL = `https://api.airqo.net/api/v2/devices/measurements/cohorts/${COHORT_ID}?token=${encodeURIComponent(TOKEN)}`;
+  const HIST_URL  = `https://api.airqo.net/api/v2/devices/measurements/cohorts/${COHORT_ID}/historical?token=${encodeURIComponent(TOKEN)}`;
 
   function normalizeDeviceId(raw) {
     if (!raw) return "";
@@ -378,6 +414,11 @@ td.pm25.aq_who_high { background: #7e0023; color:#fff;} /* >75 Extremely high */
     "airqo_g5446": { name: "Kitintale, Nakawa", district: "Kampala", lat: 0.315679, lon: 32.635063 }
   };
 
+  function siteLabel(id) {
+    const s = sites[id];
+    return s ? s.name : id;
+  }
+
   function fmtNumber(v) {
     const n = Number(v);
     if (!Number.isFinite(n)) return "";
@@ -395,37 +436,57 @@ td.pm25.aq_who_high { background: #7e0023; color:#fff;} /* >75 Extremely high */
       day: "2-digit",
       hour: "2-digit",
       minute: "2-digit",
+      second: "2-digit",
       hour12: false
     }).replace(",", "");
   }
 
-  // WHO thresholds but "typical AQI colors" (green/yellow/orange/red/purple/maroon)
+  function parseTimeMs(isoLike) {
+    const d = new Date(isoLike);
+    const ms = d.getTime();
+    return Number.isFinite(ms) ? ms : null;
+  }
+
+  function formatKampalaTick(ms) {
+    const d = new Date(ms);
+    return d.toLocaleString("en-GB", {
+      timeZone: "Africa/Kampala",
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false
+    }).replace(",", "");
+  }
+
   function whoClass(pm25) {
-    if (!Number.isFinite(pm25)) return "";
-    if (pm25 <= 15) return "aq_who_g1";
-    if (pm25 <= 25) return "aq_who_it4";
-    if (pm25 <= 37.5) return "aq_who_it3";
-    if (pm25 <= 50) return "aq_who_it2";
-    if (pm25 <= 75) return "aq_who_it1";
+    const v = Number(pm25);
+    if (!Number.isFinite(v)) return "";
+    if (v <= 15) return "aq_who_g1";
+    if (v <= 25) return "aq_who_it4";
+    if (v <= 37.5) return "aq_who_it3";
+    if (v <= 50) return "aq_who_it2";
+    if (v <= 75) return "aq_who_it1";
     return "aq_who_high";
   }
 
   function aqiFillColor(cls) {
-    if (cls === "aq_who_g1") return "#00e400";   // green
-    if (cls === "aq_who_it4") return "#ffff00";  // yellow
-    if (cls === "aq_who_it3") return "#ff7e00";  // orange
-    if (cls === "aq_who_it2") return "#ff0000";  // red
-    if (cls === "aq_who_it1") return "#8f3f97";  // purple
-    return "#7e0023";                            // maroon
+    if (cls === "aq_who_g1") return "#00e400";
+    if (cls === "aq_who_it4") return "#ffff00";
+    if (cls === "aq_who_it3") return "#ff7e00";
+    if (cls === "aq_who_it2") return "#ff0000";
+    if (cls === "aq_who_it1") return "#8f3f97";
+    return "#7e0023";
   }
 
   function whoLabel(pm25) {
-    if (!Number.isFinite(pm25)) return "No category";
-    if (pm25 <= 15) return "Good";
-    if (pm25 <= 25) return "Moderate";
-    if (pm25 <= 37.5) return "Elevated";
-    if (pm25 <= 50) return "High";
-    if (pm25 <= 75) return "Very high";
+    const v = Number(pm25);
+    if (!Number.isFinite(v)) return "No category";
+    if (v <= 15) return "Good";
+    if (v <= 25) return "Moderate";
+    if (v <= 37.5) return "Elevated";
+    if (v <= 50) return "High";
+    if (v <= 75) return "Very high";
     return "Extremely high";
   }
 
@@ -464,17 +525,15 @@ td.pm25.aq_who_high { background: #7e0023; color:#fff;} /* >75 Extremely high */
       measurements.forEach(item => {
         const rawId = item.device || item.device_id || item.deviceId || item.name || "";
         const id = normalizeDeviceId(rawId);
-
         const site = sites[id] || { name: (rawId || "Unknown"), district: "Kampala" };
 
         const pm25 = Number(item?.pm2_5?.value);
         const pm10 = Number(item?.pm10?.value);
         const when = fmtDateTimeKampala(item.time || item.created_at || item.createdAt || item.timestamp);
 
-        const tr = document.createElement("tr");
         const cls = whoClass(pm25);
-        tr.className = cls;
 
+        const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>
             <div>${site.name}</div>
@@ -514,23 +573,256 @@ td.pm25.aq_who_high { background: #7e0023; color:#fff;} /* >75 Extremely high */
       statusEl.textContent = "";
       table.style.display = "";
 
-      if (bounds.length >= 2) {
-        map.fitBounds(bounds, { padding: [25, 25] });
-      } else if (bounds.length === 1) {
-        map.setView(bounds[0], 13);
-      }
+      if (bounds.length >= 2) map.fitBounds(bounds, { padding: [25, 25] });
+      else if (bounds.length === 1) map.setView(bounds[0], 13);
     } catch (e) {
       statusEl.textContent = "Could not load data from AirQo right now.";
     }
   }
 
+  // ---------- historical chart + download (from AirQo /historical endpoint) ----------
+  let pm25Chart = null;
+  let histSeries = null; // { [deviceId]: [{t, pm25}] }
+  let selected = new Set(Object.keys(sites)); // default all 15
+  let lastFlattenedRows = []; // for CSV download
+
+  function buildControls() {
+    const controls = document.getElementById("hist-controls");
+    controls.innerHTML = "";
+
+    Object.keys(sites).forEach(id => {
+      const label = document.createElement("label");
+
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = selected.has(id);
+      cb.addEventListener("change", () => {
+        if (cb.checked) selected.add(id);
+        else selected.delete(id);
+        renderChart();
+        updateDownloadButton();
+      });
+
+      const text = document.createElement("span");
+      text.textContent = siteLabel(id);
+
+      label.appendChild(cb);
+      label.appendChild(text);
+      controls.appendChild(label);
+    });
+
+    controls.style.display = "";
+  }
+
+  function buildDatasets() {
+    const datasets = [];
+
+    Object.keys(sites).forEach(id => {
+      if (!selected.has(id)) return;
+
+      const arr = (histSeries && histSeries[id]) ? histSeries[id] : [];
+      const points = arr
+        .map(p => {
+          const ms = parseTimeMs(p.t);
+          const v = Number(p.pm25);
+          if (!Number.isFinite(v) || ms === null) return null;
+          return { x: ms, y: v };
+        })
+        .filter(Boolean)
+        .sort((a,b) => a.x - b.x);
+
+      datasets.push({
+        label: siteLabel(id),
+        data: points,
+        borderWidth: 2,
+        pointRadius: 0,
+        tension: 0.2
+      });
+    });
+
+    return datasets;
+  }
+
+  function renderChart() {
+    const canvas = document.getElementById("pm25-chart");
+    if (!canvas) return;
+
+    const datasets = buildDatasets();
+
+    if (pm25Chart) pm25Chart.destroy();
+
+    pm25Chart = new Chart(canvas, {
+      type: "line",
+      data: { datasets },
+      options: {
+        responsive: true,
+        parsing: false,
+        maintainAspectRatio: false,
+        interaction: { mode: "nearest", intersect: false },
+        scales: {
+          x: {
+            type: "linear",
+            ticks: { callback: (value) => formatKampalaTick(value) },
+            title: { display: true, text: "Date & time (EAT, UTC+3)" }
+          },
+          y: {
+            title: { display: true, text: "PM2.5 (µg/m³)" }
+          }
+        },
+        plugins: {
+          legend: { display: true, position: "bottom" },
+          tooltip: {
+            callbacks: {
+              title: (items) => items.length ? formatKampalaTick(items[0].parsed.x) : ""
+            }
+          }
+        }
+      }
+    });
+  }
+
+  function updateDownloadButton() {
+    const btn = document.getElementById("download-csv");
+    btn.disabled = !(histSeries && selected.size > 0 && lastFlattenedRows.length > 0);
+  }
+
+  function makeCsv() {
+    const header = "device_id,location,district,lat,lon,timestamp_EAT,pm2_5_ug_m3";
+    const lines = [header];
+
+    lastFlattenedRows
+      .filter(r => selected.has(r.device_id))
+      .forEach(r => {
+        const s = sites[r.device_id] || {};
+        const line = [
+          r.device_id,
+          `"${String(s.name || "").replaceAll('"','""')}"`,
+          `"${String(s.district || "").replaceAll('"','""')}"`,
+          (s.lat ?? ""),
+          (s.lon ?? ""),
+          r.timestamp_EAT,
+          r.pm2_5_ug_m3
+        ].join(",");
+        lines.push(line);
+      });
+
+    return lines.join("\n");
+  }
+
+  function wireDownload() {
+    const btn = document.getElementById("download-csv");
+    btn.addEventListener("click", () => {
+      const csv = makeCsv();
+      if (!csv) return;
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "uganda_pm25_historical.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  function flattenForDownload(seriesObj) {
+    const out = [];
+    Object.keys(seriesObj || {}).forEach(id => {
+      (seriesObj[id] || []).forEach(p => {
+        const v = Number(p.pm25);
+        if (!Number.isFinite(v)) return;
+        out.push({
+          device_id: id,
+          timestamp_EAT: fmtDateTimeKampala(p.t),
+          pm2_5_ug_m3: v
+        });
+      });
+    });
+
+    out.sort((a, b) => {
+      const ta = parseTimeMs(a.timestamp_EAT) ?? 0;
+      const tb = parseTimeMs(b.timestamp_EAT) ?? 0;
+      return ta - tb;
+    });
+
+    return out;
+  }
+
+  async function loadHistoricalFromAirQo() {
+    const statusEl = document.getElementById("hist-status");
+    const metaEl = document.getElementById("hist-meta");
+    const controls = document.getElementById("hist-controls");
+
+    try {
+      statusEl.textContent = "Loading historical data from AirQo…";
+      if (controls) controls.style.display = "none";
+      if (metaEl) metaEl.textContent = "";
+
+      const res = await fetch(HIST_URL);
+      if (!res.ok) throw new Error("Historical request failed");
+      const data = await res.json();
+
+      const items = data.measurements || data.results || data.data || data || [];
+      if (!Array.isArray(items) || items.length === 0) {
+        statusEl.textContent = "No historical data returned from AirQo.";
+        return;
+      }
+
+      const series = {};
+      items.forEach(item => {
+        const rawId = item.device || item.device_id || item.deviceId || item.name || "";
+        const id = normalizeDeviceId(rawId);
+        if (!series[id]) series[id] = [];
+
+        const t = item.time || item.created_at || item.createdAt || item.timestamp;
+        const pm25 = item?.pm2_5?.value ?? item?.pm25 ?? item?.pm2_5;
+
+        if (!t) return;
+        const v = Number(pm25);
+        if (!Number.isFinite(v)) return;
+
+        series[id].push({ t, pm25: v });
+      });
+
+      Object.keys(series).forEach(id => {
+        series[id].sort((a,b) => (parseTimeMs(a.t) ?? 0) - (parseTimeMs(b.t) ?? 0));
+      });
+
+      histSeries = series;
+      lastFlattenedRows = flattenForDownload(series);
+
+      statusEl.textContent = "";
+      buildControls();
+      renderChart();
+      updateDownloadButton();
+
+      const allTimes = [];
+      Object.values(series).forEach(arr => arr.forEach(p => {
+        const ms = parseTimeMs(p.t);
+        if (ms !== null) allTimes.push(ms);
+      }));
+      if (allTimes.length && metaEl) {
+        const min = new Date(Math.min(...allTimes));
+        const max = new Date(Math.max(...allTimes));
+        metaEl.textContent = `Time range: ${fmtDateTimeKampala(min.toISOString())} to ${fmtDateTimeKampala(max.toISOString())} (EAT)`;
+      }
+    } catch (e) {
+      statusEl.textContent = "Could not load historical data from AirQo right now.";
+      updateDownloadButton();
+    }
+  }
+
+  // run
   initMap();
   loadUgandaData();
+  wireDownload();
+  loadHistoricalFromAirQo();
 </script>
+
 
 </body>
 </html>
-
-
-
-
