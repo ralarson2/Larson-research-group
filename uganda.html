@@ -870,9 +870,14 @@ async function loadHistoricalFromCSV() {
 
     const idxDeviceName = header.indexOf("device_name");
     const idxDatetime = header.indexOf("datetime");
-    const idxPm25 = header.indexOf("pm2_5_calibrated_value") >= 0
+
+        const idxPm25 = header.indexOf("pm2_5_calibrated_value") >= 0
       ? header.indexOf("pm2_5_calibrated_value")
       : header.indexOf("pm2_5");
+
+    const idxPm10 = header.indexOf("pm10_calibrated_value") >= 0
+      ? header.indexOf("pm10_calibrated_value")
+      : header.indexOf("pm10");
 
     const usingArchiveFormat = (idxDeviceId >= 0 && idxTimestamp >= 0 && idxPm25Archive >= 0);
     const usingAirQoExportFormat = (idxDeviceName >= 0 && idxDatetime >= 0 && idxPm25 >= 0);
@@ -887,22 +892,29 @@ async function loadHistoricalFromCSV() {
     for (let r = 1; r < rows.length; r++) {
       const cols = rows[r];
 
-      let id, t, v;
+      let id, t, pm25Val, pm10Val;
 
       if (usingArchiveFormat) {
         id = normalizeDeviceId(cols[idxDeviceId]);
         t = cols[idxTimestamp];
-        v = Number(cols[idxPm25Archive]);
+        pm25Val = Number(cols[idxPm25Archive]);
+        pm10Val = NaN; // archive format doesn’t include pm10 unless you added it
       } else {
         id = normalizeDeviceId(cols[idxDeviceName]);
-        t = cols[idxDatetime];          // looks like 2025-10-01 07:00:00Z in your file
-        v = Number(cols[idxPm25]);
+        t = cols[idxDatetime];
+        pm25Val = Number(cols[idxPm25]);
+        pm10Val = (idxPm10 >= 0) ? Number(cols[idxPm10]) : NaN;
       }
 
-      if (!id || !t || !Number.isFinite(v)) continue;
+      if (!id || !t || !Number.isFinite(pm25Val)) continue;
 
       if (!series[id]) series[id] = [];
-      series[id].push({ t, pm25: v });
+      series[id].push({ t, pm25: pm25Val, pm10: pm10Val });
+
+      const ms = parseTimeMs(t);
+      if (ms !== null) allTimes.push(ms);
+    }
+
 
       const ms = parseTimeMs(t);
       if (ms !== null) allTimes.push(ms);
