@@ -664,12 +664,14 @@ const HIST_URL =
         .sort((a,b) => a.x - b.x);
 
       datasets.push({
-        label: siteLabel(id),
-        data: points,
-        borderWidth: 2,
-        pointRadius: 0,
-        tension: 0.2
-      });
+          label: siteLabel(id),
+          data: points,
+          borderWidth: 2,
+          pointRadius: 0,
+          tension: 0.2,
+          spanGaps: true,
+          showLine: true
+        });
     });
 
     return datasets;
@@ -718,16 +720,6 @@ function renderChart() {
           callbacks: {
             title: (items) => items.length ? formatKampalaTick(items[0].parsed.x) : ""
           }
-          datasets.push({
-            label: siteLabel(id),
-            data: points,
-            borderWidth: 2,
-            pointRadius: 0,
-            tension: 0.2,
-            spanGaps: true,
-            showLine: true
-          });
-
         }
       }
     }
