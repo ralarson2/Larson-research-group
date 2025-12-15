@@ -864,29 +864,53 @@ async function loadHistoricalFromCSV() {
     if (rows.length < 2) throw new Error("Archive CSV is empty");
 
     const header = rows[0].map(h => h.trim());
-    const idxDeviceId = header.indexOf("device_id");
-    const idxTimestamp = header.indexOf("timestamp");
-    const idxPm25Archive = header.indexOf("pm2_5_ug_m3");
 
-    const idxDeviceName = header.indexOf("device_name");
-const idxDatetime   = header.indexOf("datetime");
+// archive-format columns (the file we generated)
+const idxDeviceId = header.indexOf("device_id");
+const idxTimestamp = header.indexOf("timestamp");
+const idxPm25Archive = header.indexOf("pm2_5_ug_m3");
 
+// AirQo export-format columns (your downloaded files)
+const idxDeviceName = header.indexOf("device_name");
+const idxDatetime = header.indexOf("datetime");
 const idxPm25 = header.indexOf("pm2_5_calibrated_value");
 const idxPm10 = header.indexOf("pm10_calibrated_value");
 
-if (idxDeviceName < 0 || idxDatetime < 0 || idxPm25 < 0 || idxPm10 < 0) {
-  throw new Error("CSV is missing required calibrated PM2.5 / PM10 columns");
+const usingArchiveFormat = (idxDeviceId >= 0 && idxTimestamp >= 0 && idxPm25Archive >= 0);
+const usingAirQoExportFormat = (idxDeviceName >= 0 && idxDatetime >= 0 && idxPm25 >= 0 && idxPm10 >= 0);
+
+if (!usingArchiveFormat && !usingAirQoExportFormat) {
+  throw new Error("CSV header does not match expected formats");
 }
 
-    const usingArchiveFormat = (idxDeviceId >= 0 && idxTimestamp >= 0 && idxPm25Archive >= 0);
-    const usingAirQoExportFormat = (idxDeviceName >= 0 && idxDatetime >= 0 && idxPm25 >= 0);
+const series = {};
+const allTimes = [];
 
-    if (!usingArchiveFormat && !usingAirQoExportFormat) {
-      throw new Error("CSV header does not match expected formats");
-    }
+for (let r = 1; r < rows.length; r++) {
+  const cols = rows[r];
 
-    const series = {};
-    const allTimes = [];
+  let id, t, pm25Val, pm10Val;
+
+  if (usingArchiveFormat) {
+    id = normalizeDeviceId(cols[idxDeviceId]);
+    t = cols[idxTimestamp];
+    pm25Val = Number(cols[idxPm25Archive]);
+    pm10Val = NaN; // archive file currently doesn't store pm10
+  } else {
+    id = normalizeDeviceId(cols[idxDeviceName]);
+    t = cols[idxDatetime];
+    pm25Val = Number(cols[idxPm25]);
+    pm10Val = Number(cols[idxPm10]);
+  }
+
+  if (!id || !t || !Number.isFinite(pm25Val)) continue;
+
+  if (!series[id]) series[id] = [];
+  series[id].push({ t, pm25: pm25Val, pm10: pm10Val });
+
+  const ms = parseTimeMs(t);
+  if (ms !== null) allTimes.push(ms);
+}
 
     for (let r = 1; r < rows.length; r++) {
       const cols = rows[r];
