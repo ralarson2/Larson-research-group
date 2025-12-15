@@ -854,7 +854,9 @@ async function loadHistoricalFromCSV() {
     if (controls) controls.style.display = "none";
     if (metaEl) metaEl.textContent = "";
 
-    const res = await fetch(CSV_URL, { cache: "no-store" });
+   const res = await fetch(CSV_URL, { cache: "no-store" });
+    console.log("CSV fetch status:", res.status, res.url);
+
     if (!res.ok) throw new Error(`Archive CSV not found: ${CSV_URL} (HTTP ${res.status})`);
 
     const text = await res.text();
