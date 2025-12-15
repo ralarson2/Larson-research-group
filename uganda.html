@@ -701,8 +701,6 @@ function renderChart() {
       scales: {
         x: {
           type: "linear",
-          min: Date.parse(`${START_DATE}T00:00:00+03:00`), // force axis start (EAT)
-          max: Date.parse(`${END_DATE}T23:59:59+03:00`),   // optional, keeps axis bounded
           ticks: { callback: (value) => formatKampalaTick(value) },
           title: { display: true, text: "Date & time (EAT, UTC+3)" }
         },
@@ -806,46 +804,107 @@ async function loadHistoricalFromCSV() {
   const metaEl = document.getElementById("hist-meta");
   const controls = document.getElementById("hist-controls");
 
+  // set this to whatever you actually committed in the repo
+  const CSV_URL = "data/uganda_pm25_archive.csv"; // or "data/air-quality-data-2025-10-01-to-2025-12-16.csv"
+
+  // small CSV parser that handles quoted commas
+  function parseCsv(text) {
+    const rows = [];
+    let row = [];
+    let field = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      const next = text[i + 1];
+
+      if (inQuotes) {
+        if (c === '"' && next === '"') { field += '"'; i++; continue; }
+        if (c === '"') { inQuotes = false; continue; }
+        field += c;
+        continue;
+      }
+
+      if (c === '"') { inQuotes = true; continue; }
+      if (c === ",") { row.push(field); field = ""; continue; }
+      if (c === "\n") {
+        row.push(field);
+        // ignore blank final line
+        if (row.length > 1 || row[0].trim() !== "") rows.push(row);
+        row = [];
+        field = "";
+        continue;
+      }
+      if (c === "\r") continue;
+
+      field += c;
+    }
+
+    // last field
+    if (field.length || row.length) {
+      row.push(field);
+      if (row.length > 1 || row[0].trim() !== "") rows.push(row);
+    }
+
+    return rows;
+  }
+
   try {
     statusEl.textContent = "Loading archived historical data…";
     if (controls) controls.style.display = "none";
     if (metaEl) metaEl.textContent = "";
 
-    const res = await fetch("data/uganda_pm25_archive.csv", { cache: "no-store" });
-    if (!res.ok) throw new Error("Archive CSV not found");
+    const res = await fetch(CSV_URL, { cache: "no-store" });
+    if (!res.ok) throw new Error(`Archive CSV not found: ${CSV_URL} (HTTP ${res.status})`);
 
     const text = await res.text();
-    const lines = text.trim().split("\n");
-    if (lines.length < 2) throw new Error("Archive CSV is empty");
+    const rows = parseCsv(text);
+    if (rows.length < 2) throw new Error("Archive CSV is empty");
 
-    const header = lines.shift().split(",");
-    const idxDevice = header.indexOf("device_id");
-    const idxTime = header.indexOf("timestamp");
-    const idxPm25 = header.indexOf("pm2_5_ug_m3");
+    const header = rows[0].map(h => h.trim());
+    const idxDeviceId = header.indexOf("device_id");
+    const idxTimestamp = header.indexOf("timestamp");
+    const idxPm25Archive = header.indexOf("pm2_5_ug_m3");
 
-    if (idxDevice < 0 || idxTime < 0 || idxPm25 < 0) {
-      throw new Error("CSV header does not match expected format");
+    const idxDeviceName = header.indexOf("device_name");
+    const idxDatetime = header.indexOf("datetime");
+    const idxPm25 = header.indexOf("pm2_5_calibrated_value") >= 0
+      ? header.indexOf("pm2_5_calibrated_value")
+      : header.indexOf("pm2_5");
+
+    const usingArchiveFormat = (idxDeviceId >= 0 && idxTimestamp >= 0 && idxPm25Archive >= 0);
+    const usingAirQoExportFormat = (idxDeviceName >= 0 && idxDatetime >= 0 && idxPm25 >= 0);
+
+    if (!usingArchiveFormat && !usingAirQoExportFormat) {
+      throw new Error("CSV header does not match expected formats");
     }
 
     const series = {};
     const allTimes = [];
 
-    lines.forEach(line => {
-      if (!line.trim()) return;
-      const cols = line.split(",");
+    for (let r = 1; r < rows.length; r++) {
+      const cols = rows[r];
 
-      const id = normalizeDeviceId(cols[idxDevice]);
-      const t = cols[idxTime];
-      const v = Number(cols[idxPm25]);
+      let id, t, v;
 
-      if (!id || !t || !Number.isFinite(v)) return;
+      if (usingArchiveFormat) {
+        id = normalizeDeviceId(cols[idxDeviceId]);
+        t = cols[idxTimestamp];
+        v = Number(cols[idxPm25Archive]);
+      } else {
+        id = normalizeDeviceId(cols[idxDeviceName]);
+        t = cols[idxDatetime];          // looks like 2025-10-01 07:00:00Z in your file
+        v = Number(cols[idxPm25]);
+      }
+
+      if (!id || !t || !Number.isFinite(v)) continue;
 
       if (!series[id]) series[id] = [];
       series[id].push({ t, pm25: v });
 
       const ms = parseTimeMs(t);
       if (ms !== null) allTimes.push(ms);
-    });
+    }
 
     Object.keys(series).forEach(id => {
       series[id].sort((a, b) => (parseTimeMs(a.t) ?? 0) - (parseTimeMs(b.t) ?? 0));
@@ -871,6 +930,7 @@ async function loadHistoricalFromCSV() {
     console.error(e);
   }
 }
+
 
   // run
   initMap();
