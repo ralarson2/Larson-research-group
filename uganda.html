@@ -350,6 +350,25 @@
         <div id="hist-status" class="small-muted" style="margin-top:0.5rem;">Loading historical data…</div>
 
         <div id="hist-controls" class="hist-controls" aria-label="Sensor selection" style="display:none;"></div>
+        <div class="hist-toolbar" style="margin-top:0.6rem;">
+            <label>
+              Pollutant
+              <select id="pollutant-select">
+                <option value="pm25">PM2.5</option>
+                <option value="pm10">PM10</option>
+              </select>
+            </label>
+          
+            <label>
+              Time resolution
+              <select id="resolution-select">
+                <option value="hourly">Hourly</option>
+                <option value="daily">Daily</option>
+                <option value="monthly">Monthly</option>
+              </select>
+            </label>
+          </div>
+
 
         <div class="hist-toolbar">
           <button class="btn" id="download-csv" type="button" disabled>Download historical PM2.5 (CSV)</button>
@@ -618,6 +637,9 @@ const HIST_URL =
   let selected = new Set(Object.keys(sites)); // default all 15
   let lastFlattenedRows = []; // for CSV download
 
+  let selectedPollutant = "pm25";
+  let selectedResolution = "hourly";
+
   function buildControls() {
     const controls = document.getElementById("hist-controls");
     controls.innerHTML = "";
@@ -646,36 +668,68 @@ const HIST_URL =
     controls.style.display = "";
   }
 
-  function buildDatasets() {
-    const datasets = [];
+function buildDatasets() {
+  const datasets = [];
 
-    Object.keys(sites).forEach(id => {
-      if (!selected.has(id)) return;
+  Object.keys(sites).forEach(id => {
+    if (!selected.has(id)) return;
 
-      const arr = (histSeries && histSeries[id]) ? histSeries[id] : [];
-      const points = arr
-        .map(p => {
-          const ms = parseTimeMs(p.t);
-          const v = Number(p.pm25);
-          if (!Number.isFinite(v) || ms === null) return null;
-          return { x: ms, y: v };
-        })
-        .filter(Boolean)
-        .sort((a,b) => a.x - b.x);
+    const raw = histSeries?.[id] || [];
 
-      datasets.push({
-          label: siteLabel(id),
-          data: points,
-          borderWidth: 2,
-          pointRadius: 0,
-          tension: 0.2,
-          spanGaps: true,
-          showLine: true
-        });
+    const buckets = new Map();
+
+    raw.forEach(p => {
+      const ms = parseTimeMs(p.t);
+      if (ms === null) return;
+
+      const value =
+        selectedPollutant === "pm10"
+          ? Number(p.pm10)
+          : Number(p.pm25);
+
+      if (!Number.isFinite(value)) return;
+
+      const d = new Date(ms);
+      let key;
+
+      if (selectedResolution === "monthly") {
+        key = `${d.getUTCFullYear()}-${d.getUTCMonth()}`;
+      } else if (selectedResolution === "daily") {
+        key = `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}`;
+      } else {
+        key = `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}-${d.getUTCHours()}`;
+      }
+
+      if (!buckets.has(key)) {
+        buckets.set(key, { sum: 0, count: 0, time: ms });
+      }
+
+      const b = buckets.get(key);
+      b.sum += value;
+      b.count += 1;
     });
 
-    return datasets;
-  }
+    const points = Array.from(buckets.values())
+      .map(b => ({
+        x: b.time,
+        y: b.sum / b.count
+      }))
+      .sort((a, b) => a.x - b.x);
+
+    datasets.push({
+      label: siteLabel(id),
+      data: points,
+      borderWidth: 2,
+      pointRadius: 0,
+      tension: 0.2,
+      spanGaps: true,
+      showLine: true
+    });
+  });
+
+  return datasets;
+}
+
 function renderChart() {
   const canvas = document.getElementById("pm25-chart");
   if (!canvas) return;
@@ -708,7 +762,13 @@ function renderChart() {
         y: {
           beginAtZero: true,
           suggestedMax,
-          title: { display: true, text: "PM2.5 (µg/m³)" }
+          title: {
+  display: true,
+  text: selectedPollutant === "pm10"
+    ? "PM10 (µg/m³)"
+    : "PM2.5 (µg/m³)"
+}
+
         }
       },
       plugins: {
@@ -922,6 +982,16 @@ for (let r = 1; r < rows.length; r++) {
 
     statusEl.textContent = "";
     buildControls();
+              document.getElementById("pollutant-select").addEventListener("change", e => {
+            selectedPollutant = e.target.value;
+            renderChart();
+          });
+          
+          document.getElementById("resolution-select").addEventListener("change", e => {
+            selectedResolution = e.target.value;
+            renderChart();
+          });
+
     renderChart();
     updateDownloadButton();
 
