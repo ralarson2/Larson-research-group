@@ -912,36 +912,6 @@ for (let r = 1; r < rows.length; r++) {
   if (ms !== null) allTimes.push(ms);
 }
 
-    for (let r = 1; r < rows.length; r++) {
-      const cols = rows[r];
-
-      let id, t, pm25Val, pm10Val;
-
-      if (usingArchiveFormat) {
-        id = normalizeDeviceId(cols[idxDeviceId]);
-        t = cols[idxTimestamp];
-        pm25Val = Number(cols[idxPm25Archive]);
-        pm10Val = NaN; // archive format doesn’t include pm10 unless you added it
-      } else {
-        id = normalizeDeviceId(cols[idxDeviceName]);
-        t = cols[idxDatetime];
-        pm25Val = Number(cols[idxPm25]);
-        pm10Val = (idxPm10 >= 0) ? Number(cols[idxPm10]) : NaN;
-      }
-
-      if (!id || !t || !Number.isFinite(pm25Val)) continue;
-
-      if (!series[id]) series[id] = [];
-      series[id].push({ t, pm25: pm25Val, pm10: pm10Val });
-
-      const ms = parseTimeMs(t);
-      if (ms !== null) allTimes.push(ms);
-    }
-
-
-      const ms = parseTimeMs(t);
-      if (ms !== null) allTimes.push(ms);
-    }
 
     Object.keys(series).forEach(id => {
       series[id].sort((a, b) => (parseTimeMs(a.t) ?? 0) - (parseTimeMs(b.t) ?? 0));
