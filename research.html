@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Research & Extension — Larson Research Group</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f7f9fb;
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+    header, footer {
+      background: #fff;
+      border-bottom: 1px solid #dde3ea;
+      padding: 1rem;
+    }
+    .nav-links a {
+      margin-right: 1rem;
+      text-decoration: none;
+      color: #1b7c6d;
+    }
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+    .section-title {
+      font-size: 1.6rem;
+      margin: 1rem 0;
+    }
+    .tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .tile {
+      background: #fff;
+      border: 1px solid #dde3ea;
+      border-radius: 0.8rem;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(15,35,52,0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+    }
+    .tile img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+    .tile a {
+      font-weight: bold;
+      color: #1b7c6d;
+      text-decoration: none;
+      margin-bottom: 0.3rem;
+    }
+    .tile a:hover {
+      text-decoration: underline;
+    }
+    .tile p {
+      font-size: 0.9rem;
+      color: #4b5c67;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav-links">
+      <a href="index.html">About</a>
+      <a href="people.html">People</a>
+      <a href="research.html">Research & Extension</a>
+      <a href="factsheets.html">Resources</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="research">
+      <div class="section-title">Research & Extension</div>
+      <p>Our projects include sustainable manure and organic waste systems, waste-to-energy pathways, nutrient recovery, and international initiatives.</p>
+      
+      <div class="tiles">
+        <div class="tile">
+          <img src="images/anaerobic_digestion.jpg" alt="Anaerobic Digestion">
+          <a href="#">Anaerobic Digestion</a>
+          <p>Research on converting organic waste to biogas to generate energy while reducing environmental impact.</p>
+        </div>
+
+        <div class="tile">
+          <img src="images/biochar.jpg" alt="Biochar">
+          <a href="#">Biochar</a>
+          <p>Investigating pyrolysis of manure and organic waste to produce biochar for soil amendment and carbon sequestration.</p>
+        </div>
+
+        <div class="tile">
+          <img src="images/nutrient_recovery.jpg" alt="Manure Nutrient Recovery">
+          <a href="#">Manure Nutrient Recovery</a>
+          <p>Developing methods to recover nitrogen, phosphorus, and other nutrients from manure for sustainable fertilizer use.</p>
+        </div>
+
+        <div class="tile">
+          <img src="images/climate_impact.jpg" alt="Manure Management to Mitigate Climate Impacts">
+          <a href="#">Manure Management to Mitigate Climate Impacts</a>
+          <p>Exploring strategies to reduce greenhouse gas emissions from manure storage, treatment, and land application.</p>
+        </div>
+
+        <div class="tile">
+          <img src="images/uganda_air_quality.jpg" alt="Uganda Air Quality">
+          <a href="uganda.html">Uganda Air Quality</a>
+          <p>Monitoring and improving air quality from organic waste systems in international agricultural contexts.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
