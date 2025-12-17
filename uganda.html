@@ -429,12 +429,7 @@ const COHORT_ID = "68d4e669670d2e0013c85375";
 const COHORT_URL = `https://api.airqo.net/api/v2/devices/measurements/cohorts/${COHORT_ID}?token=${encodeURIComponent(TOKEN)}`;
 const START_DATE = "2025-11-01";
 const END_DATE = new Date().toISOString().slice(0, 10);
-
-const HIST_URL =
-  `https://api.airqo.net/api/v2/devices/measurements/cohorts/${COHORT_ID}/historical` +
-  `?token=${encodeURIComponent(TOKEN)}` +
-  `&startTime=${encodeURIComponent(START_DATE)}` +
-  `&endTime=${encodeURIComponent(END_DATE)}`;
+const HIST_URL = `https://api.airqo.net/api/v2/devices/measurements/cohorts/${COHORT_ID}/historical?token=${encodeURIComponent(TOKEN)}&startTime=${encodeURIComponent(START_DATE)}&endTime=${encodeURIComponent(END_DATE)}`;
 
 function normalizeDeviceId(raw) {
   if (!raw) return "";
@@ -474,10 +469,10 @@ function fmtNumber(v) {
   return Number.isFinite(n) ? n.toFixed(1) : "";
 }
 
-function fmtDateTimeKampala(iso) {
-  if (!iso) return "";
-  const d = new Date(iso);
-  if (isNaN(d.getTime())) return String(iso);
+function fmtDateTimeKampala(isoLike) {
+  if (!isoLike) return "";
+  const d = new Date(isoLike);
+  if (isNaN(d.getTime())) return String(isoLike);
   return d.toLocaleString("en-GB", {
     timeZone: "Africa/Kampala",
     year: "numeric",
@@ -490,22 +485,10 @@ function fmtDateTimeKampala(iso) {
   }).replace(",", "");
 }
 
-function parseTimeMs(iso) {
-  const d = new Date(iso);
+function parseTimeMs(isoLike) {
+  const d = new Date(isoLike);
   const ms = d.getTime();
   return Number.isFinite(ms) ? ms : null;
-}
-
-function formatKampalaTick(ms) {
-  const d = new Date(ms);
-  return d.toLocaleString("en-GB", {
-    timeZone: "Africa/Kampala",
-    month: "short",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false
-  }).replace(",", "");
 }
 
 function whoClass(pm25) {
@@ -520,14 +503,12 @@ function whoClass(pm25) {
 }
 
 function aqiFillColor(cls) {
-  switch(cls) {
-    case "aq_who_g1": return "#00e400";
-    case "aq_who_it4": return "#ffff00";
-    case "aq_who_it3": return "#ff7e00";
-    case "aq_who_it2": return "#ff0000";
-    case "aq_who_it1": return "#8f3f97";
-    default: return "#7e0023";
-  }
+  if (cls === "aq_who_g1") return "#00e400";
+  if (cls === "aq_who_it4") return "#ffff00";
+  if (cls === "aq_who_it3") return "#ff7e00";
+  if (cls === "aq_who_it2") return "#ff0000";
+  if (cls === "aq_who_it1") return "#8f3f97";
+  return "#7e0023";
 }
 
 function whoLabel(pm25) {
@@ -541,8 +522,9 @@ function whoLabel(pm25) {
   return "Extremely high";
 }
 
-// -------- Map & Recent Data --------
-let map, markersLayer;
+// ---------- MAP ----------
+let map;
+let markersLayer;
 
 function initMap() {
   map = L.map("uganda-map").setView([0.3136, 32.5811], 12);
@@ -561,7 +543,6 @@ async function loadUgandaData() {
     const res = await fetch(COHORT_URL);
     if (!res.ok) throw new Error("Request failed");
     const data = await res.json();
-
     const measurements = (data.measurements || data.results || []).slice(0, 15);
     if (!measurements.length) {
       statusEl.textContent = "No recent measurements available.";
@@ -570,18 +551,16 @@ async function loadUgandaData() {
 
     tbody.innerHTML = "";
     markersLayer.clearLayers();
-
     const bounds = [];
 
     measurements.forEach(item => {
       const rawId = item.device || item.device_id || item.deviceId || item.name || "";
       const id = normalizeDeviceId(rawId);
-      const site = sites[id] || { name: rawId || "Unknown", district: "Kampala" };
+      const site = sites[id] || { name: (rawId || "Unknown"), district: "Kampala" };
 
       const pm25 = Number(item?.pm2_5?.value);
       const pm10 = Number(item?.pm10?.value);
       const when = fmtDateTimeKampala(item.time || item.created_at || item.createdAt || item.timestamp);
-
       const cls = whoClass(pm25);
 
       const tr = document.createElement("tr");
@@ -607,7 +586,6 @@ async function loadUgandaData() {
             <div style="color:#4b5c67; font-size:12px; margin-top:6px;">${when} (EAT)</div>
           </div>
         `;
-
         L.circleMarker([site.lat, site.lon], {
           radius: 10,
           color: "#333",
@@ -615,23 +593,20 @@ async function loadUgandaData() {
           fillColor: fill,
           fillOpacity: 0.9
         }).bindPopup(popupHtml).addTo(markersLayer);
-
         bounds.push([site.lat, site.lon]);
       }
     });
 
     statusEl.textContent = "";
     table.style.display = "";
-
     if (bounds.length >= 2) map.fitBounds(bounds, { padding: [25, 25] });
     else if (bounds.length === 1) map.setView(bounds[0], 13);
   } catch (e) {
     statusEl.textContent = "Could not load data from AirQo right now.";
-    console.error(e);
   }
 }
 
-// -------- Historical Chart --------
+// ---------- HISTORICAL CHARTS ----------
 let pm25Chart = null;
 let histSeries = null;
 let selected = new Set(Object.keys(sites));
@@ -642,7 +617,6 @@ let selectedResolution = "hourly";
 function buildControls() {
   const controls = document.getElementById("hist-controls");
   controls.innerHTML = "";
-
   Object.keys(sites).forEach(id => {
     const label = document.createElement("label");
     const cb = document.createElement("input");
@@ -652,8 +626,8 @@ function buildControls() {
       if (cb.checked) selected.add(id);
       else selected.delete(id);
       renderChart();
+      renderDayOfWeekChart();
       updateDownloadButton();
-      renderDayOfWeekChart(); // keep chart in sync
     });
     const text = document.createElement("span");
     text.textContent = siteLabel(id);
@@ -661,7 +635,6 @@ function buildControls() {
     label.appendChild(text);
     controls.appendChild(label);
   });
-
   controls.style.display = "";
 }
 
@@ -676,123 +649,105 @@ function buildDatasets() {
       if (ms === null) return;
       const value = selectedPollutant === "pm10" ? Number(p.pm10) : Number(p.pm25);
       if (!Number.isFinite(value)) return;
-
       const d = new Date(ms);
       let key;
       if (selectedResolution === "monthly") key = `${d.getUTCFullYear()}-${d.getUTCMonth()}`;
       else if (selectedResolution === "daily") key = `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}`;
       else key = `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}-${d.getUTCHours()}`;
-
       if (!buckets.has(key)) buckets.set(key, { sum: 0, count: 0, time: ms });
       const b = buckets.get(key);
       b.sum += value;
       b.count += 1;
     });
-
-    const points = Array.from(buckets.values())
-      .map(b => ({ x: b.time, y: b.sum / b.count }))
-      .sort((a, b) => a.x - b.x);
-
-    datasets.push({
-      label: siteLabel(id),
-      data: points,
-      borderWidth: 2,
-      pointRadius: 0,
-      tension: 0.2,
-      spanGaps: true,
-      showLine: true
-    });
+    const points = Array.from(buckets.values()).map(b => ({ x: b.time, y: b.sum / b.count })).sort((a,b)=>a.x-b.x);
+    datasets.push({ label: siteLabel(id), data: points, borderWidth: 2, pointRadius: 0, tension: 0.2, spanGaps:true, showLine:true });
   });
-
   return datasets;
 }
 
 function renderChart() {
   const canvas = document.getElementById("pm25-chart");
-  if (!canvas) return;
-
+  if (!canvas || !histSeries) return;
   const datasets = buildDatasets();
-  const allY = datasets.flatMap(ds => (ds.data || []).map(p => p.y)).filter(Number.isFinite);
+  const allY = datasets.flatMap(ds => (ds.data||[]).map(p=>p.y)).filter(Number.isFinite);
   const maxY = allY.length ? Math.max(...allY) : 0;
-  const suggestedMax = maxY > 0 ? Math.ceil(maxY * 1.15) : 100;
-
+  const suggestedMax = maxY>0?Math.ceil(maxY*1.15):100;
   if (pm25Chart) pm25Chart.destroy();
-
   pm25Chart = new Chart(canvas, {
-    type: "line",
-    data: { datasets },
-    options: {
-      responsive: true,
-      parsing: false,
-      maintainAspectRatio: false,
-      interaction: { mode: "nearest", intersect: false },
-      layout: { padding: { top: 10, right: 12, bottom: 18, left: 12 } },
-      scales: {
-        x: {
-          type: "linear",
-          ticks: { callback: (v) => formatKampalaTick(v) },
-          title: { display: true, text: "Date & time (EAT, UTC+3)" }
-        },
-        y: {
-          beginAtZero: true,
-          suggestedMax,
-          title: { display: true, text: selectedPollutant === "pm10" ? "PM10 (µg/m³)" : "PM2.5 (µg/m³)" }
-        }
+    type:"line",
+    data:{ datasets },
+    options:{
+      responsive:true,
+      parsing:false,
+      maintainAspectRatio:false,
+      interaction:{ mode:"nearest", intersect:false },
+      layout:{ padding:{top:10,right:12,bottom:18,left:12} },
+      scales:{
+        x:{ type:"linear", ticks:{ callback:(value)=>formatKampalaTick(value) }, title:{ display:true, text:"Date & time (EAT, UTC+3)" } },
+        y:{ beginAtZero:true, suggestedMax, title:{ display:true, text: selectedPollutant==="pm10"?"PM10 (µg/m³)":"PM2.5 (µg/m³)"} }
       },
-      plugins: {
-        legend: { display: true, position: "top", labels: { padding: 14, boxWidth: 12 } },
-        tooltip: { callbacks: { title: (items) => items.length ? formatKampalaTick(items[0].parsed.x) : "" } }
-      }
+      plugins:{ legend:{ display:true, position:"top", labels:{padding:14,boxWidth:12} },
+                tooltip:{ callbacks:{ title:(items)=>items.length?formatKampalaTick(items[0].parsed.x):"" } } }
+    }
+  });
+}
+
+function renderDayOfWeekChart() {
+  if (!histSeries) return;
+  const daySums = Array(7).fill(0);
+  const dayCounts = Array(7).fill(0);
+  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  Object.keys(histSeries).forEach(id => histSeries[id].forEach(p=>{
+    const date = new Date(p.t);
+    const day = date.getDay();
+    if(Number.isFinite(p.pm25)){ daySums[day]+=p.pm25; dayCounts[day]+=1; }
+  }));
+  const dayAverages = daySums.map((sum,i)=>dayCounts[i]?sum/dayCounts[i]:0);
+  const ctx = document.getElementById('pm25-dayofweek-chart').getContext('2d');
+  new Chart(ctx,{
+    type:'bar',
+    data:{ labels:dayNames, datasets:[{label:'Average PM2.5 (µg/m³)', data:dayAverages, backgroundColor:'rgba(27,124,109,0.7)'}]},
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      scales:{ y:{ beginAtZero:true, title:{ display:true, text:'PM2.5 (µg/m³)'} }, x:{ title:{ display:true, text:'Day of Week'} } },
+      plugins:{ legend:{ display:false } }
     }
   });
 }
 
 function flattenForDownload(seriesObj) {
   const out = [];
-  Object.keys(seriesObj || {}).forEach(id => {
-    (seriesObj[id] || []).forEach(p => {
-      const v = Number(p.pm25);
-      if (!Number.isFinite(v)) return;
-      out.push({ device_id: id, timestamp_EAT: fmtDateTimeKampala(p.t), pm2_5_ug_m3: v });
-    });
-  });
-  return out.sort((a, b) => (parseTimeMs(a.timestamp_EAT) ?? 0) - (parseTimeMs(b.timestamp_EAT) ?? 0));
+  Object.keys(seriesObj||{}).forEach(id => (seriesObj[id]||[]).forEach(p=>{
+    const v = Number(p.pm25);
+    if(!Number.isFinite(v)) return;
+    out.push({ device_id:id, timestamp_EAT:fmtDateTimeKampala(p.t), pm2_5_ug_m3:v });
+  }));
+  out.sort((a,b)=> (parseTimeMs(a.timestamp_EAT)||0)-(parseTimeMs(b.timestamp_EAT)||0));
+  return out;
 }
 
 function updateDownloadButton() {
   const btn = document.getElementById("download-csv");
-  btn.disabled = !(histSeries && selected.size > 0 && lastFlattenedRows.length > 0);
+  btn.disabled = !(histSeries && selected.size>0 && lastFlattenedRows.length>0);
 }
 
 function makeCsv() {
   const header = "device_id,location,district,lat,lon,timestamp_EAT,pm2_5_ug_m3";
   const lines = [header];
-
-  lastFlattenedRows
-    .filter(r => selected.has(r.device_id))
-    .forEach(r => {
-      const s = sites[r.device_id] || {};
-      const line = [
-        r.device_id,
-        `"${String(s.name || "").replaceAll('"','""')}"`,
-        `"${String(s.district || "").replaceAll('"','""')}"`,
-        s.lat ?? "",
-        s.lon ?? "",
-        r.timestamp_EAT,
-        r.pm2_5_ug_m3
-      ].join(",");
-      lines.push(line);
-    });
-
+  lastFlattenedRows.filter(r=>selected.has(r.device_id)).forEach(r=>{
+    const s = sites[r.device_id]||{};
+    lines.push([r.device_id, `"${String(s.name||"").replaceAll('"','""')}"`, `"${String(s.district||"").replaceAll('"','""')}"`, s.lat??"", s.lon??"", r.timestamp_EAT, r.pm2_5_ug_m3].join(","));
+  });
   return lines.join("\n");
 }
 
 function wireDownload() {
   const btn = document.getElementById("download-csv");
-  btn.addEventListener("click", () => {
+  btn.addEventListener("click", ()=>{
     const csv = makeCsv();
-    if (!csv) return;
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    if(!csv) return;
+    const blob = new Blob([csv], { type:"text/csv;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -804,67 +759,39 @@ function wireDownload() {
   });
 }
 
-// -------- Day-of-week chart --------
-function renderDayOfWeekChart() {
-  if (!histSeries) return;
-  const daySums = Array(7).fill(0);
-  const dayCounts = Array(7).fill(0);
-  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-  Object.keys(histSeries).forEach(id => {
-    histSeries[id].forEach(p => {
-      const date = new Date(p.t);
-      const day = date.getDay();
-      if (Number.isFinite(p.pm25)) {
-        daySums[day] += p.pm25;
-        dayCounts[day] += 1;
-      }
-    });
-  });
-
-  const dayAverages = daySums.map((sum, i) => dayCounts[i] ? sum / dayCounts[i] : 0);
-
-  const ctx = document.getElementById('pm25-dayofweek-chart');
-  if (!ctx) return;
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: { labels: dayNames, datasets: [{ label: 'Avg PM2.5 (µg/m³)', data: dayAverages, backgroundColor: '#ff7e00' }] },
-    options: { responsive: true, plugins: { legend: { display: false } } }
-  });
-}
-
-// -------- Load historical CSV --------
 async function loadHistoricalFromCSV() {
+  const statusEl = document.getElementById("hist-status");
+  const metaEl = document.getElementById("hist-meta");
+  const controls = document.getElementById("hist-controls");
+  const CSV_URL = "data/uganda_pm25_archive.csv";
+  function parseCsv(text) {
+    const rows=[]; let row=[]; let inQuotes=false; let val=''; for(let i=0;i<text.length;i++){ const c=text[i]; if(c=='"'&&text[i-1]!=='\\'){ inQuotes=!inQuotes; continue; } if(c==','&&!inQuotes){ row.push(val); val=''; continue; } if(c=='\n'&&!inQuotes){ row.push(val); rows.push(row); row=[]; val=''; continue; } val+=c; } if(row.length) rows.push(row); return rows; }
   try {
-    const res = await fetch(HIST_URL);
-    if (!res.ok) throw new Error("Failed to fetch historical CSV");
+    const res = await fetch(CSV_URL);
+    if(!res.ok) throw new Error("Could not fetch CSV");
     const text = await res.text();
-
-    const rows = text.split("\n").filter(r => r.trim()).slice(1).map(line => {
-      const [timestamp, device, pm25, pm10] = line.split(",");
-      return { t: timestamp, device, pm25: Number(pm25), pm10: Number(pm10) };
-    });
-
+    const rows = parseCsv(text);
     histSeries = {};
-    rows.forEach(p => {
-      const id = normalizeDeviceId(p.device);
-      if (!histSeries[id]) histSeries[id] = [];
-      histSeries[id].push(p);
+    const header = rows[0].map(h=>h.trim().toLowerCase());
+    rows.slice(1).forEach(r=>{
+      const obj={};
+      r.forEach((v,i)=>obj[header[i]]=v);
+      const id = normalizeDeviceId(obj.device_id);
+      if(!histSeries[id]) histSeries[id]=[];
+      histSeries[id].push({ t: obj.timestamp_eat, pm25: parseFloat(obj.pm2_5_ug_m3), pm10: parseFloat(obj.pm10_ug_m3||NaN) });
     });
-
     lastFlattenedRows = flattenForDownload(histSeries);
+    statusEl.textContent="";
+    metaEl.style.display="";
+    controls.style.display="";
     buildControls();
     renderChart();
-    updateDownloadButton();
     renderDayOfWeekChart();
-  } catch (e) {
-    console.error("Could not load historical CSV:", e);
-  }
+    updateDownloadButton();
+  } catch(e){ statusEl.textContent="Could not load historical CSV data."; console.error(e); }
 }
 
-// -------- Init --------
-document.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", ()=>{
   initMap();
   loadUgandaData();
   loadHistoricalFromCSV();
