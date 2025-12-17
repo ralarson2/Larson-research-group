@@ -425,7 +425,6 @@
 <script>
 const TOKEN = "V6ZFRJXEAGRKRSYU";
 const COHORT_ID = "68d4e669670d2e0013c85375";
-
 const COHORT_URL = `https://api.airqo.net/api/v2/devices/measurements/cohorts/${COHORT_ID}?token=${encodeURIComponent(TOKEN)}`;
 const START_DATE = "2025-11-01";
 const END_DATE = new Date().toISOString().slice(0, 10);
@@ -443,15 +442,15 @@ function normalizeDeviceId(raw) {
 
 const sites = {
   "airqo_g5564": { name: "Busabala, Makindye", district: "Kampala", lat: 0.2182, lon: 32.6176 },
-  "aq_72":       { name: "Luwafu, Makindye", district: "Kampala", lat: 0.2689, lon: 32.588 },
-  "aq_43":       { name: "Lukuli, Makindye", district: "Kampala", lat: 0.28904, lon: 32.58958 },
-  "aq_g520":     { name: "Mbogo Road, Wabigalo", district: "Kampala", lat: 0.30991, lon: 32.60045 },
-  "aq_g5_97":    { name: "Mbuya II, Nakawa", district: "Kampala", lat: 0.325346, lon: 32.632288 },
-  "aq_g5_46":    { name: "Ggaba Bypass, Makindye", district: "Kampala", lat: 0.25776, lon: 32.63686 },
+  "aq_72": { name: "Luwafu, Makindye", district: "Kampala", lat: 0.2689, lon: 32.588 },
+  "aq_43": { name: "Lukuli, Makindye", district: "Kampala", lat: 0.28904, lon: 32.58958 },
+  "aq_g520": { name: "Mbogo Road, Wabigalo", district: "Kampala", lat: 0.30991, lon: 32.60045 },
+  "aq_g5_97": { name: "Mbuya II, Nakawa", district: "Kampala", lat: 0.325346, lon: 32.632288 },
+  "aq_g5_46": { name: "Ggaba Bypass, Makindye", district: "Kampala", lat: 0.25776, lon: 32.63686 },
   "airqo_g5438": { name: "Salaama Rd, Makindye", district: "Kampala", lat: 0.258119, lon: 32.609112 },
-  "aq_g5_53":    { name: "Kansanga, Makindye", district: "Kampala", lat: 0.28863, lon: 32.60297 },
-  "aq_g5_48":    { name: "Kabalagala, Makindye", district: "Kampala", lat: 0.29833, lon: 32.60074 },
-  "aq_g5_43":    { name: "Katwe 1, Makindye", district: "Kampala", lat: 0.30047, lon: 32.5794 },
+  "aq_g5_53": { name: "Kansanga, Makindye", district: "Kampala", lat: 0.28863, lon: 32.60297 },
+  "aq_g5_48": { name: "Kabalagala, Makindye", district: "Kampala", lat: 0.29833, lon: 32.60074 },
+  "aq_g5_43": { name: "Katwe 1, Makindye", district: "Kampala", lat: 0.30047, lon: 32.5794 },
   "airqo_g5548": { name: "Nadiope Rd Mbuya, Nakawa", district: "Kampala", lat: 0.323201, lon: 32.631972 },
   "airqo_g5567": { name: "Old Kira Rd Kamwokya, Kampala Central", district: "Kampala", lat: 0.346826, lon: 32.589047 },
   "airqo_g5563": { name: "Bulange, Rubaga", district: "Kampala", lat: 0.311874, lon: 32.562351 },
@@ -466,7 +465,8 @@ function siteLabel(id) {
 
 function fmtNumber(v) {
   const n = Number(v);
-  return Number.isFinite(n) ? n.toFixed(1) : "";
+  if (!Number.isFinite(n)) return "";
+  return n.toFixed(1);
 }
 
 function fmtDateTimeKampala(isoLike) {
@@ -491,6 +491,15 @@ function parseTimeMs(isoLike) {
   return Number.isFinite(ms) ? ms : null;
 }
 
+function aqiFillColor(cls) {
+  if (cls === "aq_who_g1") return "#00e400";
+  if (cls === "aq_who_it4") return "#ffff00";
+  if (cls === "aq_who_it3") return "#ff7e00";
+  if (cls === "aq_who_it2") return "#ff0000";
+  if (cls === "aq_who_it1") return "#8f3f97";
+  return "#7e0023";
+}
+
 function whoClass(pm25) {
   const v = Number(pm25);
   if (!Number.isFinite(v)) return "";
@@ -500,15 +509,6 @@ function whoClass(pm25) {
   if (v <= 50) return "aq_who_it2";
   if (v <= 75) return "aq_who_it1";
   return "aq_who_high";
-}
-
-function aqiFillColor(cls) {
-  if (cls === "aq_who_g1") return "#00e400";
-  if (cls === "aq_who_it4") return "#ffff00";
-  if (cls === "aq_who_it3") return "#ff7e00";
-  if (cls === "aq_who_it2") return "#ff0000";
-  if (cls === "aq_who_it1") return "#8f3f97";
-  return "#7e0023";
 }
 
 function whoLabel(pm25) {
@@ -522,7 +522,7 @@ function whoLabel(pm25) {
   return "Extremely high";
 }
 
-// ---------- MAP ----------
+// -------- map setup --------
 let map;
 let markersLayer;
 
@@ -544,6 +544,7 @@ async function loadUgandaData() {
     if (!res.ok) throw new Error("Request failed");
     const data = await res.json();
     const measurements = (data.measurements || data.results || []).slice(0, 15);
+
     if (!measurements.length) {
       statusEl.textContent = "No recent measurements available.";
       return;
@@ -556,7 +557,7 @@ async function loadUgandaData() {
     measurements.forEach(item => {
       const rawId = item.device || item.device_id || item.deviceId || item.name || "";
       const id = normalizeDeviceId(rawId);
-      const site = sites[id] || { name: (rawId || "Unknown"), district: "Kampala" };
+      const site = sites[id] || { name: rawId || "Unknown", district: "Kampala" };
 
       const pm25 = Number(item?.pm2_5?.value);
       const pm10 = Number(item?.pm10?.value);
@@ -577,21 +578,15 @@ async function loadUgandaData() {
 
       if (Number.isFinite(site.lat) && Number.isFinite(site.lon) && Number.isFinite(pm25)) {
         const fill = aqiFillColor(cls);
-        const popupHtml = `
-          <div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+        const popupHtml = `<div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
             <div style="color:#143541; margin-bottom:4px;">${site.name}</div>
             <div style="color:#4b5c67; font-size:12px; margin-bottom:6px;">${site.district}, Uganda</div>
             <div style="font-size:13px;">PM2.5: ${fmtNumber(pm25)} µg/m³ (${whoLabel(pm25)})</div>
             <div style="font-size:13px;">PM10: ${fmtNumber(pm10)} µg/m³</div>
             <div style="color:#4b5c67; font-size:12px; margin-top:6px;">${when} (EAT)</div>
-          </div>
-        `;
+          </div>`;
         L.circleMarker([site.lat, site.lon], {
-          radius: 10,
-          color: "#333",
-          weight: 1,
-          fillColor: fill,
-          fillOpacity: 0.9
+          radius: 10, color: "#333", weight: 1, fillColor: fill, fillOpacity: 0.9
         }).bindPopup(popupHtml).addTo(markersLayer);
         bounds.push([site.lat, site.lon]);
       }
@@ -601,12 +596,14 @@ async function loadUgandaData() {
     table.style.display = "";
     if (bounds.length >= 2) map.fitBounds(bounds, { padding: [25, 25] });
     else if (bounds.length === 1) map.setView(bounds[0], 13);
+
   } catch (e) {
+    console.error(e);
     statusEl.textContent = "Could not load data from AirQo right now.";
   }
 }
 
-// ---------- HISTORICAL CHARTS ----------
+// -------- historical chart setup --------
 let pm25Chart = null;
 let histSeries = null;
 let selected = new Set(Object.keys(sites));
@@ -629,10 +626,8 @@ function buildControls() {
       renderDayOfWeekChart();
       updateDownloadButton();
     });
-    const text = document.createElement("span");
-    text.textContent = siteLabel(id);
     label.appendChild(cb);
-    label.appendChild(text);
+    label.appendChild(document.createTextNode(siteLabel(id)));
     controls.appendChild(label);
   });
   controls.style.display = "";
@@ -660,7 +655,7 @@ function buildDatasets() {
       b.count += 1;
     });
     const points = Array.from(buckets.values()).map(b => ({ x: b.time, y: b.sum / b.count })).sort((a,b)=>a.x-b.x);
-    datasets.push({ label: siteLabel(id), data: points, borderWidth: 2, pointRadius: 0, tension: 0.2, spanGaps:true, showLine:true });
+    datasets.push({ label: siteLabel(id), data: points, borderWidth: 2, pointRadius: 0, tension: 0.2, spanGaps: true, showLine: true });
   });
   return datasets;
 }
@@ -671,59 +666,36 @@ function renderChart() {
   const datasets = buildDatasets();
   const allY = datasets.flatMap(ds => (ds.data||[]).map(p=>p.y)).filter(Number.isFinite);
   const maxY = allY.length ? Math.max(...allY) : 0;
-  const suggestedMax = maxY>0?Math.ceil(maxY*1.15):100;
+  const suggestedMax = maxY>0 ? Math.ceil(maxY*1.15) : 100;
   if (pm25Chart) pm25Chart.destroy();
   pm25Chart = new Chart(canvas, {
-    type:"line",
-    data:{ datasets },
-    options:{
+    type: "line",
+    data: { datasets },
+    options: {
       responsive:true,
       parsing:false,
       maintainAspectRatio:false,
       interaction:{ mode:"nearest", intersect:false },
-      layout:{ padding:{top:10,right:12,bottom:18,left:12} },
-      scales:{
-        x:{ type:"linear", ticks:{ callback:(value)=>formatKampalaTick(value) }, title:{ display:true, text:"Date & time (EAT, UTC+3)" } },
-        y:{ beginAtZero:true, suggestedMax, title:{ display:true, text: selectedPollutant==="pm10"?"PM10 (µg/m³)":"PM2.5 (µg/m³)"} }
+      layout:{ padding:{ top:10,right:12,bottom:18,left:12 } },
+      scales: {
+        x:{ type:"linear", ticks:{ callback:value=>formatKampalaTick(value) }, title:{ display:true, text:"Date & time (EAT, UTC+3)" } },
+        y:{ beginAtZero:true, suggestedMax, title:{ display:true, text:selectedPollutant==="pm10"?"PM10 (µg/m³)":"PM2.5 (µg/m³)" } }
       },
-      plugins:{ legend:{ display:true, position:"top", labels:{padding:14,boxWidth:12} },
-                tooltip:{ callbacks:{ title:(items)=>items.length?formatKampalaTick(items[0].parsed.x):"" } } }
-    }
-  });
-}
-
-function renderDayOfWeekChart() {
-  if (!histSeries) return;
-  const daySums = Array(7).fill(0);
-  const dayCounts = Array(7).fill(0);
-  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  Object.keys(histSeries).forEach(id => histSeries[id].forEach(p=>{
-    const date = new Date(p.t);
-    const day = date.getDay();
-    if(Number.isFinite(p.pm25)){ daySums[day]+=p.pm25; dayCounts[day]+=1; }
-  }));
-  const dayAverages = daySums.map((sum,i)=>dayCounts[i]?sum/dayCounts[i]:0);
-  const ctx = document.getElementById('pm25-dayofweek-chart').getContext('2d');
-  new Chart(ctx,{
-    type:'bar',
-    data:{ labels:dayNames, datasets:[{label:'Average PM2.5 (µg/m³)', data:dayAverages, backgroundColor:'rgba(27,124,109,0.7)'}]},
-    options:{
-      responsive:true,
-      maintainAspectRatio:false,
-      scales:{ y:{ beginAtZero:true, title:{ display:true, text:'PM2.5 (µg/m³)'} }, x:{ title:{ display:true, text:'Day of Week'} } },
-      plugins:{ legend:{ display:false } }
+      plugins:{ legend:{ display:true, position:"top", labels:{ padding:14, boxWidth:12 } }, tooltip:{ callbacks:{ title: items=>items.length?formatKampalaTick(items[0].parsed.x):"" } } }
     }
   });
 }
 
 function flattenForDownload(seriesObj) {
   const out = [];
-  Object.keys(seriesObj||{}).forEach(id => (seriesObj[id]||[]).forEach(p=>{
-    const v = Number(p.pm25);
-    if(!Number.isFinite(v)) return;
-    out.push({ device_id:id, timestamp_EAT:fmtDateTimeKampala(p.t), pm2_5_ug_m3:v });
-  }));
-  out.sort((a,b)=> (parseTimeMs(a.timestamp_EAT)||0)-(parseTimeMs(b.timestamp_EAT)||0));
+  Object.keys(seriesObj||{}).forEach(id => {
+    (seriesObj[id]||[]).forEach(p => {
+      const v = Number(p.pm25);
+      if (!Number.isFinite(v)) return;
+      out.push({ device_id:id, timestamp_EAT:fmtDateTimeKampala(p.t), pm2_5_ug_m3:v });
+    });
+  });
+  out.sort((a,b)=> (parseTimeMs(a.timestamp_EAT)||0)-(parseTimeMs(b.timestamp_EAT)||0) );
   return out;
 }
 
@@ -737,7 +709,8 @@ function makeCsv() {
   const lines = [header];
   lastFlattenedRows.filter(r=>selected.has(r.device_id)).forEach(r=>{
     const s = sites[r.device_id]||{};
-    lines.push([r.device_id, `"${String(s.name||"").replaceAll('"','""')}"`, `"${String(s.district||"").replaceAll('"','""')}"`, s.lat??"", s.lon??"", r.timestamp_EAT, r.pm2_5_ug_m3].join(","));
+    const line = [r.device_id, `"${String(s.name||"").replaceAll('"','""')}"`, `"${String(s.district||"").replaceAll('"','""')}"`, (s.lat??""), (s.lon??""), r.timestamp_EAT, r.pm2_5_ug_m3].join(",");
+    lines.push(line);
   });
   return lines.join("\n");
 }
@@ -747,11 +720,11 @@ function wireDownload() {
   btn.addEventListener("click", ()=>{
     const csv = makeCsv();
     if(!csv) return;
-    const blob = new Blob([csv], { type:"text/csv;charset=utf-8" });
+    const blob = new Blob([csv],{type:"text/csv;charset=utf-8"});
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "uganda_pm25_historical.csv";
+    a.download="uganda_pm25_historical.csv";
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -759,43 +732,63 @@ function wireDownload() {
   });
 }
 
-async function loadHistoricalFromCSV() {
-  const statusEl = document.getElementById("hist-status");
-  const metaEl = document.getElementById("hist-meta");
-  const controls = document.getElementById("hist-controls");
-  const CSV_URL = "data/uganda_pm25_archive.csv";
-  function parseCsv(text) {
-    const rows=[]; let row=[]; let inQuotes=false; let val=''; for(let i=0;i<text.length;i++){ const c=text[i]; if(c=='"'&&text[i-1]!=='\\'){ inQuotes=!inQuotes; continue; } if(c==','&&!inQuotes){ row.push(val); val=''; continue; } if(c=='\n'&&!inQuotes){ row.push(val); rows.push(row); row=[]; val=''; continue; } val+=c; } if(row.length) rows.push(row); return rows; }
-  try {
-    const res = await fetch(CSV_URL);
-    if(!res.ok) throw new Error("Could not fetch CSV");
-    const text = await res.text();
-    const rows = parseCsv(text);
-    histSeries = {};
-    const header = rows[0].map(h=>h.trim().toLowerCase());
-    rows.slice(1).forEach(r=>{
-      const obj={};
-      r.forEach((v,i)=>obj[header[i]]=v);
-      const id = normalizeDeviceId(obj.device_id);
-      if(!histSeries[id]) histSeries[id]=[];
-      histSeries[id].push({ t: obj.timestamp_eat, pm25: parseFloat(obj.pm2_5_ug_m3), pm10: parseFloat(obj.pm10_ug_m3||NaN) });
+function renderDayOfWeekChart() {
+  if (!histSeries) return;
+  const daySums = Array(7).fill(0);
+  const dayCounts = Array(7).fill(0);
+  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  Object.keys(histSeries).forEach(id=>{
+    histSeries[id].forEach(p=>{
+      const date = new Date(p.t);
+      const day = date.getDay();
+      if(Number.isFinite(p.pm25)){ daySums[day]+=p.pm25; dayCounts[day]+=1; }
     });
+  });
+  const dayAverages = daySums.map((sum,i)=>dayCounts[i]?sum/dayCounts[i]:0);
+  const ctx = document.getElementById('pm25-dayofweek-chart').getContext('2d');
+  new Chart(ctx,{ type:'bar', data:{ labels:dayNames, datasets:[{label:'Average PM2.5 (µg/m³)', data:dayAverages, backgroundColor:'rgba(27,124,109,0.7)'}] }, options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{ beginAtZero:true, title:{ display:true, text:'PM2.5 (µg/m³)' } }, x:{ title:{ display:true, text:'Day of Week' } } }, plugins:{ legend:{ display:false } } } });
+}
+
+// -------- load historical CSV --------
+async function loadHistorical() {
+  try {
+    const res = await fetch('data/uganda_pm25_archive.csv');
+    if (!res.ok) throw new Error("Could not fetch CSV");
+    const txt = await res.text();
+    const lines = txt.trim().split(/\r?\n/);
+    const headers = lines.shift().split(',');
+    const series = {};
+    lines.forEach(l=>{
+      const parts = l.split(',');
+      const row = {};
+      headers.forEach((h,i)=>row[h]=parts[i]);
+      const id = normalizeDeviceId(row.device_id);
+      if (!series[id]) series[id]=[];
+      series[id].push({ t: row.timestamp_EAT, pm25: Number(row.pm2_5_ug_m3) });
+    });
+    histSeries = series;
     lastFlattenedRows = flattenForDownload(histSeries);
-    statusEl.textContent="";
-    metaEl.style.display="";
-    controls.style.display="";
     buildControls();
     renderChart();
     renderDayOfWeekChart();
-    updateDownloadButton();
-  } catch(e){ statusEl.textContent="Could not load historical CSV data."; console.error(e); }
+    wireDownload();
+  } catch(e){
+    console.error(e);
+    document.getElementById('hist-controls').textContent = "Could not load historical CSV data.";
+  }
 }
 
-window.addEventListener("DOMContentLoaded", ()=>{
+// -------- helper --------
+function formatKampalaTick(ms) {
+  if (!Number.isFinite(ms)) return "";
+  return new Date(ms).toLocaleString("en-GB",{timeZone:"Africa/Kampala", month:"short", day:"2-digit", hour:"2-digit", minute:"2-digit", hour12:false}).replace(",", "");
+}
+
+// -------- startup --------
+document.addEventListener("DOMContentLoaded", ()=>{
   initMap();
   loadUgandaData();
-  loadHistoricalFromCSV();
-  wireDownload();
+  loadHistorical();
 });
 </script>
 
