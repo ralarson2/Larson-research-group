@@ -633,6 +633,15 @@ const HIST_URL =
     }
   }
 
+  <div class="card" style="margin-top:1rem; font-size:0.9rem;">
+  <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Analyzed data</div>
+  <div style="color:#4b5c67;">
+    See PM2.5 average concentrations by day of the week: 
+    <a href="dailyavg.html">View daily averages</a>
+  </div>
+</div>
+
+
   // ---------- historical chart + download (from AirQo /historical endpoint) ----------
   let pm25Chart = null;
   let histSeries = null; // { [deviceId]: [{t, pm25}] }
