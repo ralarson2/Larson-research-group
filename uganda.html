@@ -423,12 +423,12 @@
   </footer>
 
 <script>
-  const TOKEN = "V6ZFRJXEAGRKRSYU";
-  const COHORT_ID = "68d4e669670d2e0013c85375";
+const TOKEN = "V6ZFRJXEAGRKRSYU";
+const COHORT_ID = "68d4e669670d2e0013c85375";
 
-  const COHORT_URL = `https://api.airqo.net/api/v2/devices/measurements/cohorts/${COHORT_ID}?token=${encodeURIComponent(TOKEN)}`;
-  const START_DATE = "2025-11-01"; // change year if you meant a different Nov 1
-  const END_DATE = new Date().toISOString().slice(0, 10);
+const COHORT_URL = `https://api.airqo.net/api/v2/devices/measurements/cohorts/${COHORT_ID}?token=${encodeURIComponent(TOKEN)}`;
+const START_DATE = "2025-11-01";
+const END_DATE = new Date().toISOString().slice(0, 10);
 
 const HIST_URL =
   `https://api.airqo.net/api/v2/devices/measurements/cohorts/${COHORT_ID}/historical` +
@@ -436,284 +436,261 @@ const HIST_URL =
   `&startTime=${encodeURIComponent(START_DATE)}` +
   `&endTime=${encodeURIComponent(END_DATE)}`;
 
+function normalizeDeviceId(raw) {
+  if (!raw) return "";
+  const s = String(raw).trim().toLowerCase();
+  if (s.startsWith("aq_g5_")) return s;
+  if (s.startsWith("aq_g")) return s;
+  if (s.startsWith("aq_")) return s;
+  if (s.startsWith("airqo_g")) return s;
+  return s.replace(/[^a-z0-9_]/g, "_");
+}
 
-  function normalizeDeviceId(raw) {
-    if (!raw) return "";
-    const s = String(raw).trim().toLowerCase();
-    if (s.startsWith("aq_g5_")) return s;
-    if (s.startsWith("aq_g")) return s;
-    if (s.startsWith("aq_")) return s;
-    if (s.startsWith("airqo_g")) return s;
-    return s.replace(/[^a-z0-9_]/g, "_");
+const sites = {
+  "airqo_g5564": { name: "Busabala, Makindye", district: "Kampala", lat: 0.2182, lon: 32.6176 },
+  "aq_72":       { name: "Luwafu, Makindye", district: "Kampala", lat: 0.2689, lon: 32.588 },
+  "aq_43":       { name: "Lukuli, Makindye", district: "Kampala", lat: 0.28904, lon: 32.58958 },
+  "aq_g520":     { name: "Mbogo Road, Wabigalo", district: "Kampala", lat: 0.30991, lon: 32.60045 },
+  "aq_g5_97":    { name: "Mbuya II, Nakawa", district: "Kampala", lat: 0.325346, lon: 32.632288 },
+  "aq_g5_46":    { name: "Ggaba Bypass, Makindye", district: "Kampala", lat: 0.25776, lon: 32.63686 },
+  "airqo_g5438": { name: "Salaama Rd, Makindye", district: "Kampala", lat: 0.258119, lon: 32.609112 },
+  "aq_g5_53":    { name: "Kansanga, Makindye", district: "Kampala", lat: 0.28863, lon: 32.60297 },
+  "aq_g5_48":    { name: "Kabalagala, Makindye", district: "Kampala", lat: 0.29833, lon: 32.60074 },
+  "aq_g5_43":    { name: "Katwe 1, Makindye", district: "Kampala", lat: 0.30047, lon: 32.5794 },
+  "airqo_g5548": { name: "Nadiope Rd Mbuya, Nakawa", district: "Kampala", lat: 0.323201, lon: 32.631972 },
+  "airqo_g5567": { name: "Old Kira Rd Kamwokya, Kampala Central", district: "Kampala", lat: 0.346826, lon: 32.589047 },
+  "airqo_g5563": { name: "Bulange, Rubaga", district: "Kampala", lat: 0.311874, lon: 32.562351 },
+  "airqo_g5449": { name: "Forest Village Muyenga, Makindye", district: "Kampala", lat: 0.287828, lon: 32.624583 },
+  "airqo_g5446": { name: "Kitintale, Nakawa", district: "Kampala", lat: 0.315679, lon: 32.635063 }
+};
+
+function siteLabel(id) {
+  const s = sites[id];
+  return s ? s.name : id;
+}
+
+function fmtNumber(v) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n.toFixed(1) : "";
+}
+
+function fmtDateTimeKampala(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return String(iso);
+  return d.toLocaleString("en-GB", {
+    timeZone: "Africa/Kampala",
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  }).replace(",", "");
+}
+
+function parseTimeMs(iso) {
+  const d = new Date(iso);
+  const ms = d.getTime();
+  return Number.isFinite(ms) ? ms : null;
+}
+
+function formatKampalaTick(ms) {
+  const d = new Date(ms);
+  return d.toLocaleString("en-GB", {
+    timeZone: "Africa/Kampala",
+    month: "short",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  }).replace(",", "");
+}
+
+function whoClass(pm25) {
+  const v = Number(pm25);
+  if (!Number.isFinite(v)) return "";
+  if (v <= 15) return "aq_who_g1";
+  if (v <= 25) return "aq_who_it4";
+  if (v <= 37.5) return "aq_who_it3";
+  if (v <= 50) return "aq_who_it2";
+  if (v <= 75) return "aq_who_it1";
+  return "aq_who_high";
+}
+
+function aqiFillColor(cls) {
+  switch(cls) {
+    case "aq_who_g1": return "#00e400";
+    case "aq_who_it4": return "#ffff00";
+    case "aq_who_it3": return "#ff7e00";
+    case "aq_who_it2": return "#ff0000";
+    case "aq_who_it1": return "#8f3f97";
+    default: return "#7e0023";
   }
+}
 
-  const sites = {
-    "airqo_g5564": { name: "Busabala, Makindye", district: "Kampala", lat: 0.2182, lon: 32.6176 },
-    "aq_72":       { name: "Luwafu, Makindye", district: "Kampala", lat: 0.2689, lon: 32.588 },
-    "aq_43":       { name: "Lukuli, Makindye", district: "Kampala", lat: 0.28904, lon: 32.58958 },
-    "aq_g520":     { name: "Mbogo Road, Wabigalo", district: "Kampala", lat: 0.30991, lon: 32.60045 },
-    "aq_g5_97":    { name: "Mbuya II, Nakawa", district: "Kampala", lat: 0.325346, lon: 32.632288 },
-    "aq_g5_46":    { name: "Ggaba Bypass, Makindye", district: "Kampala", lat: 0.25776, lon: 32.63686 },
-    "airqo_g5438": { name: "Salaama Rd, Makindye", district: "Kampala", lat: 0.258119, lon: 32.609112 },
-    "aq_g5_53":    { name: "Kansanga, Makindye", district: "Kampala", lat: 0.28863, lon: 32.60297 },
-    "aq_g5_48":    { name: "Kabalagala, Makindye", district: "Kampala", lat: 0.29833, lon: 32.60074 },
-    "aq_g5_43":    { name: "Katwe 1, Makindye", district: "Kampala", lat: 0.30047, lon: 32.5794 },
-    "airqo_g5548": { name: "Nadiope Rd Mbuya, Nakawa", district: "Kampala", lat: 0.323201, lon: 32.631972 },
-    "airqo_g5567": { name: "Old Kira Rd Kamwokya, Kampala Central", district: "Kampala", lat: 0.346826, lon: 32.589047 },
-    "airqo_g5563": { name: "Bulange, Rubaga", district: "Kampala", lat: 0.311874, lon: 32.562351 },
-    "airqo_g5449": { name: "Forest Village Muyenga, Makindye", district: "Kampala", lat: 0.287828, lon: 32.624583 },
-    "airqo_g5446": { name: "Kitintale, Nakawa", district: "Kampala", lat: 0.315679, lon: 32.635063 }
-  };
+function whoLabel(pm25) {
+  const v = Number(pm25);
+  if (!Number.isFinite(v)) return "No category";
+  if (v <= 15) return "Good";
+  if (v <= 25) return "Moderate";
+  if (v <= 37.5) return "Elevated";
+  if (v <= 50) return "High";
+  if (v <= 75) return "Very high";
+  return "Extremely high";
+}
 
-  function siteLabel(id) {
-    const s = sites[id];
-    return s ? s.name : id;
-  }
+// -------- Map & Recent Data --------
+let map, markersLayer;
 
-  function fmtNumber(v) {
-    const n = Number(v);
-    if (!Number.isFinite(n)) return "";
-    return n.toFixed(1);
-  }
+function initMap() {
+  map = L.map("uganda-map").setView([0.3136, 32.5811], 12);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "&copy; OpenStreetMap contributors"
+  }).addTo(map);
+  markersLayer = L.layerGroup().addTo(map);
+}
 
-  function fmtDateTimeKampala(isoLike) {
-    if (!isoLike) return "";
-    const d = new Date(isoLike);
-    if (isNaN(d.getTime())) return String(isoLike);
-    return d.toLocaleString("en-GB", {
-      timeZone: "Africa/Kampala",
-      year: "numeric",
-      month: "short",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false
-    }).replace(",", "");
-  }
+async function loadUgandaData() {
+  const tbody = document.getElementById("uganda-data-body");
+  const statusEl = document.getElementById("uganda-status");
+  const table = document.getElementById("uganda-data-table");
 
-  function parseTimeMs(isoLike) {
-    const d = new Date(isoLike);
-    const ms = d.getTime();
-    return Number.isFinite(ms) ? ms : null;
-  }
+  try {
+    const res = await fetch(COHORT_URL);
+    if (!res.ok) throw new Error("Request failed");
+    const data = await res.json();
 
-  function formatKampalaTick(ms) {
-    const d = new Date(ms);
-    return d.toLocaleString("en-GB", {
-      timeZone: "Africa/Kampala",
-      month: "short",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false
-    }).replace(",", "");
-  }
-
-  function whoClass(pm25) {
-    const v = Number(pm25);
-    if (!Number.isFinite(v)) return "";
-    if (v <= 15) return "aq_who_g1";
-    if (v <= 25) return "aq_who_it4";
-    if (v <= 37.5) return "aq_who_it3";
-    if (v <= 50) return "aq_who_it2";
-    if (v <= 75) return "aq_who_it1";
-    return "aq_who_high";
-  }
-
-  function aqiFillColor(cls) {
-    if (cls === "aq_who_g1") return "#00e400";
-    if (cls === "aq_who_it4") return "#ffff00";
-    if (cls === "aq_who_it3") return "#ff7e00";
-    if (cls === "aq_who_it2") return "#ff0000";
-    if (cls === "aq_who_it1") return "#8f3f97";
-    return "#7e0023";
-  }
-
-  function whoLabel(pm25) {
-    const v = Number(pm25);
-    if (!Number.isFinite(v)) return "No category";
-    if (v <= 15) return "Good";
-    if (v <= 25) return "Moderate";
-    if (v <= 37.5) return "Elevated";
-    if (v <= 50) return "High";
-    if (v <= 75) return "Very high";
-    return "Extremely high";
-  }
-
-  let map;
-  let markersLayer;
-
-  function initMap() {
-    map = L.map("uganda-map").setView([0.3136, 32.5811], 12);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "&copy; OpenStreetMap contributors"
-    }).addTo(map);
-    markersLayer = L.layerGroup().addTo(map);
-  }
-
-  async function loadUgandaData() {
-    const tbody = document.getElementById("uganda-data-body");
-    const statusEl = document.getElementById("uganda-status");
-    const table = document.getElementById("uganda-data-table");
-
-    try {
-      const res = await fetch(COHORT_URL);
-      if (!res.ok) throw new Error("Request failed");
-      const data = await res.json();
-
-      const measurements = (data.measurements || data.results || []).slice(0, 15);
-      if (!measurements.length) {
-        statusEl.textContent = "No recent measurements available.";
-        return;
-      }
-
-      tbody.innerHTML = "";
-      markersLayer.clearLayers();
-
-      const bounds = [];
-
-      measurements.forEach(item => {
-        const rawId = item.device || item.device_id || item.deviceId || item.name || "";
-        const id = normalizeDeviceId(rawId);
-        const site = sites[id] || { name: (rawId || "Unknown"), district: "Kampala" };
-
-        const pm25 = Number(item?.pm2_5?.value);
-        const pm10 = Number(item?.pm10?.value);
-        const when = fmtDateTimeKampala(item.time || item.created_at || item.createdAt || item.timestamp);
-
-        const cls = whoClass(pm25);
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>
-            <div>${site.name}</div>
-            <div style="font-size:0.8em;color:#4b5c67;">${site.district}, Uganda</div>
-          </td>
-          <td>${when}</td>
-          <td class="pm25 ${cls}">${fmtNumber(pm25)}</td>
-          <td>${fmtNumber(pm10)}</td>
-        `;
-        tbody.appendChild(tr);
-
-        if (Number.isFinite(site.lat) && Number.isFinite(site.lon) && Number.isFinite(pm25)) {
-          const fill = aqiFillColor(cls);
-
-          const popupHtml = `
-            <div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
-              <div style="color:#143541; margin-bottom:4px;">${site.name}</div>
-              <div style="color:#4b5c67; font-size:12px; margin-bottom:6px;">${site.district}, Uganda</div>
-              <div style="font-size:13px;">PM2.5: ${fmtNumber(pm25)} µg/m³ (${whoLabel(pm25)})</div>
-              <div style="font-size:13px;">PM10: ${fmtNumber(pm10)} µg/m³</div>
-              <div style="color:#4b5c67; font-size:12px; margin-top:6px;">${when} (EAT)</div>
-            </div>
-          `;
-
-          L.circleMarker([site.lat, site.lon], {
-            radius: 10,
-            color: "#333",
-            weight: 1,
-            fillColor: fill,
-            fillOpacity: 0.9
-          }).bindPopup(popupHtml).addTo(markersLayer);
-
-          bounds.push([site.lat, site.lon]);
-        }
-      });
-
-      statusEl.textContent = "";
-      table.style.display = "";
-
-      if (bounds.length >= 2) map.fitBounds(bounds, { padding: [25, 25] });
-      else if (bounds.length === 1) map.setView(bounds[0], 13);
-    } catch (e) {
-      statusEl.textContent = "Could not load data from AirQo right now.";
+    const measurements = (data.measurements || data.results || []).slice(0, 15);
+    if (!measurements.length) {
+      statusEl.textContent = "No recent measurements available.";
+      return;
     }
-  }
 
-  // ---------- historical chart + download (from AirQo /historical endpoint) ----------
-  let pm25Chart = null;
-  let histSeries = null; // { [deviceId]: [{t, pm25}] }
-  let selected = new Set(Object.keys(sites)); // default all 15
-  let lastFlattenedRows = []; // for CSV download
+    tbody.innerHTML = "";
+    markersLayer.clearLayers();
 
-  let selectedPollutant = "pm25";
-  let selectedResolution = "hourly";
+    const bounds = [];
 
-  function buildControls() {
-    const controls = document.getElementById("hist-controls");
-    controls.innerHTML = "";
+    measurements.forEach(item => {
+      const rawId = item.device || item.device_id || item.deviceId || item.name || "";
+      const id = normalizeDeviceId(rawId);
+      const site = sites[id] || { name: rawId || "Unknown", district: "Kampala" };
 
-    Object.keys(sites).forEach(id => {
-      const label = document.createElement("label");
+      const pm25 = Number(item?.pm2_5?.value);
+      const pm10 = Number(item?.pm10?.value);
+      const when = fmtDateTimeKampala(item.time || item.created_at || item.createdAt || item.timestamp);
 
-      const cb = document.createElement("input");
-      cb.type = "checkbox";
-      cb.checked = selected.has(id);
-      cb.addEventListener("change", () => {
-        if (cb.checked) selected.add(id);
-        else selected.delete(id);
-        renderChart();
-        updateDownloadButton();
-      });
+      const cls = whoClass(pm25);
 
-      const text = document.createElement("span");
-      text.textContent = siteLabel(id);
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>
+          <div>${site.name}</div>
+          <div style="font-size:0.8em;color:#4b5c67;">${site.district}, Uganda</div>
+        </td>
+        <td>${when}</td>
+        <td class="pm25 ${cls}">${fmtNumber(pm25)}</td>
+        <td>${fmtNumber(pm10)}</td>
+      `;
+      tbody.appendChild(tr);
 
-      label.appendChild(cb);
-      label.appendChild(text);
-      controls.appendChild(label);
+      if (Number.isFinite(site.lat) && Number.isFinite(site.lon) && Number.isFinite(pm25)) {
+        const fill = aqiFillColor(cls);
+        const popupHtml = `
+          <div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+            <div style="color:#143541; margin-bottom:4px;">${site.name}</div>
+            <div style="color:#4b5c67; font-size:12px; margin-bottom:6px;">${site.district}, Uganda</div>
+            <div style="font-size:13px;">PM2.5: ${fmtNumber(pm25)} µg/m³ (${whoLabel(pm25)})</div>
+            <div style="font-size:13px;">PM10: ${fmtNumber(pm10)} µg/m³</div>
+            <div style="color:#4b5c67; font-size:12px; margin-top:6px;">${when} (EAT)</div>
+          </div>
+        `;
+
+        L.circleMarker([site.lat, site.lon], {
+          radius: 10,
+          color: "#333",
+          weight: 1,
+          fillColor: fill,
+          fillOpacity: 0.9
+        }).bindPopup(popupHtml).addTo(markersLayer);
+
+        bounds.push([site.lat, site.lon]);
+      }
     });
 
-    controls.style.display = "";
+    statusEl.textContent = "";
+    table.style.display = "";
+
+    if (bounds.length >= 2) map.fitBounds(bounds, { padding: [25, 25] });
+    else if (bounds.length === 1) map.setView(bounds[0], 13);
+  } catch (e) {
+    statusEl.textContent = "Could not load data from AirQo right now.";
+    console.error(e);
   }
+}
+
+// -------- Historical Chart --------
+let pm25Chart = null;
+let histSeries = null;
+let selected = new Set(Object.keys(sites));
+let lastFlattenedRows = [];
+let selectedPollutant = "pm25";
+let selectedResolution = "hourly";
+
+function buildControls() {
+  const controls = document.getElementById("hist-controls");
+  controls.innerHTML = "";
+
+  Object.keys(sites).forEach(id => {
+    const label = document.createElement("label");
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = selected.has(id);
+    cb.addEventListener("change", () => {
+      if (cb.checked) selected.add(id);
+      else selected.delete(id);
+      renderChart();
+      updateDownloadButton();
+      renderDayOfWeekChart(); // keep chart in sync
+    });
+    const text = document.createElement("span");
+    text.textContent = siteLabel(id);
+    label.appendChild(cb);
+    label.appendChild(text);
+    controls.appendChild(label);
+  });
+
+  controls.style.display = "";
+}
 
 function buildDatasets() {
   const datasets = [];
-
   Object.keys(sites).forEach(id => {
     if (!selected.has(id)) return;
-
     const raw = histSeries?.[id] || [];
-
     const buckets = new Map();
-
     raw.forEach(p => {
       const ms = parseTimeMs(p.t);
       if (ms === null) return;
-
-      const value =
-        selectedPollutant === "pm10"
-          ? Number(p.pm10)
-          : Number(p.pm25);
-
+      const value = selectedPollutant === "pm10" ? Number(p.pm10) : Number(p.pm25);
       if (!Number.isFinite(value)) return;
 
       const d = new Date(ms);
       let key;
+      if (selectedResolution === "monthly") key = `${d.getUTCFullYear()}-${d.getUTCMonth()}`;
+      else if (selectedResolution === "daily") key = `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}`;
+      else key = `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}-${d.getUTCHours()}`;
 
-      if (selectedResolution === "monthly") {
-        key = `${d.getUTCFullYear()}-${d.getUTCMonth()}`;
-      } else if (selectedResolution === "daily") {
-        key = `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}`;
-      } else {
-        key = `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}-${d.getUTCHours()}`;
-      }
-
-      if (!buckets.has(key)) {
-        buckets.set(key, { sum: 0, count: 0, time: ms });
-      }
-
+      if (!buckets.has(key)) buckets.set(key, { sum: 0, count: 0, time: ms });
       const b = buckets.get(key);
       b.sum += value;
       b.count += 1;
     });
 
     const points = Array.from(buckets.values())
-      .map(b => ({
-        x: b.time,
-        y: b.sum / b.count
-      }))
+      .map(b => ({ x: b.time, y: b.sum / b.count }))
       .sort((a, b) => a.x - b.x);
 
     datasets.push({
@@ -735,8 +712,6 @@ function renderChart() {
   if (!canvas) return;
 
   const datasets = buildDatasets();
-
-  // compute y max from the plotted points
   const allY = datasets.flatMap(ds => (ds.data || []).map(p => p.y)).filter(Number.isFinite);
   const maxY = allY.length ? Math.max(...allY) : 0;
   const suggestedMax = maxY > 0 ? Math.ceil(maxY * 1.15) : 100;
@@ -755,270 +730,83 @@ function renderChart() {
       scales: {
         x: {
           type: "linear",
-          ticks: { callback: (value) => formatKampalaTick(value) },
+          ticks: { callback: (v) => formatKampalaTick(v) },
           title: { display: true, text: "Date & time (EAT, UTC+3)" }
         },
-
         y: {
           beginAtZero: true,
           suggestedMax,
-          title: {
-  display: true,
-  text: selectedPollutant === "pm10"
-    ? "PM10 (µg/m³)"
-    : "PM2.5 (µg/m³)"
-}
-
+          title: { display: true, text: selectedPollutant === "pm10" ? "PM10 (µg/m³)" : "PM2.5 (µg/m³)" }
         }
       },
       plugins: {
-        legend: {
-          display: true,
-          position: "top",
-          labels: { padding: 14, boxWidth: 12 }
-        },
-        tooltip: {
-          callbacks: {
-            title: (items) => items.length ? formatKampalaTick(items[0].parsed.x) : ""
-          }
-        }
+        legend: { display: true, position: "top", labels: { padding: 14, boxWidth: 12 } },
+        tooltip: { callbacks: { title: (items) => items.length ? formatKampalaTick(items[0].parsed.x) : "" } }
       }
     }
   });
 }
 
-
-  function updateDownloadButton() {
-    const btn = document.getElementById("download-csv");
-    btn.disabled = !(histSeries && selected.size > 0 && lastFlattenedRows.length > 0);
-  }
-
-  function makeCsv() {
-    const header = "device_id,location,district,lat,lon,timestamp_EAT,pm2_5_ug_m3";
-    const lines = [header];
-
-    lastFlattenedRows
-      .filter(r => selected.has(r.device_id))
-      .forEach(r => {
-        const s = sites[r.device_id] || {};
-        const line = [
-          r.device_id,
-          `"${String(s.name || "").replaceAll('"','""')}"`,
-          `"${String(s.district || "").replaceAll('"','""')}"`,
-          (s.lat ?? ""),
-          (s.lon ?? ""),
-          r.timestamp_EAT,
-          r.pm2_5_ug_m3
-        ].join(",");
-        lines.push(line);
-      });
-
-    return lines.join("\n");
-  }
-
-  function wireDownload() {
-    const btn = document.getElementById("download-csv");
-    btn.addEventListener("click", () => {
-      const csv = makeCsv();
-      if (!csv) return;
-
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "uganda_pm25_historical.csv";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-
-      URL.revokeObjectURL(url);
+function flattenForDownload(seriesObj) {
+  const out = [];
+  Object.keys(seriesObj || {}).forEach(id => {
+    (seriesObj[id] || []).forEach(p => {
+      const v = Number(p.pm25);
+      if (!Number.isFinite(v)) return;
+      out.push({ device_id: id, timestamp_EAT: fmtDateTimeKampala(p.t), pm2_5_ug_m3: v });
     });
-  }
-
-  function flattenForDownload(seriesObj) {
-    const out = [];
-    Object.keys(seriesObj || {}).forEach(id => {
-      (seriesObj[id] || []).forEach(p => {
-        const v = Number(p.pm25);
-        if (!Number.isFinite(v)) return;
-        out.push({
-          device_id: id,
-          timestamp_EAT: fmtDateTimeKampala(p.t),
-          pm2_5_ug_m3: v
-        });
-      });
-    });
-
-    out.sort((a, b) => {
-      const ta = parseTimeMs(a.timestamp_EAT) ?? 0;
-      const tb = parseTimeMs(b.timestamp_EAT) ?? 0;
-      return ta - tb;
-    });
-
-    return out;
-  }
-
-async function loadHistoricalFromCSV() {
-  const statusEl = document.getElementById("hist-status");
-  const metaEl = document.getElementById("hist-meta");
-  const controls = document.getElementById("hist-controls");
-
-  // set this to whatever you actually committed in the repo
-  const CSV_URL = "data/uganda_pm25_archive.csv"; // or "data/air-quality-data-2025-10-01-to-2025-12-16.csv"
-
-  // small CSV parser that handles quoted commas
-  function parseCsv(text) {
-    const rows = [];
-    let row = [];
-    let field = "";
-    let inQuotes = false;
-
-    for (let i = 0; i < text.length; i++) {
-      const c = text[i];
-      const next = text[i + 1];
-
-      if (inQuotes) {
-        if (c === '"' && next === '"') { field += '"'; i++; continue; }
-        if (c === '"') { inQuotes = false; continue; }
-        field += c;
-        continue;
-      }
-
-      if (c === '"') { inQuotes = true; continue; }
-      if (c === ",") { row.push(field); field = ""; continue; }
-      if (c === "\n") {
-        row.push(field);
-        // ignore blank final line
-        if (row.length > 1 || row[0].trim() !== "") rows.push(row);
-        row = [];
-        field = "";
-        continue;
-      }
-      if (c === "\r") continue;
-
-      field += c;
-    }
-
-    // last field
-    if (field.length || row.length) {
-      row.push(field);
-      if (row.length > 1 || row[0].trim() !== "") rows.push(row);
-    }
-
-    return rows;
-  }
-
-  try {
-    statusEl.textContent = "Loading archived historical data…";
-    if (controls) controls.style.display = "none";
-    if (metaEl) metaEl.textContent = "";
-
-   const res = await fetch(CSV_URL, { cache: "no-store" });
-    console.log("CSV fetch status:", res.status, res.url);
-
-    if (!res.ok) throw new Error(`Archive CSV not found: ${CSV_URL} (HTTP ${res.status})`);
-
-    const text = await res.text();
-    const rows = parseCsv(text);
-    if (rows.length < 2) throw new Error("Archive CSV is empty");
-
-    const header = rows[0].map(h => h.trim());
-
-// archive-format columns (the file we generated)
-const idxDeviceId = header.indexOf("device_id");
-const idxTimestamp = header.indexOf("timestamp");
-const idxPm25Archive = header.indexOf("pm2_5_ug_m3");
-
-// AirQo export-format columns (your downloaded files)
-const idxDeviceName = header.indexOf("device_name");
-const idxDatetime = header.indexOf("datetime");
-const idxPm25 = header.indexOf("pm2_5_calibrated_value");
-const idxPm10 = header.indexOf("pm10_calibrated_value");
-
-const usingArchiveFormat = (idxDeviceId >= 0 && idxTimestamp >= 0 && idxPm25Archive >= 0);
-const usingAirQoExportFormat = (idxDeviceName >= 0 && idxDatetime >= 0 && idxPm25 >= 0 && idxPm10 >= 0);
-
-if (!usingArchiveFormat && !usingAirQoExportFormat) {
-  throw new Error("CSV header does not match expected formats");
+  });
+  return out.sort((a, b) => (parseTimeMs(a.timestamp_EAT) ?? 0) - (parseTimeMs(b.timestamp_EAT) ?? 0));
 }
 
-const series = {};
-const allTimes = [];
-
-for (let r = 1; r < rows.length; r++) {
-  const cols = rows[r];
-
-  let id, t, pm25Val, pm10Val;
-
-  if (usingArchiveFormat) {
-    id = normalizeDeviceId(cols[idxDeviceId]);
-    t = cols[idxTimestamp];
-    pm25Val = Number(cols[idxPm25Archive]);
-    pm10Val = NaN; // archive file currently doesn't store pm10
-  } else {
-    id = normalizeDeviceId(cols[idxDeviceName]);
-    t = cols[idxDatetime];
-    pm25Val = Number(cols[idxPm25]);
-    pm10Val = Number(cols[idxPm10]);
-  }
-
-  if (!id || !t || !Number.isFinite(pm25Val)) continue;
-
-  if (!series[id]) series[id] = [];
-  series[id].push({ t, pm25: pm25Val, pm10: pm10Val });
-
-  const ms = parseTimeMs(t);
-  if (ms !== null) allTimes.push(ms);
+function updateDownloadButton() {
+  const btn = document.getElementById("download-csv");
+  btn.disabled = !(histSeries && selected.size > 0 && lastFlattenedRows.length > 0);
 }
 
+function makeCsv() {
+  const header = "device_id,location,district,lat,lon,timestamp_EAT,pm2_5_ug_m3";
+  const lines = [header];
 
-    Object.keys(series).forEach(id => {
-      series[id].sort((a, b) => (parseTimeMs(a.t) ?? 0) - (parseTimeMs(b.t) ?? 0));
+  lastFlattenedRows
+    .filter(r => selected.has(r.device_id))
+    .forEach(r => {
+      const s = sites[r.device_id] || {};
+      const line = [
+        r.device_id,
+        `"${String(s.name || "").replaceAll('"','""')}"`,
+        `"${String(s.district || "").replaceAll('"','""')}"`,
+        s.lat ?? "",
+        s.lon ?? "",
+        r.timestamp_EAT,
+        r.pm2_5_ug_m3
+      ].join(",");
+      lines.push(line);
     });
 
-    histSeries = series;
-    lastFlattenedRows = flattenForDownload(series);
-
-    statusEl.textContent = "";
-    buildControls();
-              document.getElementById("pollutant-select").addEventListener("change", e => {
-            selectedPollutant = e.target.value;
-            renderChart();
-          });
-          
-          document.getElementById("resolution-select").addEventListener("change", e => {
-            selectedResolution = e.target.value;
-            renderChart();
-          });
-
-    renderChart();
-    updateDownloadButton();
-
-    if (allTimes.length && metaEl) {
-      const min = new Date(Math.min(...allTimes));
-      const max = new Date(Math.max(...allTimes));
-      metaEl.textContent =
-        `Time range: ${fmtDateTimeKampala(min.toISOString())} to ${fmtDateTimeKampala(max.toISOString())} (EAT)`;
-    }
-  } catch (e) {
-    statusEl.textContent = "Could not load archived historical data.";
-    updateDownloadButton();
-    console.error(e);
-  }
+  return lines.join("\n");
 }
 
-<div class="pm25-chart-wrap" style="margin-top:0.85rem;">
-  <canvas id="pm25-chart"></canvas>
-</div>
+function wireDownload() {
+  const btn = document.getElementById("download-csv");
+  btn.addEventListener("click", () => {
+    const csv = makeCsv();
+    if (!csv) return;
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "uganda_pm25_historical.csv";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+}
 
-<div class="pm25-chart-wrap" style="margin-top:1.2rem;">
-  <canvas id="pm25-dayofweek-chart"></canvas>
-</div>
-
+// -------- Day-of-week chart --------
 function renderDayOfWeekChart() {
   if (!histSeries) return;
-
   const daySums = Array(7).fill(0);
   const dayCounts = Array(7).fill(0);
   const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -1036,44 +824,54 @@ function renderDayOfWeekChart() {
 
   const dayAverages = daySums.map((sum, i) => dayCounts[i] ? sum / dayCounts[i] : 0);
 
-  const ctx = document.getElementById('pm25-dayofweek-chart').getContext('2d');
+  const ctx = document.getElementById('pm25-dayofweek-chart');
+  if (!ctx) return;
+
   new Chart(ctx, {
     type: 'bar',
-    data: {
-      labels: dayNames,
-      datasets: [{
-        label: 'Average PM2.5 (µg/m³)',
-        data: dayAverages,
-        backgroundColor: 'rgba(27,124,109,0.7)'
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: true,
-          title: { display: true, text: 'PM2.5 (µg/m³)' }
-        },
-        x: { title: { display: true, text: 'Day of Week' } }
-      },
-      plugins: {
-        legend: { display: false }
-      }
-    }
+    data: { labels: dayNames, datasets: [{ label: 'Avg PM2.5 (µg/m³)', data: dayAverages, backgroundColor: '#ff7e00' }] },
+    options: { responsive: true, plugins: { legend: { display: false } } }
   });
 }
 
-// call after rendering the main historical chart
-renderDayOfWeekChart();
+// -------- Load historical CSV --------
+async function loadHistoricalFromCSV() {
+  try {
+    const res = await fetch(HIST_URL);
+    if (!res.ok) throw new Error("Failed to fetch historical CSV");
+    const text = await res.text();
 
-  
-  // run
+    const rows = text.split("\n").filter(r => r.trim()).slice(1).map(line => {
+      const [timestamp, device, pm25, pm10] = line.split(",");
+      return { t: timestamp, device, pm25: Number(pm25), pm10: Number(pm10) };
+    });
+
+    histSeries = {};
+    rows.forEach(p => {
+      const id = normalizeDeviceId(p.device);
+      if (!histSeries[id]) histSeries[id] = [];
+      histSeries[id].push(p);
+    });
+
+    lastFlattenedRows = flattenForDownload(histSeries);
+    buildControls();
+    renderChart();
+    updateDownloadButton();
+    renderDayOfWeekChart();
+  } catch (e) {
+    console.error("Could not load historical CSV:", e);
+  }
+}
+
+// -------- Init --------
+document.addEventListener("DOMContentLoaded", () => {
   initMap();
   loadUgandaData();
-  wireDownload();
   loadHistoricalFromCSV();
+  wireDownload();
+});
 </script>
+
 
 
 </body>
