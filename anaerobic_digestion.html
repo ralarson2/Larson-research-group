@@ -2,87 +2,345 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PROJECT TITLE — Larson Research Group</title>
+  <title>Anaerobic Digestion — Larson Research Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root {
-      --accent: #1b7c6d;
-      --accent-light: #e2f3f0;
-      --dark: #143541;
-      --text: #222222;
-      --bg: #f7f9fb;
-      --card: #ffffff;
+    :root{
+      --accent:#1b7c6d;
+      --accent-light:#e2f3f0;
+      --dark:#143541;
+      --text:#222;
+      --bg:#f7f9fb;
+      --card:#fff;
+      --border:#dde3ea;
+      --muted:#4b5c67;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *{box-sizing:border-box;margin:0;padding:0}
 
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
     }
 
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
 
-    header {
-      background: var(--card);
-      border-bottom: 1px solid #dde3ea;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+    header{
+      background:var(--card);
+      border-bottom:1px solid var(--border);
+      position:sticky;
+      top:0;
+      z-index:10;
     }
 
-    .nav-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0.75rem 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
+    .nav-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:0.75rem 1rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
     }
 
-    .nav-title {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--dark);
-      white-space: nowrap;
+    .nav-title{
+      font-size:1rem;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      color:var(--dark);
+      white-space:nowrap;
     }
 
-    .nav-links { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.9rem; }
-    .nav-links a { padding-bottom: 0.15rem; border-bottom: 2px solid transparent; }
-    .nav-links a:hover { border-color: var(--accent); }
-
-    main { max-width: 960px; margin: 2.5rem auto; padding: 0 1rem; }
-
-    .page-title { font-size: 2rem; margin-bottom: 1rem; text-align:center; color:var(--dark); }
-    .page-image { width: 100%; max-height: 300px; object-fit: cover; border-radius: 0.6rem; margin-bottom: 1rem; }
-    .page-text { font-size: 1rem; color: #4b5c67; line-height:1.6; margin-bottom:2rem; }
-
-    footer {
-      border-top: 1px solid #dde3ea;
-      padding: 1.2rem 1rem 2rem 1rem;
-      font-size: 0.8rem;
-      color: #6b7c88;
+    .nav-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:1rem;
+      font-size:0.9rem;
     }
 
-    .footer-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      text-align: center;
+    .nav-links a{
+      padding-bottom:0.15rem;
+      border-bottom:2px solid transparent;
     }
 
-    @media (max-width: 720px) {
-      .nav-inner { flex-direction: column; align-items: flex-start; }
-      .nav-links { justify-content: flex-start; }
+    .nav-links a:hover{
+      border-color:var(--accent);
+      text-decoration:none;
+    }
+
+    .page{
+      max-width:1100px;
+      margin:0 auto;
+      padding:1.25rem 1rem 3rem 1rem;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:260px 1fr;
+      gap:1.25rem;
+      align-items:start;
+    }
+
+    @media (max-width:900px){
+      .layout{grid-template-columns:1fr}
+    }
+
+    .side{
+      position:sticky;
+      top:80px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    @media (max-width:900px){
+      .side{position:relative;top:0}
+    }
+
+    .side h2{
+      font-size:0.95rem;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      color:var(--dark);
+      margin-bottom:0.75rem;
+    }
+
+    .side a{
+      display:block;
+      padding:0.55rem 0.6rem;
+      border-radius:0.6rem;
+      color:var(--dark);
+      border:1px solid transparent;
+    }
+
+    .side a:hover{
+      background:var(--accent-light);
+      text-decoration:none;
+      border-color:#cfe8e4;
+    }
+
+    .side a.active{
+      background:var(--accent-light);
+      border-color:#cfe8e4;
+      color:var(--dark);
+      font-weight:600;
+    }
+
+    .divider{
+      height:1px;
+      background:var(--border);
+      margin:1rem 0;
+    }
+
+    .hero{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      overflow:hidden;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+      margin-bottom:1rem;
+    }
+
+    .hero-img{
+      width:100%;
+      height:240px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      background:#f2f4f7;
+    }
+
+    .hero-img img{
+      max-width:100%;
+      max-height:100%;
+      object-fit:contain;
+      display:block;
+    }
+
+    .hero-body{
+      padding:1.1rem 1.1rem 1.2rem 1.1rem;
+    }
+
+    .kicker{
+      display:inline-block;
+      font-size:0.8rem;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--dark);
+      background:var(--accent-light);
+      padding:0.25rem 0.5rem;
+      border-radius:999px;
+      margin-bottom:0.7rem;
+    }
+
+    .title{
+      font-size:1.8rem;
+      color:var(--dark);
+      line-height:1.2;
+      margin-bottom:0.55rem;
+    }
+
+    .subtitle{
+      color:var(--muted);
+      font-size:1rem;
+      max-width:80ch;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:1rem;
+      margin-top:1rem;
+    }
+
+    @media (max-width:700px){
+      .cards{grid-template-columns:1fr}
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    .card h3{
+      font-size:1.05rem;
+      color:var(--dark);
+      margin-bottom:0.5rem;
+    }
+
+    .card p{
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+
+    .section{
+      margin-top:1rem;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    .section h3{
+      font-size:1.15rem;
+      color:var(--dark);
+      margin-bottom:0.4rem;
+    }
+
+    .section p{
+      color:var(--muted);
+      margin-bottom:0.75rem;
+      max-width:90ch;
+    }
+
+    .section p:last-child{margin-bottom:0}
+
+    .mini-table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border-radius:0.75rem;
+      border:1px solid var(--border);
+      background:#fff;
+      margin-top:0.6rem;
+    }
+
+    .mini-table th, .mini-table td{
+      text-align:left;
+      padding:0.65rem 0.75rem;
+      border-bottom:1px solid var(--border);
+      vertical-align:top;
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+
+    .mini-table th{
+      color:var(--dark);
+      background:var(--accent-light);
+      font-weight:600;
+      width:34%;
+    }
+
+    .mini-table tr:last-child th,
+    .mini-table tr:last-child td{
+      border-bottom:none;
+    }
+
+    .cta{
+      margin-top:1rem;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+      display:flex;
+      flex-wrap:wrap;
+      gap:0.75rem;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .cta p{color:var(--muted);margin:0;max-width:80ch}
+
+    .cta .buttons{
+      display:flex;
+      gap:0.6rem;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-block;
+      background:var(--accent);
+      color:#fff;
+      padding:0.55rem 0.85rem;
+      border-radius:0.7rem;
+      text-decoration:none;
+      font-weight:600;
+      white-space:nowrap;
+    }
+
+    .btn:hover{filter:brightness(0.95);text-decoration:none}
+
+    .btn.secondary{
+      background:#ffffff;
+      color:var(--dark);
+      border:1px solid var(--border);
+    }
+
+    .btn.secondary:hover{background:#f7f9fb}
+
+    footer{
+      border-top:1px solid var(--border);
+      padding:1.2rem 1rem 2rem 1rem;
+      font-size:0.8rem;
+      color:#6b7c88;
+    }
+
+    .footer-inner{
+      max-width:1100px;
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:0.4rem;
+      text-align:center;
+    }
+
+    @media (max-width:720px){
+      .nav-inner{flex-direction:column;align-items:flex-start}
+      .nav-links{justify-content:flex-start}
     }
   </style>
 </head>
@@ -100,11 +358,129 @@
     </div>
   </header>
 
-  <main>
-    <div class="page-title">PROJECT TITLE</div>
-    <img src="IMAGE PATH" alt="PROJECT TITLE" class="page-image">
-    <div class="page-text">
-      Detailed description of the research project. Include objectives, methods, key findings, and relevance. You can also link to publications, datasets, or related projects.
+  <main class="page">
+    <div class="layout">
+
+      <aside class="side" aria-label="Research topics">
+        <h2>Research topics</h2>
+        <a class="active" href="anaerobic_digestion.html">Anaerobic Digestion</a>
+        <a href="biochar.html">Biochar</a>
+        <a href="manure_nutrient_recovery.html">Manure Separation and Nutrient Recovery</a>
+        <a href="climate_impacts.html">Manure Management to Mitigate Climate Impacts</a>
+        <a href="nitrogen_loss.html">Manure Management to Mitigate Nitrogen Losses</a>
+        <a href="sand_separation.html">Manure Sand Separation</a>
+        <a href="land_application.html">Manure Land Application</a>
+        <a href="manure_storage.html">Manure Storage</a>
+        <a href="composting.html">Composting</a>
+        <a href="uganda.html">Uganda Air Quality</a>
+        <div class="divider"></div>
+        <a href="research.html">Back to Research & Extension</a>
+      </aside>
+
+      <div>
+        <section class="hero">
+          <div class="hero-img">
+            <img src="images/research/anaerobic_digestion.jpg" alt="Anaerobic digestion">
+          </div>
+          <div class="hero-body">
+            <div class="kicker">Research & Extension</div>
+            <h1 class="title">Anaerobic Digestion</h1>
+            <p class="subtitle">
+              We work on anaerobic digestion systems that convert manure and other organic feedstocks into biogas and digestate, with a focus on farmstead sustainability, nutrient cycling, and practical decision making for producers, communities, and partners.
+            </p>
+          </div>
+        </section>
+
+        <div class="cards">
+          <section class="card">
+            <h3>What it is</h3>
+            <p>
+              Anaerobic digestion is a biological process where microorganisms break down organic material without oxygen, producing biogas and digestate. Biogas is mostly methane with carbon dioxide and small amounts of other gases, and digestate retains nutrients for land application. :contentReference[oaicite:0]{index=0} :contentReference[oaicite:1]{index=1}
+            </p>
+          </section>
+          <section class="card">
+            <h3>Why it matters</h3>
+            <p>
+              Digesters can support energy independence, reduce odors and pathogens, and reduce greenhouse gas emissions by capturing methane that would otherwise be emitted from manure handling. :contentReference[oaicite:2]{index=2} :contentReference[oaicite:3]{index=3}
+            </p>
+          </section>
+        </div>
+
+        <section class="section">
+          <h3>How the system works</h3>
+          <p>
+            Manure is collected and moved to a sealed reactor where it typically remains for days to weeks, depending on operating temperature. Many agricultural systems operate in the mesophilic range, while thermophilic operation can shorten retention time but generally requires higher heat inputs and tighter management. :contentReference[oaicite:4]{index=4} :contentReference[oaicite:5]{index=5}
+          </p>
+          <p>
+            Digesters can process manure alone or use co-digestion with other organic materials such as spoiled feed, food waste, fats, or oils to increase biogas production, while keeping integration with existing manure systems in mind. :contentReference[oaicite:6]{index=6} :contentReference[oaicite:7]{index=7}
+          </p>
+        </section>
+
+        <section class="section">
+          <h3>Common digester designs and outputs</h3>
+          <p>
+            Agricultural digester designs vary, but covered lagoons, plug-flow systems, and complete mix systems are commonly used, each with different complexity, cost, and fit for manure characteristics. :contentReference[oaicite:8]{index=8} :contentReference[oaicite:9]{index=9}
+          </p>
+
+          <table class="mini-table" aria-label="Biogas and digestate outputs">
+            <tr>
+              <th>Biogas</th>
+              <td>Methane is typically the largest component of biogas, and the gas can be used for heat, electricity generation, or upgraded to renewable natural gas. :contentReference[oaicite:10]{index=10} :contentReference[oaicite:11]{index=11}</td>
+            </tr>
+            <tr>
+              <th>Digestate</th>
+              <td>Digestate is commonly separated into liquid and solids for flexible management. Digestion shifts nitrogen toward more plant-available inorganic forms, which can increase fertilizer value but also increase the risk of ammonia loss if not managed carefully. :contentReference[oaicite:12]{index=12} :contentReference[oaicite:13]{index=13}</td>
+            </tr>
+          </table>
+        </section>
+
+        <section class="section">
+          <h3>Benefits and tradeoffs we emphasize in extension</h3>
+          <p>
+            Capturing and combusting methane lowers climate impact because methane is a potent greenhouse gas, and digestion can reduce emissions from manure handling and downstream storage because volatile compounds are degraded in the digester. :contentReference[oaicite:14]{index=14} :contentReference[oaicite:15]{index=15}
+          </p>
+          <p>
+            A consistent message is that digestion should be paired with downstream practices that minimize ammonia emissions, such as covered storage and injection or rapid incorporation during land application. :contentReference[oaicite:16]{index=16} :contentReference[oaicite:17]{index=17}
+          </p>
+          <p>
+            We also highlight co-benefits that matter locally, including odor reduction, pathogen inactivation, and antibiotic degradation under digester conditions. :contentReference[oaicite:18]{index=18} :contentReference[oaicite:19]{index=19}
+          </p>
+        </section>
+
+        <section class="section">
+          <h3>Economics and the current market context</h3>
+          <p>
+            Economics depend on system scale, design, and the product pathway. Many existing agricultural projects historically generated electricity, while newer projects increasingly target renewable natural gas, influenced by policy-driven incentives and credit markets. :contentReference[oaicite:20]{index=20} :contentReference[oaicite:21]{index=21}
+          </p>
+          <p>
+            Reported capital costs vary widely by design and size, and ongoing operation and maintenance can be a meaningful fraction of total costs, so project evaluation needs to include realistic management requirements and downstream handling. :contentReference[oaicite:22]{index=22}
+          </p>
+        </section>
+
+        <section class="section">
+          <h3>Related fact sheets and resources</h3>
+          <p>
+            The two fact sheets below are the ones we point to most often for a clear overview of system basics, benefits, and tradeoffs, and they are also listed on the Resources page.
+          </p>
+          <p>
+            Sustainable Dairy Fact Sheet Series: Dairy Anaerobic Digestion Systems and their Impact on Greenhouse Gas and Ammonia Emissions. :contentReference[oaicite:23]{index=23}
+          </p>
+          <p>
+            Manure Processing Fact Sheet Series: Anaerobic Digestion from Animal Manure. :contentReference[oaicite:24]{index=24}
+          </p>
+          <div class="cta" aria-label="Links to resources">
+            <p>
+              For the full set of digestion materials, use the Resources page. If you place the PDFs in your site folder, you can also link them directly here.
+            </p>
+            <div class="buttons">
+              <a class="btn secondary" href="factsheets.html">Go to Resources page</a>
+              <a class="btn" href="2_DairyCap_Digestion_FactSheet_Final-Final.pdf">Open Sustainable Dairy fact sheet</a>
+              <a class="btn" href="mp-series-AD.pdf">Open Manure Processing fact sheet</a>
+            </div>
+          </div>
+        </section>
+
+      </div>
     </div>
   </main>
 
