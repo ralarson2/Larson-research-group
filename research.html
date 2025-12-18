@@ -66,7 +66,11 @@
 
     .nav-links a:hover { border-color: var(--accent); text-decoration: none; }
 
-    .section-title { font-size: 1.6rem; margin: 1rem 0; text-align:center; }
+    .section-title {
+      font-size: 1.6rem;
+      margin: 1rem 0;
+      text-align: center;
+    }
 
     .tiles {
       display: grid;
@@ -77,8 +81,13 @@
       padding: 0 1rem;
     }
 
-    @media (max-width: 960px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 640px) { .tiles { grid-template-columns: 1fr; } }
+    @media (max-width: 960px) {
+      .tiles { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      .tiles { grid-template-columns: 1fr; }
+    }
 
     .tile {
       background: var(--card);
@@ -88,18 +97,31 @@
       box-shadow: 0 8px 20px rgba(15,35,52,0.04);
       display: flex;
       flex-direction: column;
-      align-items: start;
+      align-items: flex-start;
       transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .tile:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(15,35,52,0.08); }
+    .tile:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(15,35,52,0.08);
+    }
 
-    .tile img {
+    .tile .image-wrap {
       width: 100%;
       height: 150px;
-      object-fit: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
       border-radius: 0.6rem;
       margin-bottom: 0.5rem;
+      background: #f2f4f7;
+    }
+
+    .tile .image-wrap img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
 
     .tile a {
@@ -111,7 +133,11 @@
 
     .tile a:hover { text-decoration: underline; }
 
-    .tile p { font-size: 0.9rem; color: #4b5c67; margin: 0; }
+    .tile p {
+      font-size: 0.9rem;
+      color: #4b5c67;
+      margin: 0;
+    }
 
     footer {
       border-top: 1px solid #dde3ea;
@@ -158,88 +184,109 @@
         Our projects include sustainable manure and organic waste systems, waste-to-energy pathways, nutrient recovery, and international initiatives.
       </p>
 
-<div class="tiles">
-  <div class="tile">
-    <a href="anaerobic_digestion.html">
-      <img src="images/research/anaerobic_digestion.jpg" alt="Anaerobic Digestion">
-      <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Anaerobic Digestion</div>
-    </a>
-    <p>Research on converting organic waste to biogas to generate renewable energy while reducing environmental impact.</p>
-  </div>
+      <div class="tiles">
 
-  <div class="tile">
-    <a href="biochar.html">
-      <img src="images/research/biochar.png" alt="Biochar">
-      <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Biochar</div>
-    </a>
-    <p>Investigating pyrolysis of manure and organic waste streams to produce biochar.</p>
-  </div>
+        <div class="tile">
+          <a href="anaerobic_digestion.html">
+            <div class="image-wrap">
+              <img src="images/research/anaerobic_digestion.jpg" alt="Anaerobic Digestion">
+            </div>
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Anaerobic Digestion</div>
+          </a>
+          <p>Research on converting organic waste to biogas to generate renewable energy while reducing environmental impact.</p>
+        </div>
 
-  <div class="tile">
-    <a href="manure_nutrient_recovery.html">
-      <img src="images/research/manuresep.jpg" alt="Manure Nutrient Recovery">
-      <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Separation and Nutrient Recovery</div>
-    </a>
-    <p>Developing methods to separate manure components and recover nitrogen, phosphorus, and other products from manure.</p>
-  </div>
+        <div class="tile">
+          <a href="biochar.html">
+            <div class="image-wrap">
+              <img src="images/research/biochar.png" alt="Biochar">
+            </div>
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Biochar</div>
+          </a>
+          <p>Investigating pyrolysis of manure and organic waste streams to produce biochar.</p>
+        </div>
 
-  <div class="tile">
-    <a href="climate_impacts.html">
-      <img src="images/research/climate.png" alt="Manure Management to Mitigate Climate Impacts">
-      <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Management to Mitigate Climate Impacts</div>
-    </a>
-    <p>Exploring strategies to reduce greenhouse gas emissions from manure storage and land application.</p>
-  </div>
+        <div class="tile">
+          <a href="manure_nutrient_recovery.html">
+            <div class="image-wrap">
+              <img src="images/research/manuresep.jpg" alt="Manure Nutrient Recovery">
+            </div>
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Separation and Nutrient Recovery</div>
+          </a>
+          <p>Developing methods to separate manure components and recover nitrogen, phosphorus, and other products from manure.</p>
+        </div>
 
-  <div class="tile">
-    <a href="nitrogen_loss.html">
-      <img src="images/research/nitrogen.jpg" alt="Manure Management to Mitigate Nitrogen Losses">
-      <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Management to Mitigate Nitrogen Losses</div>
-    </a>
-    <p>Exploring strategies to reduce nitrogen loss from manure storage and land application.</p>
-  </div>
+        <div class="tile">
+          <a href="climate_impacts.html">
+            <div class="image-wrap">
+              <img src="images/research/climate.png" alt="Manure Management to Mitigate Climate Impacts">
+            </div>
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Management to Mitigate Climate Impacts</div>
+          </a>
+          <p>Exploring strategies to reduce greenhouse gas emissions from manure storage and land application.</p>
+        </div>
 
-  <div class="tile">
-    <a href="sand_separation.html">
-      <img src="images/research/sandsep.jpg" alt="Manure Sand Separation">
-      <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Sand Separation</div>
-    </a>
-    <p>Exploring strategies to separate sand bedding from manure.</p>
-  </div>
+        <div class="tile">
+          <a href="nitrogen_loss.html">
+            <div class="image-wrap">
+              <img src="images/research/nitrogen.jpg" alt="Manure Management to Mitigate Nitrogen Losses">
+            </div>
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Management to Mitigate Nitrogen Losses</div>
+          </a>
+          <p>Exploring strategies to reduce nitrogen loss from manure storage and land application.</p>
+        </div>
 
-  <div class="tile">
-    <a href="land_application.html">
-      <img src="images/research/landapp.jpg" alt="Manure Land Application">
-      <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Land Application</div>
-    </a>
-    <p>Land application of manure.</p>
-  </div>
+        <div class="tile">
+          <a href="sand_separation.html">
+            <div class="image-wrap">
+              <img src="images/research/sandsep.jpg" alt="Manure Sand Separation">
+            </div>
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Sand Separation</div>
+          </a>
+          <p>Exploring strategies to separate sand bedding from manure.</p>
+        </div>
 
-  <div class="tile">
-    <a href="manure_storage.html">
-      <img src="images/research/manurestorage.jpg" alt="Manure Storage">
-      <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Storage</div>
-    </a>
-    <p>Storage of liquid, slurry, and solid manure. Agitation of liquid and slurry manure.</p>
-  </div>
+        <div class="tile">
+          <a href="land_application.html">
+            <div class="image-wrap">
+              <img src="images/research/landapp.jpg" alt="Manure Land Application">
+            </div>
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Land Application</div>
+          </a>
+          <p>Land application of manure.</p>
+        </div>
 
-  <div class="tile">
-    <a href="composting.html">
-      <img src="images/research/compost.jpg" alt="Composting">
-      <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Composting</div>
-    </a>
-    <p>Composting of manure and other organic feedstocks to produce a high-quality soil amendment.</p>
-  </div>
+        <div class="tile">
+          <a href="manure_storage.html">
+            <div class="image-wrap">
+              <img src="images/research/manurestorage.jpg" alt="Manure Storage">
+            </div>
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Storage</div>
+          </a>
+          <p>Storage of liquid, slurry, and solid manure. Agitation of liquid and slurry manure.</p>
+        </div>
 
-  <div class="tile">
-    <a href="uganda.html">
-      <img src="images/research/uganda.jpg" alt="Uganda Air Quality">
-      <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Uganda Air Quality</div>
-    </a>
-    <p>Monitoring and improving air quality in Kampala, Uganda.</p>
-  </div>
-</div>
+        <div class="tile">
+          <a href="composting.html">
+            <div class="image-wrap">
+              <img src="images/research/compost.jpg" alt="Composting">
+            </div>
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Composting</div>
+          </a>
+          <p>Composting of manure and other organic feedstocks to produce a high-quality soil amendment.</p>
+        </div>
 
+        <div class="tile">
+          <a href="uganda.html">
+            <div class="image-wrap">
+              <img src="images/research/uganda.jpg" alt="Uganda Air Quality">
+            </div>
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Uganda Air Quality</div>
+          </a>
+          <p>Monitoring and improving air quality in Kampala, Uganda.</p>
+        </div>
+
+      </div>
     </section>
   </main>
 
