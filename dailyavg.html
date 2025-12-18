@@ -58,7 +58,6 @@
 
 <script>
   const CSV_URL = "data/uganda_pm25_archive.csv"; // commit the merged file here
-
   const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
   function parseTimeMs(isoLike) {
@@ -116,23 +115,27 @@
   }
 
   let chart = null;
-  let bySensor = {}; // device_name -> [{ datetime, pm25_cal }]
+  let bySensor = {}; // device_name -> [{ datetime, pm25 }]
+  let sensorLabelByDevice = {}; // device_name -> site_name (fallback device_name)
 
-  function buildDropdown(sensorNames) {
+  function buildDropdown(items) {
+    // items: [{ device, label }]
     const sel = document.getElementById("sensor-select");
     sel.innerHTML = "";
-    sensorNames.forEach(name => {
+
+    items.forEach(it => {
       const opt = document.createElement("option");
-      opt.value = name;
-      opt.textContent = name;
+      opt.value = it.device;       // internal key stays device_name
+      opt.textContent = it.label;  // display label is site_name (or fallback)
       sel.appendChild(opt);
     });
+
     sel.addEventListener("change", e => render(e.target.value));
   }
 
-  function render(sensorName) {
+  function render(sensorDeviceName) {
     const status = document.getElementById("status");
-    const rows = bySensor[sensorName] || [];
+    const rows = bySensor[sensorDeviceName] || [];
 
     const buckets = {};
     DAYS.forEach(d => buckets[d] = []);
@@ -152,7 +155,8 @@
       return { day: d, avg: sum / arr.length };
     });
 
-    status.textContent = `Loaded ${rows.length.toLocaleString()} records for ${sensorName}.`;
+    const label = sensorLabelByDevice[sensorDeviceName] || sensorDeviceName;
+    status.textContent = `Loaded ${rows.length.toLocaleString()} records for ${label}.`;
 
     const ctx = document.getElementById("pm25-daily-chart").getContext("2d");
     if (chart) chart.destroy();
@@ -198,6 +202,7 @@
 
       const idxDatetime = header.indexOf("datetime");
       const idxDeviceName = header.indexOf("device_name");
+      const idxSiteName = header.indexOf("site_name");
       const idxPm25Cal = header.indexOf("pm2_5_calibrated_value");
 
       if (idxDatetime < 0 || idxDeviceName < 0 || idxPm25Cal < 0) {
@@ -205,32 +210,44 @@
       }
 
       bySensor = {};
+      sensorLabelByDevice = {};
 
       for (let i = 1; i < rows.length; i++) {
         const cols = rows[i];
         const datetime = cols[idxDatetime];
         const device = cols[idxDeviceName];
+        const site = (idxSiteName >= 0 ? cols[idxSiteName] : "") || "";
         const pm25 = Number(cols[idxPm25Cal]);
 
         if (!datetime || !device) continue;
-        if (!Number.isFinite(pm25)) continue; // only keep valid calibrated values
+        if (!Number.isFinite(pm25)) continue;
+
+        const label = (site && site.trim()) ? site.trim() : device;
+        if (!sensorLabelByDevice[device]) sensorLabelByDevice[device] = label;
 
         if (!bySensor[device]) bySensor[device] = [];
         bySensor[device].push({ datetime, pm25 });
       }
 
-      const sensorNames = Object.keys(bySensor).sort((a,b) => a.localeCompare(b));
-      if (!sensorNames.length) {
+      const devices = Object.keys(bySensor).sort((a,b) => {
+        const la = (sensorLabelByDevice[a] || a).toLowerCase();
+        const lb = (sensorLabelByDevice[b] || b).toLowerCase();
+        return la.localeCompare(lb);
+      });
+
+      if (!devices.length) {
         status.textContent = "No usable calibrated PM2.5 data found in the archive.";
         return;
       }
 
-      sensorNames.forEach(name => {
-        bySensor[name].sort((a,b) => (parseTimeMs(a.datetime) ?? 0) - (parseTimeMs(b.datetime) ?? 0));
+      devices.forEach(d => {
+        bySensor[d].sort((a,b) => (parseTimeMs(a.datetime) ?? 0) - (parseTimeMs(b.datetime) ?? 0));
       });
 
-      buildDropdown(sensorNames);
-      render(sensorNames[0]);
+      const items = devices.map(d => ({ device: d, label: sensorLabelByDevice[d] || d }));
+
+      buildDropdown(items);
+      render(devices[0]);
     } catch (e) {
       console.error(e);
       status.textContent = "Could not load the archive data for this page.";
