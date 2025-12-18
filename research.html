@@ -2,65 +2,160 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Anaerobic Digestion — Larson Research Group</title>
+  <title>Research & Extension — Larson Research Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root{
-      --accent:#1b7c6d; --accent-light:#e2f3f0; --dark:#143541; --text:#222; --bg:#f7f9fb;
-      --card:#fff; --border:#dde3ea; --muted:#4b5c67;
+    :root {
+      --accent: #1b7c6d;
+      --accent-light: #e2f3f0;
+      --dark: #143541;
+      --text: #222222;
+      --bg: #f7f9fb;
+      --card: #ffffff;
+      --border: #dde3ea;
+      --muted: #4b5c67;
     }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
-    a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
 
-    header{background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
-    .nav-inner{max-width:1100px;margin:0 auto;padding:0.75rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
-    .nav-title{font-size:1rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--dark);white-space:nowrap}
-    .nav-links{display:flex;flex-wrap:wrap;gap:1rem;font-size:0.9rem}
-    .nav-links a{padding-bottom:0.15rem;border-bottom:2px solid transparent}
-    .nav-links a:hover{border-color:var(--accent);text-decoration:none}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    .page{max-width:1100px;margin:0 auto;padding:1.25rem 1rem 3rem 1rem}
-    .layout{display:grid;grid-template-columns:260px 1fr;gap:1.25rem;align-items:start}
-    @media (max-width:900px){.layout{grid-template-columns:1fr}}
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
 
-    .side{position:sticky;top:80px;background:var(--card);border:1px solid var(--border);border-radius:0.9rem;padding:1rem;box-shadow:0 8px 20px rgba(15,35,52,0.04)}
-    @media (max-width:900px){.side{position:relative;top:0}}
-    .side h2{font-size:0.95rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--dark);margin-bottom:0.75rem}
-    .side a{display:block;padding:0.55rem 0.6rem;border-radius:0.6rem;color:var(--dark);border:1px solid transparent}
-    .side a:hover{background:var(--accent-light);text-decoration:none;border-color:#cfe8e4}
-    .side a.active{background:var(--accent-light);border-color:#cfe8e4;color:var(--dark);font-weight:600}
-    .divider{height:1px;background:var(--border);margin:1rem 0}
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-    .hero{background:var(--card);border:1px solid var(--border);border-radius:0.9rem;overflow:hidden;box-shadow:0 8px 20px rgba(15,35,52,0.04);margin-bottom:1rem}
-    .hero-img{width:100%;height:240px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#f2f4f7}
-    .hero-img img{max-width:100%;max-height:100%;object-fit:contain;display:block}
-    .hero-body{padding:1.1rem 1.1rem 1.2rem 1.1rem}
-    .kicker{display:inline-block;font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--dark);background:var(--accent-light);padding:0.25rem 0.5rem;border-radius:999px;margin-bottom:0.7rem}
-    .title{font-size:1.8rem;color:var(--dark);line-height:1.2;margin-bottom:0.55rem}
-    .subtitle{color:var(--muted);font-size:1rem;max-width:70ch}
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1rem}
-    @media (max-width:700px){.cards{grid-template-columns:1fr}}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:0.9rem;padding:1rem;box-shadow:0 8px 20px rgba(15,35,52,0.04)}
-    .card h3{font-size:1.05rem;color:var(--dark);margin-bottom:0.5rem}
-    .card p{color:var(--muted);font-size:0.95rem}
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
 
-    .section{margin-top:1rem}
-    .section h3{font-size:1.15rem;color:var(--dark);margin-bottom:0.4rem}
-    .section p{color:var(--muted);margin-bottom:0.8rem;max-width:80ch}
+    .nav-title {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--dark);
+      white-space: nowrap;
+    }
 
-    .cta{margin-top:1rem;background:var(--card);border:1px solid var(--border);border-radius:0.9rem;padding:1rem;box-shadow:0 8px 20px rgba(15,35,52,0.04)}
-    .cta p{color:var(--muted)}
-    .cta a{display:inline-block;margin-top:0.6rem;background:var(--accent);color:#fff;padding:0.55rem 0.8rem;border-radius:0.7rem;text-decoration:none;font-weight:600}
-    .cta a:hover{filter:brightness(0.95);text-decoration:none}
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
 
-    footer{border-top:1px solid var(--border);padding:1.2rem 1rem 2rem 1rem;font-size:0.8rem;color:#6b7c88}
-    .footer-inner{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.4rem;text-align:center}
+    .nav-links a {
+      padding-bottom: 0.15rem;
+      border-bottom: 2px solid transparent;
+    }
 
-    @media (max-width:720px){
-      .nav-inner{flex-direction:column;align-items:flex-start}
-      .nav-links{justify-content:flex-start}
+    .nav-links a:hover { border-color: var(--accent); text-decoration: none; }
+
+    .section-title {
+      font-size: 1.6rem;
+      margin: 1rem 0;
+      text-align: center;
+    }
+
+    .intro {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 2rem auto;
+      padding: 0 1rem;
+      color: var(--muted);
+    }
+
+    .tiles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      max-width: 960px;
+      margin: 0 auto 3rem auto;
+      padding: 0 1rem;
+    }
+
+    @media (max-width: 960px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .tiles { grid-template-columns: 1fr; } }
+
+    .tile {
+      background: var(--card);
+      border-radius: 0.9rem;
+      border: 1px solid var(--border);
+      padding: 1rem;
+      box-shadow: 0 8px 20px rgba(15,35,52,0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .tile:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(15,35,52,0.08); }
+
+    .tile .image-wrap {
+      width: 100%;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 0.6rem;
+      margin-bottom: 0.5rem;
+      background: #f2f4f7;
+    }
+
+    .tile .image-wrap img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .tile .tile-title {
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+
+    .tile p { font-size: 0.9rem; color: var(--muted); margin: 0; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.2rem 1rem 2rem 1rem;
+      font-size: 0.8rem;
+      color: #6b7c88;
+    }
+
+    .footer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      text-align: center;
+    }
+
+    @media (max-width: 720px) {
+      .nav-inner { flex-direction: column; align-items: flex-start; }
+      .nav-links { justify-content: flex-start; }
     }
   </style>
 </head>
@@ -78,80 +173,115 @@
     </div>
   </header>
 
-  <main class="page">
-    <div class="layout">
-      <aside class="side" aria-label="Research topics">
-        <h2>Research topics</h2>
-        <a class="active" href="anaerobic_digestion.html">Anaerobic Digestion</a>
-        <a href="biochar.html">Biochar</a>
-        <a href="manure_nutrient_recovery.html">Manure Separation and Nutrient Recovery</a>
-        <a href="climate_impacts.html">Manure Management to Mitigate Climate Impacts</a>
-        <a href="nitrogen_loss.html">Manure Management to Mitigate Nitrogen Losses</a>
-        <a href="sand_separation.html">Manure Sand Separation</a>
-        <a href="land_application.html">Manure Land Application</a>
-        <a href="manure_storage.html">Manure Storage</a>
-        <a href="composting.html">Composting</a>
-        <a href="uganda.html">Uganda Air Quality</a>
-        <div class="divider"></div>
-        <a href="research.html">Back to Research & Extension</a>
-      </aside>
+  <main>
+    <section id="research">
+      <div class="section-title">Research & Extension</div>
+      <p class="intro">
+        Our projects include sustainable manure and organic waste systems, waste-to-energy pathways, nutrient recovery, and international initiatives.
+      </p>
 
-      <div>
-        <section class="hero">
-          <div class="hero-img">
-            <img src="images/research/anaerobic_digestion.jpg" alt="Anaerobic digestion">
-          </div>
-          <div class="hero-body">
-            <div class="kicker">Research & Extension</div>
-            <h1 class="title">Anaerobic Digestion</h1>
-            <p class="subtitle">
-              We study anaerobic digestion systems that convert manure and other organic wastes into renewable biogas, while improving nutrient management and reducing environmental impacts.
-            </p>
-          </div>
-        </section>
-
-        <div class="cards">
-          <section class="card">
-            <h3>Focus</h3>
-            <p>
-              Digester performance, co-digestion opportunities, operational stability, and outcomes that matter for farms and communities.
-            </p>
-          </section>
-          <section class="card">
-            <h3>Applications</h3>
-            <p>
-              Renewable energy generation, methane mitigation from manure management, and integration with nutrient recovery and manure handling.
-            </p>
-          </section>
+      <div class="tiles">
+        <div class="tile">
+          <a href="anaerobic_digestion.html">
+            <div class="image-wrap">
+              <img src="images/research/anaerobic_digestion.jpg" alt="Anaerobic Digestion">
+            </div>
+            <div class="tile-title">Anaerobic Digestion</div>
+          </a>
+          <p>Research on converting organic waste to biogas to generate renewable energy while reducing environmental impact.</p>
         </div>
 
-        <section class="section">
-          <h3>What you’ll find on this page</h3>
-          <p>
-            This page is set up for a short overview, current directions, and a place to add a few key outputs when you’re ready (papers, reports, tools, or partner projects).
-          </p>
-        </section>
+        <div class="tile">
+          <a href="biochar.html">
+            <div class="image-wrap">
+              <img src="images/research/biochar.png" alt="Biochar">
+            </div>
+            <div class="tile-title">Biochar</div>
+          </a>
+          <p>Investigating pyrolysis of manure and organic waste streams to produce biochar.</p>
+        </div>
 
-        <section class="section">
-          <h3>Current directions</h3>
-          <p>
-            Replace this paragraph with a few sentences on your most active digestion-related projects and partners, including what’s new or unique about your approach.
-          </p>
-        </section>
+        <div class="tile">
+          <a href="manure_nutrient_recovery.html">
+            <div class="image-wrap">
+              <img src="images/research/manuresep.jpg" alt="Manure Nutrient Recovery">
+            </div>
+            <div class="tile-title">Manure Separation and Nutrient Recovery</div>
+          </a>
+          <p>Developing methods to separate manure components and recover nitrogen, phosphorus, and other products from manure.</p>
+        </div>
 
-        <section class="section">
-          <h3>Extension and outreach</h3>
-          <p>
-            Replace this paragraph with the extension side: decision-support, operator guidance, workshops, field days, stakeholder engagement, and practical takeaways.
-          </p>
-        </section>
+        <div class="tile">
+          <a href="climate_impacts.html">
+            <div class="image-wrap">
+              <img src="images/research/climate.png" alt="Manure Management to Mitigate Climate Impacts">
+            </div>
+            <div class="tile-title">Manure Management to Mitigate Climate Impacts</div>
+          </a>
+          <p>Exploring strategies to reduce greenhouse gas emissions from manure storage and land application.</p>
+        </div>
 
-        <div class="cta">
-          <p>Interested in collaborating or learning more about this topic?</p>
-          <a href="index.html#contact">Contact the group</a>
+        <div class="tile">
+          <a href="nitrogen_loss.html">
+            <div class="image-wrap">
+              <img src="images/research/nitrogen.jpg" alt="Manure Management to Mitigate Nitrogen Losses">
+            </div>
+            <div class="tile-title">Manure Management to Mitigate Nitrogen Losses</div>
+          </a>
+          <p>Exploring strategies to reduce nitrogen loss from manure storage and land application.</p>
+        </div>
+
+        <div class="tile">
+          <a href="sand_separation.html">
+            <div class="image-wrap">
+              <img src="images/research/sandsep.jpg" alt="Manure Sand Separation">
+            </div>
+            <div class="tile-title">Manure Sand Separation</div>
+          </a>
+          <p>Exploring strategies to separate sand bedding from manure.</p>
+        </div>
+
+        <div class="tile">
+          <a href="land_application.html">
+            <div class="image-wrap">
+              <img src="images/research/landapp.jpg" alt="Manure Land Application">
+            </div>
+            <div class="tile-title">Manure Land Application</div>
+          </a>
+          <p>Land application of manure.</p>
+        </div>
+
+        <div class="tile">
+          <a href="manure_storage.html">
+            <div class="image-wrap">
+              <img src="images/research/manurestorage.jpg" alt="Manure Storage">
+            </div>
+            <div class="tile-title">Manure Storage</div>
+          </a>
+          <p>Storage of liquid, slurry, and solid manure. Agitation of liquid and slurry manure.</p>
+        </div>
+
+        <div class="tile">
+          <a href="composting.html">
+            <div class="image-wrap">
+              <img src="images/research/compost.jpg" alt="Composting">
+            </div>
+            <div class="tile-title">Composting</div>
+          </a>
+          <p>Composting of manure and other organic feedstocks to produce a high-quality soil amendment.</p>
+        </div>
+
+        <div class="tile">
+          <a href="uganda.html">
+            <div class="image-wrap">
+              <img src="images/research/uganda.jpg" alt="Uganda Air Quality">
+            </div>
+            <div class="tile-title">Uganda Air Quality</div>
+          </a>
+          <p>Monitoring and improving air quality in Kampala, Uganda.</p>
         </div>
       </div>
-    </div>
+    </section>
   </main>
 
   <footer>
