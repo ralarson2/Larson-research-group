@@ -163,8 +163,14 @@
       display:block;
     }
 
+    .hero-caption{
+      padding:0.6rem 1.1rem 0.1rem 1.1rem;
+      color:var(--muted);
+      font-size:0.9rem;
+    }
+
     .hero-body{
-      padding:1.1rem 1.1rem 1.2rem 1.1rem;
+      padding:0.6rem 1.1rem 1.2rem 1.1rem;
     }
 
     .kicker{
@@ -245,6 +251,15 @@
 
     .section p:last-child{margin-bottom:0}
 
+    .section ul{
+      margin:0.25rem 0 0 1.1rem;
+      color:var(--muted);
+    }
+
+    .section li{
+      margin:0.35rem 0;
+    }
+
     .mini-table{
       width:100%;
       border-collapse:separate;
@@ -277,48 +292,46 @@
       border-bottom:none;
     }
 
-    .cta{
-      margin-top:1rem;
-      background:var(--card);
+    .digester-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:0.9rem;
+      margin-top:0.75rem;
+    }
+
+    @media (max-width:900px){
+      .digester-grid{grid-template-columns:1fr}
+    }
+
+    figure.digester{
       border:1px solid var(--border);
       border-radius:0.9rem;
-      padding:1rem;
-      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+      overflow:hidden;
+      background:#fff;
+    }
+
+    figure.digester .imgwrap{
+      width:100%;
+      height:190px;
+      background:#f2f4f7;
       display:flex;
-      flex-wrap:wrap;
-      gap:0.75rem;
       align-items:center;
-      justify-content:space-between;
+      justify-content:center;
+      overflow:hidden;
     }
 
-    .cta p{color:var(--muted);margin:0;max-width:80ch}
-
-    .cta .buttons{
-      display:flex;
-      gap:0.6rem;
-      flex-wrap:wrap;
+    figure.digester img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
     }
 
-    .btn{
-      display:inline-block;
-      background:var(--accent);
-      color:#fff;
-      padding:0.55rem 0.85rem;
-      border-radius:0.7rem;
-      text-decoration:none;
-      font-weight:600;
-      white-space:nowrap;
+    figure.digester figcaption{
+      padding:0.65rem 0.75rem 0.75rem 0.75rem;
+      color:var(--muted);
+      font-size:0.9rem;
     }
-
-    .btn:hover{filter:brightness(0.95);text-decoration:none}
-
-    .btn.secondary{
-      background:#ffffff;
-      color:var(--dark);
-      border:1px solid var(--border);
-    }
-
-    .btn.secondary:hover{background:#f7f9fb}
 
     footer{
       border-top:1px solid var(--border);
@@ -382,6 +395,7 @@
           <div class="hero-img">
             <img src="images/research/anaerobic_digestion.jpg" alt="Anaerobic digestion">
           </div>
+          <div class="hero-caption">Completely mixed anaerobic digestion system</div>
           <div class="hero-body">
             <div class="kicker">Research & Extension</div>
             <h1 class="title">Anaerobic Digestion</h1>
@@ -395,13 +409,13 @@
           <section class="card">
             <h3>What it is</h3>
             <p>
-              Anaerobic digestion is a biological process where microorganisms break down organic material without oxygen, producing biogas and digestate. Biogas is mostly methane with carbon dioxide and small amounts of other gases, and digestate retains nutrients for land application. 
+              Anaerobic digestion is a biological process where microorganisms break down organic material without oxygen, producing biogas and digestate. Biogas is mostly methane with carbon dioxide and small amounts of other gases, and digestate retains nutrients for land application.
             </p>
           </section>
           <section class="card">
             <h3>Why it matters</h3>
             <p>
-              Digesters can support energy independence, reduce odors and pathogens, and reduce greenhouse gas emissions by capturing methane that would otherwise be emitted from manure handling. 
+              Digesters can support energy independence, reduce odors and pathogens, and reduce greenhouse gas emissions by capturing methane that would otherwise be emitted from manure handling.
             </p>
           </section>
         </div>
@@ -419,31 +433,51 @@
         <section class="section">
           <h3>Common digester designs and outputs</h3>
           <p>
-            Agricultural digester designs vary, but covered lagoons, plug-flow systems, and complete mix systems are most common. 
+            Agricultural digester designs vary, but covered lagoons, plug-flow systems, and complete mix systems are most common.
           </p>
+
+          <div class="digester-grid" aria-label="Digester type photos">
+            <figure class="digester">
+              <div class="imgwrap">
+                <img src="images/research/digesters/mixed_plug_flow.jpg" alt="Mixed plug-flow anaerobic digester">
+              </div>
+              <figcaption>Mixed plug-flow digester</figcaption>
+            </figure>
+
+            <figure class="digester">
+              <div class="imgwrap">
+                <img src="images/research/digesters/covered_lagoon.jpg" alt="Covered lagoon anaerobic digester">
+              </div>
+              <figcaption>Covered lagoon digester</figcaption>
+            </figure>
+
+            <figure class="digester">
+              <div class="imgwrap">
+                <img src="images/research/digesters/dry_digester.jpg" alt="Dry anaerobic digester">
+              </div>
+              <figcaption>Dry digester</figcaption>
+            </figure>
+          </div>
 
           <table class="mini-table" aria-label="Biogas and digestate outputs">
             <tr>
               <th>Biogas</th>
-              <td>Methane is typically the largest component of biogas (60-65%), and the gas can be used for heat, electricity generation, cooling, or upgraded to renewable natural gas.             </tr>
+              <td>Methane is typically the largest component of biogas (60-65%), and the gas can be used for heat, electricity generation, cooling, or upgraded to renewable natural gas.</td>
+            </tr>
             <tr>
               <th>Digestate</th>
-              <td>Digestate is commonly separated into liquid and solids for flexible management. Digestion shifts nitrogen toward more plant-available inorganic forms, which can increase fertilizer value but also increase the risk of ammonia loss if not managed carefully. </td>
+              <td>Digestate is commonly separated into liquid and solids for flexible management. Digestion shifts nitrogen toward more plant-available inorganic forms, which can increase fertilizer value but also increase the risk of ammonia loss if not managed carefully.</td>
             </tr>
           </table>
         </section>
 
         <section class="section">
           <h3>Benefits and tradeoffs</h3>
-          <p>
-            Capturing and combusting methane lowers climate impact because methane is a potent greenhouse gas, and digestion can reduce emissions from manure handling and downstream storage because volatile compounds are degraded in the digester. 
-          </p>
-          <p>
-            Digestion should be paired with downstream practices that minimize ammonia emissions, such as covered storage and injection or rapid incorporation during land application. 
-          </p>
-          <p>
-            Co-benefits include odor reduction, pathogen inactivation, and antibiotic degradation under digester conditions.
-          </p>
+          <ul>
+            <li>Capturing and combusting methane lowers climate impact because methane is a potent greenhouse gas, and digestion can reduce emissions from manure handling and downstream storage because volatile compounds are degraded in the digester.</li>
+            <li>Digestion should be paired with downstream practices that minimize ammonia emissions, such as covered storage and injection or rapid incorporation during land application.</li>
+            <li>Co-benefits include odor reduction, pathogen inactivation, and antibiotic degradation under digester conditions.</li>
+          </ul>
         </section>
 
         <section class="section">
@@ -452,23 +486,25 @@
             Economics depend on system scale, design, and the product pathway. Many existing agricultural projects historically generated electricity, while newer projects increasingly target renewable natural gas, influenced by policy-driven incentives and credit markets.
           </p>
           <p>
-            Reported capital costs vary widely by design and size, and ongoing operation and maintenance can be a meaningful fraction of total costs, so project evaluation needs to include realistic management requirements and downstream handling. 
+            Reported capital costs vary widely by design and size, and ongoing operation and maintenance can be a meaningful fraction of total costs, so project evaluation needs to include realistic management requirements and downstream handling.
           </p>
         </section>
 
         <section class="section">
           <h3>Related fact sheets and resources</h3>
-                   <p>
-        <a href="https://cdn.shopify.com/s/files/1/0145/8808/4272/files/A4131-02.pdf" target="_blank" rel="noopener">
-          Dairy Anaerobic Digestion Systems and their Impact on Greenhouse Gas and Ammonia Emissions
-        </a>
+          <p>
+            <a href="factsheets.html">See all Resources and fact sheets</a>
           </p>
           <p>
-               <a href="https://cdn.shopify.com/s/files/1/0145/8808/4272/files/A4192-001.pdf" target="_blank" rel="noopener">
-          Anaerobic Digestion from Animal Manure
-        </a>
+            <a href="https://cdn.shopify.com/s/files/1/0145/8808/4272/files/A4131-02.pdf" target="_blank" rel="noopener">
+              Dairy Anaerobic Digestion Systems and their Impact on Greenhouse Gas and Ammonia Emissions
+            </a>
           </p>
-                    </div>
+          <p>
+            <a href="mp-series-AD.pdf" target="_blank" rel="noopener">
+              Manure Processing Fact Sheet Series: Anaerobic Digestion from Animal Manure
+            </a>
+          </p>
         </section>
 
       </div>
