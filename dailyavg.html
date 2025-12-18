@@ -4,24 +4,20 @@
   <meta charset="UTF-8" />
   <title>PM2.5 Daily Average Concentrations – Larson Research Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      margin: 1rem;
       background: #f7f9fb;
       color: #222;
+      margin: 1rem;
     }
 
     h1 {
       font-size: 1.6rem;
-      margin-bottom: 0.4rem;
-    }
-
-    p {
-      max-width: 960px;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     label {
@@ -38,7 +34,6 @@
     .chart-container {
       width: 100%;
       max-width: 960px;
-      height: 420px;
       margin-bottom: 1.5rem;
     }
 
@@ -47,7 +42,6 @@
       width: 100%;
       max-width: 960px;
       margin-top: 0.5rem;
-      font-size: 0.9rem;
     }
 
     th, td {
@@ -63,172 +57,183 @@
 </head>
 
 <body>
+  <h1>PM2.5 Daily Average Concentrations</h1>
+  <p>Select a sensor location to view average PM2.5 concentrations by day of the week.</p>
 
-  <h1>PM2.5 average concentrations by day of the week</h1>
-  <p>Select a monitoring location to view average PM2.5 concentrations aggregated by day of the week using archived sensor data.</p>
-
-  <label for="sensor-select">Sensor location:</label>
-  <select id="sensor-select"></select>
+  <label for="sensorSelect">Sensor:</label>
+  <select id="sensorSelect"></select>
 
   <div class="chart-container">
-    <canvas id="pm25-daily-chart"></canvas>
+    <canvas id="pm25Chart"></canvas>
   </div>
 
-  <table id="pm25-daily-table">
+  <table>
     <thead>
       <tr>
-        <th>Day of the week</th>
+        <th>Day of the Week</th>
         <th>Average PM2.5 (µg/m³)</th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody id="pm25TableBody"></tbody>
   </table>
 
 <script>
-const sites = {
-  "airqo_g5564": "Busabala, Makindye",
-  "aq_72": "Luwafu, Makindye",
-  "aq_43": "Lukuli, Makindye",
-  "aq_g520": "Mbogo Road, Wabigalo",
-  "aq_g5_97": "Mbuya II, Nakawa",
-  "aq_g5_46": "Ggaba Bypass, Makindye",
-  "airqo_g5438": "Salaama Rd, Makindye",
-  "aq_g5_53": "Kansanga, Makindye",
-  "aq_g5_48": "Kabalagala, Makindye",
-  "aq_g5_43": "Katwe 1, Makindye",
-  "airqo_g5548": "Nadiope Rd Mbuya, Nakawa",
-  "airqo_g5567": "Old Kira Rd Kamwokya",
-  "airqo_g5563": "Bulange, Rubaga",
-  "airqo_g5449": "Forest Village Muyenga",
-  "airqo_g5446": "Kitintale, Nakawa"
-};
+/* =========================
+   Configuration
+========================= */
 
-function normalizeDeviceId(raw) {
-  if (!raw) return "";
-  return String(raw).trim().toLowerCase().replace(/[^a-z0-9_]/g, "_");
+const DATA_URL = "historical_pm25.csv";  // update filename if needed
+
+const DAYS = [
+  "Sunday", "Monday", "Tuesday",
+  "Wednesday", "Thursday", "Friday", "Saturday"
+];
+
+/* =========================
+   State
+========================= */
+
+let rawData = [];
+let chart = null;
+
+/* =========================
+   Helpers
+========================= */
+
+function parseCSV(text) {
+  const lines = text.trim().split("\n");
+  const headers = lines[0].split(",");
+
+  return lines.slice(1).map(line => {
+    const values = line.split(",");
+    const row = {};
+    headers.forEach((h, i) => row[h.trim()] = values[i]?.trim());
+    return row;
+  });
 }
 
-function parseTimeMs(isoLike) {
-  const d = new Date(isoLike);
-  return Number.isFinite(d.getTime()) ? d.getTime() : null;
+function getDayOfWeek(dateString) {
+  const d = new Date(dateString);
+  return DAYS[d.getDay()];
 }
 
-function dayOfWeek(ms) {
-  return new Date(ms).toLocaleDateString("en-US", { weekday: "long" });
+function average(arr) {
+  return arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0;
 }
 
-function fmtNumber(v) {
+function formatNumber(v) {
   return Number.isFinite(v) ? v.toFixed(1) : "";
 }
 
-let histSeries = {};
-let pm25Chart = null;
+/* =========================
+   Data Processing
+========================= */
 
-async function loadHistoricalData() {
-  try {
-    const res = await fetch("data/uganda_pm25_archive.csv", { cache: "no-store" });
-    if (!res.ok) throw new Error("CSV not found");
-
-    const text = await res.text();
-    const lines = text.trim().split("\n");
-    const header = lines[0].split(",");
-
-    const idxDevice = header.indexOf("device_id");
-    const idxTime = header.indexOf("timestamp");
-    const idxPm25 = header.indexOf("pm2_5_ug_m3");
-
-    for (let i = 1; i < lines.length; i++) {
-      const cols = lines[i].split(",");
-      const id = normalizeDeviceId(cols[idxDevice]);
-      const t = cols[idxTime];
-      const pm25 = Number(cols[idxPm25]);
-
-      if (!id || !t || !Number.isFinite(pm25)) continue;
-      if (!histSeries[id]) histSeries[id] = [];
-      histSeries[id].push({ t, pm25 });
-    }
-
-    Object.keys(histSeries).forEach(id => {
-      histSeries[id].sort((a, b) => parseTimeMs(a.t) - parseTimeMs(b.t));
-    });
-
-    populateSensorDropdown();
-    renderForSensor(Object.keys(histSeries)[0]);
-
-  } catch (e) {
-    console.error("Failed loading daily averages:", e);
-  }
+function getSensors(data) {
+  return [...new Set(data.map(d => d.device_name))].sort();
 }
 
-function populateSensorDropdown() {
-  const sel = document.getElementById("sensor-select");
-  sel.innerHTML = "";
-
-  Object.keys(histSeries).forEach(id => {
-    const opt = document.createElement("option");
-    opt.value = id;
-    opt.textContent = sites[id] || id;
-    sel.appendChild(opt);
-  });
-
-  sel.addEventListener("change", e => renderForSensor(e.target.value));
-}
-
-function renderForSensor(sensorId) {
-  const data = histSeries[sensorId] || [];
+function computeDailyAverages(sensor) {
   const buckets = {
-    Sunday: [], Monday: [], Tuesday: [], Wednesday: [],
-    Thursday: [], Friday: [], Saturday: []
+    Sunday: [], Monday: [], Tuesday: [],
+    Wednesday: [], Thursday: [], Friday: [], Saturday: []
   };
 
-  data.forEach(p => {
-    const ms = parseTimeMs(p.t);
-    if (ms !== null) buckets[dayOfWeek(ms)].push(p.pm25);
-  });
+  rawData
+    .filter(d => d.device_name === sensor)
+    .forEach(d => {
+      const pm = Number(d.pm2_5_calibrated_value);
+      if (!Number.isFinite(pm)) return;
+      const day = getDayOfWeek(d.datetime);
+      buckets[day].push(pm);
+    });
 
-  const days = Object.keys(buckets);
-  const averages = days.map(d => {
-    const arr = buckets[d];
-    return arr.length ? arr.reduce((a,b)=>a+b,0) / arr.length : 0;
-  });
+  return DAYS.map(day => ({
+    day,
+    avg: average(buckets[day])
+  }));
+}
 
-  const ctx = document.getElementById("pm25-daily-chart");
-  if (pm25Chart) pm25Chart.destroy();
+/* =========================
+   Rendering
+========================= */
 
-  pm25Chart = new Chart(ctx, {
+function renderChart(data) {
+  const ctx = document.getElementById("pm25Chart");
+
+  if (chart) chart.destroy();
+
+  chart = new Chart(ctx, {
     type: "bar",
     data: {
-      labels: days,
+      labels: data.map(d => d.day),
       datasets: [{
-        label: "PM2.5 (µg/m³)",
-        data: averages,
+        data: data.map(d => d.avg),
         backgroundColor: "#1b7c6d"
       }]
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false,
       plugins: { legend: { display: false } },
       scales: {
         y: {
           beginAtZero: true,
-          title: { display: true, text: "PM2.5 (µg/m³)" }
+          title: {
+            display: true,
+            text: "PM2.5 (µg/m³)"
+          }
         }
       }
     }
   });
+}
 
-  const tbody = document.querySelector("#pm25-daily-table tbody");
+function renderTable(data) {
+  const tbody = document.getElementById("pm25TableBody");
   tbody.innerHTML = "";
-  days.forEach((d, i) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${d}</td><td>${fmtNumber(averages[i])}</td>`;
-    tbody.appendChild(tr);
+
+  data.forEach(d => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${d.day}</td>
+      <td>${formatNumber(d.avg)}</td>
+    `;
+    tbody.appendChild(row);
   });
 }
 
-loadHistoricalData();
-</script>
+/* =========================
+   Initialization
+========================= */
 
+async function init() {
+  const response = await fetch(DATA_URL);
+  const text = await response.text();
+  rawData = parseCSV(text);
+
+  const sensors = getSensors(rawData);
+  const select = document.getElementById("sensorSelect");
+
+  sensors.forEach(s => {
+    const opt = document.createElement("option");
+    opt.value = s;
+    opt.textContent = s;
+    select.appendChild(opt);
+  });
+
+  function update() {
+    const daily = computeDailyAverages(select.value);
+    renderChart(daily);
+    renderTable(daily);
+  }
+
+  select.addEventListener("change", update);
+
+  select.value = sensors[0];
+  update();
+}
+
+init();
+</script>
 </body>
 </html>
