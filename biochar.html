@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PROJECT TITLE — Larson Research Group</title>
+  <title>Biochar — Larson Research Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
@@ -12,6 +12,8 @@
       --text: #222222;
       --bg: #f7f9fb;
       --card: #ffffff;
+      --border:#dde3ea;
+      --muted:#4b5c67;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -20,7 +22,7 @@
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     a { color: var(--accent); text-decoration: none; }
@@ -28,7 +30,7 @@
 
     header {
       background: var(--card);
-      border-bottom: 1px solid #dde3ea;
+      border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 10;
@@ -54,16 +56,123 @@
 
     .nav-links { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.9rem; }
     .nav-links a { padding-bottom: 0.15rem; border-bottom: 2px solid transparent; }
-    .nav-links a:hover { border-color: var(--accent); }
+    .nav-links a:hover { border-color: var(--accent); text-decoration: none; }
 
-    main { max-width: 960px; margin: 2.5rem auto; padding: 0 1rem; }
+    main { max-width: 960px; margin: 2rem auto 3rem auto; padding: 0 1rem; }
 
-    .page-title { font-size: 2rem; margin-bottom: 1rem; text-align:center; color:var(--dark); }
-    .page-image { width: 100%; max-height: 300px; object-fit: cover; border-radius: 0.6rem; margin-bottom: 1rem; }
-    .page-text { font-size: 1rem; color: #4b5c67; line-height:1.6; margin-bottom:2rem; }
+    .hero {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.9rem;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(15,35,52,0.04);
+      margin-bottom: 1rem;
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f2f4f7;
+      overflow: hidden;
+    }
+
+    .hero-img img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .hero-caption {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 0.6rem 1rem 0.2rem 1rem;
+    }
+
+    .hero-body {
+      padding: 0.9rem 1rem 1.1rem 1rem;
+    }
+
+    .kicker {
+      display: inline-block;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dark);
+      background: var(--accent-light);
+      padding: 0.25rem 0.5rem;
+      border-radius: 999px;
+      margin-bottom: 0.6rem;
+    }
+
+    .page-title { font-size: 2rem; margin-bottom: 0.4rem; color: var(--dark); }
+    .subtitle { font-size: 1rem; color: var(--muted); max-width: 85ch; }
+
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.9rem;
+      padding: 1rem;
+      box-shadow: 0 8px 20px rgba(15,35,52,0.04);
+      margin-top: 1rem;
+    }
+
+    .section h2 {
+      font-size: 1.15rem;
+      color: var(--dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .section p {
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      max-width: 90ch;
+    }
+
+    .section p:last-child { margin-bottom: 0; }
+
+    .callout {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 0.85rem;
+      margin-top: 0.75rem;
+    }
+
+    .btnrow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.65rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.55rem 0.85rem;
+      border-radius: 0.7rem;
+      text-decoration: none;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .btn:hover { filter: brightness(0.95); text-decoration: none; }
+
+    .btn.secondary {
+      background: #ffffff;
+      color: var(--dark);
+      border: 1px solid var(--border);
+    }
+
+    .btn.secondary:hover { background: #f7f9fb; }
 
     footer {
-      border-top: 1px solid #dde3ea;
+      border-top: 1px solid var(--border);
       padding: 1.2rem 1rem 2rem 1rem;
       font-size: 0.8rem;
       color: #6b7c88;
@@ -83,6 +192,7 @@
     @media (max-width: 720px) {
       .nav-inner { flex-direction: column; align-items: flex-start; }
       .nav-links { justify-content: flex-start; }
+      .hero-img { height: 240px; }
     }
   </style>
 </head>
@@ -101,11 +211,82 @@
   </header>
 
   <main>
-    <div class="page-title">PROJECT TITLE</div>
-    <img src="IMAGE PATH" alt="PROJECT TITLE" class="page-image">
-    <div class="page-text">
-      Detailed description of the research project. Include objectives, methods, key findings, and relevance. You can also link to publications, datasets, or related projects.
-    </div>
+    <section class="hero">
+      <div class="hero-img">
+        <img src="images/research/biochar.png" alt="Biochar">
+      </div>
+      <div class="hero-caption">Biochar produced from manure- and wood-based feedstocks</div>
+      <div class="hero-body">
+        <div class="kicker">Research & Extension</div>
+        <h1 class="page-title">Biochar</h1>
+        <p class="subtitle">
+          We work on manure- and wood-based biochar production and field applications, including how biochar can fit into manure systems as a soil amendment and nutrient management tool. :contentReference[oaicite:0]{index=0}
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>What biochar is</h2>
+      <p>
+        Biochar is a carbon-rich material produced by pyrolysis, where biomass is heated at high temperature under oxygen-limited conditions. Pyrolysis generates three products: syngas and bio-oil (which can be used for energy) and the solid residual biochar. :contentReference[oaicite:1]{index=1}
+      </p>
+      <p>
+        Biochar is typically porous with high carbon content and low density, and it is often discussed as a soil amendment that can support soil health and nutrient management. :contentReference[oaicite:2]{index=2}
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>How biochar is produced</h2>
+      <p>
+        Slow pyrolysis is commonly used when the goal is to maximize biochar recovery. Operating conditions vary by reactor design, but slow pyrolysis is typically described across roughly 300–700°C with slow heating rates, and systems can be designed as batch or continuous operations. :contentReference[oaicite:3]{index=3} :contentReference[oaicite:4]{index=4}
+      </p>
+      <p>
+        Feedstock moisture matters for performance and energy requirements, and guidance commonly recommends keeping moisture below about 30% (or drying when higher) to reduce energy demand and reach target temperatures. :contentReference[oaicite:5]{index=5}
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Why manure-based biochar is of interest</h2>
+      <p>
+        Converting separated manure solids to biochar can substantially reduce mass and volume, which can make storage and transportation easier compared to handling the original solids. :contentReference[oaicite:6]{index=6}
+      </p>
+      <p>
+        During pyrolysis, reported phosphorus recovery in manure-derived biochar is high, while nitrogen recovery is lower because some nitrogen is volatilized; recovery depends on temperature and operating conditions. :contentReference[oaicite:7]{index=7}
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Uses we focus on</h2>
+      <p>
+        Biochar is used most commonly as a soil amendment, and it is also explored for filtration applications and integration into manure systems (for example, as a cover or as part of broader nutrient management strategies). :contentReference[oaicite:8]{index=8}
+      </p>
+      <p>
+        Research findings across studies show that biochar can improve nutrient retention and reduce nitrate leaching in some contexts, while crop yield responses can vary by soil, climate, feedstock, and application conditions. :contentReference[oaicite:9]{index=9} :contentReference[oaicite:10]{index=10}
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Practical considerations</h2>
+      <p>
+        Costs and feasibility depend heavily on system scale, whether the reactor is batch or continuous, and whether energy recovery is integrated. On-farm deployment can also require pretreatment steps such as solid-liquid separation and drying to meet moisture requirements. :contentReference[oaicite:11]{index=11} :contentReference[oaicite:12]{index=12}
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Related fact sheet and resources</h2>
+      <p>
+        The biochar fact sheet below is also linked from the Resources page.
+      </p>
+      <div class="callout">
+        <p>
+          Manure Processing Fact Sheet Series: Biochar Production through Slow Pyrolysis of Animal Manure. :contentReference[oaicite:13]{index=13}
+        </p>
+        <div class="btnrow">
+          <a class="btn secondary" href="factsheets.html">Go to Resources page</a>
+          <a class="btn" href="mp-series-biochar.pdf" target="_blank" rel="noopener">Open biochar fact sheet</a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
