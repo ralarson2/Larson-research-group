@@ -2,87 +2,346 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PROJECT TITLE — Larson Research Group</title>
+  <title>Manure Separation and Nutrient Recovery — Larson Research Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root {
-      --accent: #1b7c6d;
-      --accent-light: #e2f3f0;
-      --dark: #143541;
-      --text: #222222;
-      --bg: #f7f9fb;
-      --card: #ffffff;
+    :root{
+      --accent:#1b7c6d;
+      --accent-light:#e2f3f0;
+      --dark:#143541;
+      --text:#222;
+      --bg:#f7f9fb;
+      --card:#fff;
+      --border:#dde3ea;
+      --muted:#4b5c67;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *{box-sizing:border-box;margin:0;padding:0}
 
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
     }
 
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
 
-    header {
-      background: var(--card);
-      border-bottom: 1px solid #dde3ea;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+    header{
+      background:var(--card);
+      border-bottom:1px solid var(--border);
+      position:sticky;
+      top:0;
+      z-index:10;
     }
 
-    .nav-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0.75rem 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
+    .nav-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:0.75rem 1rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
     }
 
-    .nav-title {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--dark);
-      white-space: nowrap;
+    .nav-title{
+      font-size:1rem;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      color:var(--dark);
+      white-space:nowrap;
     }
 
-    .nav-links { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.9rem; }
-    .nav-links a { padding-bottom: 0.15rem; border-bottom: 2px solid transparent; }
-    .nav-links a:hover { border-color: var(--accent); }
-
-    main { max-width: 960px; margin: 2.5rem auto; padding: 0 1rem; }
-
-    .page-title { font-size: 2rem; margin-bottom: 1rem; text-align:center; color:var(--dark); }
-    .page-image { width: 100%; max-height: 300px; object-fit: cover; border-radius: 0.6rem; margin-bottom: 1rem; }
-    .page-text { font-size: 1rem; color: #4b5c67; line-height:1.6; margin-bottom:2rem; }
-
-    footer {
-      border-top: 1px solid #dde3ea;
-      padding: 1.2rem 1rem 2rem 1rem;
-      font-size: 0.8rem;
-      color: #6b7c88;
+    .nav-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:1rem;
+      font-size:0.9rem;
     }
 
-    .footer-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      text-align: center;
+    .nav-links a{
+      padding-bottom:0.15rem;
+      border-bottom:2px solid transparent;
     }
 
-    @media (max-width: 720px) {
-      .nav-inner { flex-direction: column; align-items: flex-start; }
-      .nav-links { justify-content: flex-start; }
+    .nav-links a:hover{
+      border-color:var(--accent);
+      text-decoration:none;
+    }
+
+    .page{
+      max-width:1100px;
+      margin:0 auto;
+      padding:1.25rem 1rem 3rem 1rem;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:260px 1fr;
+      gap:1.25rem;
+      align-items:start;
+    }
+
+    @media (max-width:900px){
+      .layout{grid-template-columns:1fr}
+    }
+
+    .side{
+      position:sticky;
+      top:80px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    @media (max-width:900px){
+      .side{position:relative;top:0}
+    }
+
+    .side h2{
+      font-size:0.95rem;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      color:var(--dark);
+      margin-bottom:0.75rem;
+    }
+
+    .side a{
+      display:block;
+      padding:0.55rem 0.6rem;
+      border-radius:0.6rem;
+      color:var(--dark);
+      border:1px solid transparent;
+    }
+
+    .side a:hover{
+      background:var(--accent-light);
+      text-decoration:none;
+      border-color:#cfe8e4;
+    }
+
+    .side a.active{
+      background:var(--accent-light);
+      border-color:#cfe8e4;
+      color:var(--dark);
+      font-weight:600;
+    }
+
+    .divider{
+      height:1px;
+      background:var(--border);
+      margin:1rem 0;
+    }
+
+    .hero{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      overflow:hidden;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+      margin-bottom:1rem;
+    }
+
+    .hero-img{
+      width:100%;
+      height:240px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      background:#f2f4f7;
+    }
+
+    .hero-img img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      display:block;
+    }
+
+    .hero-body{
+      padding:1.1rem 1.1rem 1.2rem 1.1rem;
+    }
+
+    .kicker{
+      display:inline-block;
+      font-size:0.8rem;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--dark);
+      background:var(--accent-light);
+      padding:0.25rem 0.5rem;
+      border-radius:999px;
+      margin-bottom:0.7rem;
+    }
+
+    .title{
+      font-size:1.8rem;
+      color:var(--dark);
+      line-height:1.2;
+      margin-bottom:0.55rem;
+    }
+
+    .subtitle{
+      color:var(--muted);
+      font-size:1rem;
+      max-width:85ch;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:1rem;
+      margin-top:1rem;
+    }
+
+    @media (max-width:700px){
+      .cards{grid-template-columns:1fr}
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    .card h3{
+      font-size:1.05rem;
+      color:var(--dark);
+      margin-bottom:0.5rem;
+    }
+
+    .card p{
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+
+    .section{
+      margin-top:1rem;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    .section h3{
+      font-size:1.15rem;
+      color:var(--dark);
+      margin-bottom:0.4rem;
+    }
+
+    .section p{
+      color:var(--muted);
+      margin-bottom:0.75rem;
+      max-width:92ch;
+    }
+
+    .section p:last-child{margin-bottom:0}
+
+    .mini-table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border-radius:0.75rem;
+      border:1px solid var(--border);
+      background:#fff;
+      margin-top:0.6rem;
+    }
+
+    .mini-table th, .mini-table td{
+      text-align:left;
+      padding:0.65rem 0.75rem;
+      border-bottom:1px solid var(--border);
+      vertical-align:top;
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+
+    .mini-table th{
+      color:var(--dark);
+      background:var(--accent-light);
+      font-weight:600;
+      width:36%;
+    }
+
+    .mini-table tr:last-child th,
+    .mini-table tr:last-child td{
+      border-bottom:none;
+    }
+
+    .cta{
+      margin-top:1rem;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+      display:flex;
+      flex-wrap:wrap;
+      gap:0.75rem;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .cta p{color:var(--muted);margin:0;max-width:82ch}
+
+    .cta .buttons{
+      display:flex;
+      gap:0.6rem;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-block;
+      background:var(--accent);
+      color:#fff;
+      padding:0.55rem 0.85rem;
+      border-radius:0.7rem;
+      text-decoration:none;
+      font-weight:600;
+      white-space:nowrap;
+    }
+
+    .btn:hover{filter:brightness(0.95);text-decoration:none}
+
+    .btn.secondary{
+      background:#ffffff;
+      color:var(--dark);
+      border:1px solid var(--border);
+    }
+
+    .btn.secondary:hover{background:#f7f9fb}
+
+    footer{
+      border-top:1px solid var(--border);
+      padding:1.2rem 1rem 2rem 1rem;
+      font-size:0.8rem;
+      color:#6b7c88;
+    }
+
+    .footer-inner{
+      max-width:1100px;
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:0.4rem;
+      text-align:center;
+    }
+
+    @media (max-width:720px){
+      .nav-inner{flex-direction:column;align-items:flex-start}
+      .nav-links{justify-content:flex-start}
     }
   </style>
 </head>
@@ -100,11 +359,130 @@
     </div>
   </header>
 
-  <main>
-    <div class="page-title">PROJECT TITLE</div>
-    <img src="IMAGE PATH" alt="PROJECT TITLE" class="page-image">
-    <div class="page-text">
-      Detailed description of the research project. Include objectives, methods, key findings, and relevance. You can also link to publications, datasets, or related projects.
+  <main class="page">
+    <div class="layout">
+
+      <aside class="side" aria-label="Research topics">
+        <h2>Research topics</h2>
+        <a href="anaerobic_digestion.html">Anaerobic Digestion</a>
+        <a href="biochar.html">Biochar</a>
+        <a class="active" href="manure_nutrient_recovery.html">Manure Separation and Nutrient Recovery</a>
+        <a href="climate_impacts.html">Manure Management to Mitigate Climate Impacts</a>
+        <a href="nitrogen_loss.html">Manure Management to Mitigate Nitrogen Losses</a>
+        <a href="sand_separation.html">Manure Sand Separation</a>
+        <a href="land_application.html">Manure Land Application</a>
+        <a href="manure_storage.html">Manure Storage</a>
+        <a href="composting.html">Composting</a>
+        <a href="uganda.html">Uganda Air Quality</a>
+        <div class="divider"></div>
+        <a href="research.html">Back to Research & Extension</a>
+      </aside>
+
+      <div>
+        <section class="hero">
+          <div class="hero-img">
+            <img src="images/research/manuresep.jpg" alt="Manure separation and nutrient recovery">
+          </div>
+          <div class="hero-body">
+            <div class="kicker">Research & Extension</div>
+            <h1 class="title">Manure Separation and Nutrient Recovery</h1>
+            <p class="subtitle">
+              Solid-liquid separation is a foundational manure processing step that splits manure into a solids stream and a liquids stream to improve handling, enable targeted nutrient management, and support downstream technologies such as anaerobic digestion, composting, drying, and pyrolysis.
+            </p>
+          </div>
+        </section>
+
+        <div class="cards">
+          <section class="card">
+            <h3>What it does</h3>
+            <p>
+              Separation partially removes solids from liquid manure using gravity-driven or mechanical systems, producing a solids fraction with higher dry matter and a liquids fraction with lower solids content. The two streams can then be stored, transported, and land-applied using different equipment and strategies.
+            </p>
+          </section>
+          <section class="card">
+            <h3>Why it matters</h3>
+            <p>
+              Separation can reduce hauling and handling time by reducing volume, improve flexibility in nutrient management by concentrating phosphorus in the solids stream, and reduce methane emissions from liquid storage by diverting a portion of volatile solids into the separated solids stream.
+            </p>
+          </section>
+        </div>
+
+        <section class="section">
+          <h3>How separation supports nutrient management</h3>
+          <p>
+            Dairy manure is valued for nitrogen, phosphorus, and potassium, but nutrient-based application limits can create a mismatch: phosphorus application can reach crop limits before manure nitrogen meets crop needs. Separation helps by moving a portion of phosphorus into the solids stream, which can be exported to areas that need phosphorus, while the liquids stream can often be applied locally with a higher nitrogen-to-phosphorus ratio.
+          </p>
+
+          <table class="mini-table" aria-label="Typical mass separation efficiencies">
+            <tr>
+              <th>Typical outcome</th>
+              <td>Solids stream has higher nutrient density (especially phosphorus) and reduced volume; liquids stream is easier to pump and often needs less agitation during storage.</td>
+            </tr>
+            <tr>
+              <th>Example efficiencies</th>
+              <td>Average mass separation efficiencies reported across mechanical separation show a meaningful portion of total solids and phosphorus following the solids stream, while much of the nitrogen remains in the liquids stream.</td>
+            </tr>
+          </table>
+        </section>
+
+        <section class="section">
+          <h3>Common mechanical separator types</h3>
+          <p>
+            Farms use several separator types depending on manure consistency, bedding, goals, and costs. Two common options are sloped screen separators (often used for low-solids flushed manure) and screw press separators (often used for higher-solids slurry streams and as part of multi-stage systems).
+          </p>
+
+          <table class="mini-table" aria-label="Separator type overview">
+            <tr>
+              <th>Sloped screen separator</th>
+              <td>High-throughput screening where manure flows over bar slats or wedge-wire; liquids pass through while large fibrous solids are retained and slide off the screen. Often used when dry matter is roughly 2–4% (typical for flushed systems). Cleaning labor can be a drawback, and very fine solids are not well removed.</td>
+            </tr>
+            <tr>
+              <th>Screw press separator</th>
+              <td>Mechanical pressing through a screen; produces a separated solids stream often around 30% dry matter and a liquids stream with lower solids content. Typically more effective on slurry streams (greater than about 4% total solids) than on dilute liquid manure. Commonly used as a first step in multi-unit processing trains and is often installed after digestion to separate digestate.</td>
+            </tr>
+          </table>
+        </section>
+
+        <section class="section">
+          <h3>Performance and system integration</h3>
+          <p>
+            Separator performance depends on manure characteristics, screen size, flow rate, and management. For sloped screens, opening size and feed rate influence both throughput and capture; excessive feed rates can lead to bypass flow that reduces efficiency. For screw presses, screen size and pressure affect what particle sizes are captured and the moisture content of the separated solids.
+          </p>
+          <p>
+            Separation can be used alone or combined in series with other technologies (for example, sloped screen followed by screw press or other presses, or separation paired with coagulation/flocculation) to increase overall solids and nutrient removal while maintaining manageable flow rates for downstream units.
+          </p>
+        </section>
+
+        <section class="section">
+          <h3>Emissions and tradeoffs</h3>
+          <p>
+            Separation can reduce methane emissions from liquid manure storage because some volatile solids follow the solids stream, and solids storage conditions are often more aerated. However, ammonia emissions from liquids storage can increase after separation when a natural crust is reduced or absent; practices such as storage covers and injection or rapid incorporation at application can help reduce ammonia losses.
+          </p>
+          <p>
+            Capital cost and added system complexity can be a barrier, especially for smaller operations, because separation often requires additional equipment and space for handling, storing, and applying two distinct product streams.
+          </p>
+        </section>
+
+        <section class="section">
+          <h3>Related fact sheets and resources</h3>
+          <p>
+            These fact sheets are also linked from the Resources page.
+          </p>
+
+          <div class="cta">
+            <p>
+              Learn more about separator selection, performance, and integration using the fact sheets below.
+            </p>
+            <div class="buttons">
+              <a class="btn secondary" href="factsheets.html">Go to Resources page</a>
+              <a class="btn" href="mp-series-screen-separator.pdf" target="_blank" rel="noopener">Open sloped screen fact sheet</a>
+              <a class="btn" href="mp-series-Screw-Press.pdf" target="_blank" rel="noopener">Open screw press fact sheet</a>
+              <a class="btn" href="4_DairyCap_SLS_FactSheet_Final-Final.pdf" target="_blank" rel="noopener">Open solid-liquid separation emissions fact sheet</a>
+            </div>
+          </div>
+        </section>
+
+      </div>
     </div>
   </main>
 
