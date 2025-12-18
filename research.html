@@ -12,8 +12,6 @@
       --text: #222222;
       --bg: #f7f9fb;
       --card: #ffffff;
-      --border: #dde3ea;
-      --muted: #4b5c67;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,7 +28,7 @@
 
     header {
       background: var(--card);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid #dde3ea;
       position: sticky;
       top: 0;
       z-index: 10;
@@ -68,19 +66,7 @@
 
     .nav-links a:hover { border-color: var(--accent); text-decoration: none; }
 
-    .section-title {
-      font-size: 1.6rem;
-      margin: 1rem 0;
-      text-align: center;
-    }
-
-    .intro {
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto 2rem auto;
-      padding: 0 1rem;
-      color: var(--muted);
-    }
+    .section-title { font-size: 1.6rem; margin: 1rem 0; text-align:center; }
 
     .tiles {
       display: grid;
@@ -97,58 +83,38 @@
     .tile {
       background: var(--card);
       border-radius: 0.9rem;
-      border: 1px solid var(--border);
+      border: 1px solid #dde3ea;
       padding: 1rem;
       box-shadow: 0 8px 20px rgba(15,35,52,0.04);
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: start;
       transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .tile:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(15,35,52,0.08); }
 
-    .tile .image-wrap {
+    .tile img {
       width: 100%;
       height: 150px;
-      overflow: hidden;
+      object-fit: cover;
       border-radius: 0.6rem;
       margin-bottom: 0.5rem;
-      background: #f2f4f7;
-      position: relative;
     }
 
-    /* default = photo mode (jpg etc): fill frame, crop from the true center */
-    .tile .image-wrap img {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100% !important;
-      height: 100% !important;
-      transform: translate(-50%, -50%);
-      object-fit: cover;
-      object-position: center center !important;
-      display: block;
-    }
-
-    /* png = graphic mode (logos/illustrations): show whole image, centered */
-    .tile .image-wrap img[src$=".png"],
-    .tile .image-wrap img[src$=".PNG"] {
-      width: 92% !important;
-      height: 92% !important;
-      object-fit: contain;
-    }
-
-    .tile .tile-title {
-      font-weight: 700;
+    .tile a {
+      font-weight: bold;
       color: var(--accent);
+      text-decoration: none;
       margin-bottom: 0.3rem;
     }
 
-    .tile p { font-size: 0.9rem; color: var(--muted); margin: 0; }
+    .tile a:hover { text-decoration: underline; }
+
+    .tile p { font-size: 0.9rem; color: #4b5c67; margin: 0; }
 
     footer {
-      border-top: 1px solid var(--border);
+      border-top: 1px solid #dde3ea;
       padding: 1.2rem 1rem 2rem 1rem;
       font-size: 0.8rem;
       color: #6b7c88;
@@ -188,111 +154,92 @@
   <main>
     <section id="research">
       <div class="section-title">Research & Extension</div>
-      <p class="intro">
+      <p style="text-align:center; max-width:800px; margin:0 auto 2rem auto;">
         Our projects include sustainable manure and organic waste systems, waste-to-energy pathways, nutrient recovery, and international initiatives.
       </p>
 
       <div class="tiles">
         <div class="tile">
           <a href="anaerobic_digestion.html">
-            <div class="image-wrap">
-              <img src="images/research/anaerobic_digestion.jpg" alt="Anaerobic Digestion">
-            </div>
-            <div class="tile-title">Anaerobic Digestion</div>
+            <img src="images/research/anaerobic_digestion.jpg" alt="Anaerobic Digestion">
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Anaerobic Digestion</div>
           </a>
           <p>Research on converting organic waste to biogas to generate renewable energy while reducing environmental impact.</p>
         </div>
 
         <div class="tile">
           <a href="biochar.html">
-            <div class="image-wrap">
-              <img src="images/research/biochar.png" alt="Biochar">
-            </div>
-            <div class="tile-title">Biochar</div>
+            <img src="images/research/biochar.png" alt="Biochar">
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Biochar</div>
           </a>
           <p>Investigating pyrolysis of manure and organic waste streams to produce biochar.</p>
         </div>
 
         <div class="tile">
           <a href="manure_nutrient_recovery.html">
-            <div class="image-wrap">
-              <img src="images/research/manuresep.jpg" alt="Manure Nutrient Recovery">
-            </div>
-            <div class="tile-title">Manure Separation and Nutrient Recovery</div>
+            <img src="images/research/manuresep.jpg" alt="Manure Nutrient Recovery">
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Separation and Nutrient Recovery</div>
           </a>
           <p>Developing methods to separate manure components and recover nitrogen, phosphorus, and other products from manure.</p>
         </div>
 
         <div class="tile">
           <a href="climate_impacts.html">
-            <div class="image-wrap">
-              <img src="images/research/climate.png" alt="Manure Management to Mitigate Climate Impacts">
-            </div>
-            <div class="tile-title">Manure Management to Mitigate Climate Impacts</div>
+            <img src="images/research/climate.png" alt="Manure Management to Mitigate Climate Impacts">
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Management to Mitigate Climate Impacts</div>
           </a>
           <p>Exploring strategies to reduce greenhouse gas emissions from manure storage and land application.</p>
         </div>
 
         <div class="tile">
           <a href="nitrogen_loss.html">
-            <div class="image-wrap">
-              <img src="images/research/nitrogen.jpg" alt="Manure Management to Mitigate Nitrogen Losses">
-            </div>
-            <div class="tile-title">Manure Management to Mitigate Nitrogen Losses</div>
+            <img src="images/research/nitrogen.jpg" alt="Manure Management to Mitigate Nitrogen Losses">
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Management to Mitigate Nitrogen Losses</div>
           </a>
           <p>Exploring strategies to reduce nitrogen loss from manure storage and land application.</p>
         </div>
 
         <div class="tile">
           <a href="sand_separation.html">
-            <div class="image-wrap">
-              <img src="images/research/sandsep.jpg" alt="Manure Sand Separation">
-            </div>
-            <div class="tile-title">Manure Sand Separation</div>
+            <img src="images/research/sandsep.jpg" alt="Manure Sand Separation">
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Sand Separation</div>
           </a>
           <p>Exploring strategies to separate sand bedding from manure.</p>
         </div>
 
         <div class="tile">
           <a href="land_application.html">
-            <div class="image-wrap">
-              <img src="images/research/landapp.jpg" alt="Manure Land Application">
-            </div>
-            <div class="tile-title">Manure Land Application</div>
+            <img src="images/research/landapp.jpg" alt="Manure Land Application">
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Land Application</div>
           </a>
           <p>Land application of manure.</p>
         </div>
 
         <div class="tile">
           <a href="manure_storage.html">
-            <div class="image-wrap">
-              <img src="images/research/manurestorage.jpg" alt="Manure Storage">
-            </div>
-            <div class="tile-title">Manure Storage</div>
+            <img src="images/research/manurestorage.jpg" alt="Manure Storage">
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Manure Storage</div>
           </a>
           <p>Storage of liquid, slurry, and solid manure. Agitation of liquid and slurry manure.</p>
         </div>
 
         <div class="tile">
           <a href="composting.html">
-            <div class="image-wrap">
-              <img src="images/research/compost.jpg" alt="Composting">
-            </div>
-            <div class="tile-title">Composting</div>
+            <img src="images/research/compost.jpg" alt="Composting">
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Composting</div>
           </a>
           <p>Composting of manure and other organic feedstocks to produce a high-quality soil amendment.</p>
         </div>
 
         <div class="tile">
           <a href="uganda.html">
-            <div class="image-wrap">
-              <img src="images/research/uganda.jpg" alt="Uganda Air Quality">
-            </div>
-            <div class="tile-title">Uganda Air Quality</div>
+            <img src="images/research/uganda.jpg" alt="Uganda Air Quality">
+            <div style="font-weight:bold; color:#1b7c6d; margin-bottom:0.3rem;">Uganda Air Quality</div>
           </a>
           <p>Monitoring and improving air quality in Kampala, Uganda.</p>
         </div>
       </div>
+
     </section>
   </main>
 
