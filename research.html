@@ -66,10 +66,7 @@
       border-bottom: 2px solid transparent;
     }
 
-    .nav-links a:hover {
-      border-color: var(--accent);
-      text-decoration: none;
-    }
+    .nav-links a:hover { border-color: var(--accent); text-decoration: none; }
 
     .section-title {
       font-size: 1.6rem;
@@ -94,13 +91,8 @@
       padding: 0 1rem;
     }
 
-    @media (max-width: 960px) {
-      .tiles { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 640px) {
-      .tiles { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 960px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .tiles { grid-template-columns: 1fr; } }
 
     .tile {
       background: var(--card);
@@ -114,12 +106,8 @@
       transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .tile:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(15,35,52,0.08);
-    }
+    .tile:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(15,35,52,0.08); }
 
-    /* THIS IS THE FIX */
     .tile .image-wrap {
       width: 100%;
       height: 150px;
@@ -130,16 +118,25 @@
       position: relative;
     }
 
+    /* default = photo mode (jpg etc): fill frame, crop from the true center */
     .tile .image-wrap img {
       position: absolute;
-      inset: 0;
+      top: 50%;
+      left: 50%;
       width: 100% !important;
       height: 100% !important;
-      min-width: 100%;
-      min-height: 100%;
+      transform: translate(-50%, -50%);
       object-fit: cover;
-      object-position: center center;
+      object-position: center center !important;
       display: block;
+    }
+
+    /* png = graphic mode (logos/illustrations): show whole image, centered */
+    .tile .image-wrap img[src$=".png"],
+    .tile .image-wrap img[src$=".PNG"] {
+      width: 92% !important;
+      height: 92% !important;
+      object-fit: contain;
     }
 
     .tile .tile-title {
@@ -148,11 +145,7 @@
       margin-bottom: 0.3rem;
     }
 
-    .tile p {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin: 0;
-    }
+    .tile p { font-size: 0.9rem; color: var(--muted); margin: 0; }
 
     footer {
       border-top: 1px solid var(--border);
@@ -173,13 +166,8 @@
     }
 
     @media (max-width: 720px) {
-      .nav-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .nav-links {
-        justify-content: flex-start;
-      }
+      .nav-inner { flex-direction: column; align-items: flex-start; }
+      .nav-links { justify-content: flex-start; }
     }
   </style>
 </head>
@@ -205,7 +193,6 @@
       </p>
 
       <div class="tiles">
-
         <div class="tile">
           <a href="anaerobic_digestion.html">
             <div class="image-wrap">
@@ -305,7 +292,6 @@
           </a>
           <p>Monitoring and improving air quality in Kampala, Uganda.</p>
         </div>
-
       </div>
     </section>
   </main>
