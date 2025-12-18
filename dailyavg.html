@@ -2,66 +2,79 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PM2.5 Daily Average Concentrations – Larson Research Group</title>
+  <title>PM2.5 average concentrations by day of the week – Larson Research Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
-    :root { --accent:#1b7c6d; --bg:#f7f9fb; --card:#ffffff; --text:#222; --border:#dde3ea; }
-    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; background: var(--bg); color: var(--text); }
-    main { max-width: 960px; margin: 0 auto; padding: 1.25rem 1rem 2rem; display:flex; flex-direction:column; gap:1rem; }
-    h1 { font-size: 1.5rem; margin: 0; }
-    p { margin: 0; color:#4b5c67; }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 0.9rem; padding: 1rem 1.1rem; box-shadow: 0 8px 20px rgba(15,35,52,0.04); }
-    label { display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; }
-    select { padding: 0.4rem 0.55rem; font-size: 0.95rem; border:1px solid #cfd8e3; border-radius:0.6rem; background:#fff; }
-    .status { font-size: 0.9rem; color:#4b5c67; }
-    .chart-wrap { height: 460px; width: 100%; }
-    canvas { width:100% !important; height:100% !important; }
-    table { border-collapse: collapse; width:100%; margin-top:0.75rem; font-size:0.92rem; }
-    th, td { border:1px solid var(--border); padding:0.45rem; text-align:center; }
-    th { background:#eef3f7; font-weight: 600; }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 1rem; background:#f7f9fb; color:#222;}
+    h1 { font-size:1.6rem; margin-bottom:0.5rem; }
+    p { max-width: 960px; color:#4b5c67; margin-bottom: 0.9rem; }
+    label { font-weight:500; margin-right:0.5rem; }
+    select { padding:0.35rem 0.5rem; font-size:0.95rem; margin-bottom:1rem; }
+    .wrap { max-width: 960px; }
+    .card { background:#fff; border:1px solid #dde3ea; border-radius:0.9rem; padding:1rem 1.1rem; box-shadow: 0 8px 20px rgba(15,35,52,0.04); }
+    .chart-container { height: 420px; width:100%; margin-top: 0.75rem; }
+    table { border-collapse: collapse; width:100%; margin-top:0.9rem; font-size: 0.95rem; }
+    th, td { border:1px solid #dde3ea; padding:0.55rem; text-align:left; }
+    th { background:#eef3f7; }
+    td:last-child { text-align:right; }
+    .status { margin-top:0.5rem; color:#4b5c67; font-size:0.95rem; }
+    a { color:#1b7c6d; text-decoration:none; }
+    a:hover { text-decoration:underline; }
   </style>
 </head>
 <body>
-  <main>
-    <div class="card">
-      <h1>PM2.5 average concentrations by day of the week</h1>
-      <p>Calculated from hourly AirQo data using pm2_5_calibrated_value.</p>
-      <p style="margin-top:0.5rem;"><a href="uganda.html">Back to Uganda air quality</a></p>
-    </div>
+  <div class="wrap">
+    <h1>PM2.5 average concentrations by day of the week</h1>
+    <p>This page uses the archived AirQo dataset on this site and plots calibrated PM2.5 (pm2_5_calibrated_value). Missing values are left blank.</p>
 
     <div class="card">
-      <label>
-        Sensor
+      <div>
+        <label for="sensor-select">Sensor</label>
         <select id="sensor-select"></select>
-      </label>
-      <div id="status" class="status" style="margin-top:0.5rem;">Loading archived data…</div>
-    </div>
-
-    <div class="card">
-      <div class="chart-wrap">
-        <canvas id="pm25-dow-chart"></canvas>
       </div>
 
-      <table>
+      <div class="status" id="status">Loading archive…</div>
+
+      <div class="chart-container">
+        <canvas id="pm25-daily-chart"></canvas>
+      </div>
+
+      <table id="pm25-daily-table" aria-label="Daily averages table">
         <thead>
           <tr>
             <th>Day of the week</th>
             <th>Average PM2.5 (µg/m³)</th>
-            <th>Count (hourly points)</th>
           </tr>
         </thead>
-        <tbody id="tbl-body"></tbody>
+        <tbody></tbody>
       </table>
+
+      <div class="status" style="margin-top:0.9rem;">
+        <a href="uganda.html">Back to Uganda air quality page</a>
+      </div>
     </div>
-  </main>
+  </div>
 
 <script>
-  const CSV_URL = "data/uganda_pm25_archive.csv"; // your archive in the repo
+  const CSV_URL = "data/uganda_pm25_archive.csv"; // commit the merged file here
 
   const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+  function parseTimeMs(isoLike) {
+    const d = new Date(isoLike);
+    const ms = d.getTime();
+    return Number.isFinite(ms) ? ms : null;
+  }
+
+  function dayOfWeek(ms) {
+    return new Date(ms).toLocaleDateString("en-US", { weekday: "long" });
+  }
+
+  function fmtNumber(v) {
+    const n = Number(v);
+    return Number.isFinite(n) ? n.toFixed(1) : "";
+  }
 
   function parseCsv(text) {
     const rows = [];
@@ -102,115 +115,77 @@
     return rows;
   }
 
-  function toNumberOrNull(raw) {
-    if (raw === null || raw === undefined) return null;
-    const s = String(raw).trim();
-    if (s === "") return null;
-    const n = Number(s);
-    return Number.isFinite(n) ? n : null;
-  }
-
-  function parseTimeMs(isoLike) {
-    const d = new Date(isoLike);
-    const ms = d.getTime();
-    return Number.isFinite(ms) ? ms : null;
-  }
-
-  function dayOfWeekName(ms) {
-    return new Date(ms).toLocaleDateString("en-US", { weekday: "long" });
-  }
-
   let chart = null;
-  let bySensor = new Map(); // sensorKey -> { label, points: [{ms, pm25}] }
+  let bySensor = {}; // device_name -> [{ datetime, pm25_cal }]
 
-  function render(sensorKey) {
-    const entry = bySensor.get(sensorKey);
-    if (!entry) return;
-
-    const buckets = new Map(DAYS.map(d => [d, { sum: 0, n: 0 }]));
-
-    for (const p of entry.points) {
-      const d = dayOfWeekName(p.ms);
-      const b = buckets.get(d);
-      if (!b) continue;
-      b.sum += p.pm25;
-      b.n += 1;
-    }
-
-    const labels = DAYS.slice();
-    const avgs = labels.map(d => {
-      const b = buckets.get(d);
-      return b && b.n ? (b.sum / b.n) : null;
+  function buildDropdown(sensorNames) {
+    const sel = document.getElementById("sensor-select");
+    sel.innerHTML = "";
+    sensorNames.forEach(name => {
+      const opt = document.createElement("option");
+      opt.value = name;
+      opt.textContent = name;
+      sel.appendChild(opt);
     });
-    const counts = labels.map(d => (buckets.get(d)?.n || 0));
+    sel.addEventListener("change", e => render(e.target.value));
+  }
 
-    const ctx = document.getElementById("pm25-dow-chart").getContext("2d");
+  function render(sensorName) {
+    const status = document.getElementById("status");
+    const rows = bySensor[sensorName] || [];
+
+    const buckets = {};
+    DAYS.forEach(d => buckets[d] = []);
+
+    rows.forEach(r => {
+      const ms = parseTimeMs(r.datetime);
+      if (ms === null) return;
+      if (!Number.isFinite(r.pm25)) return;
+      const d = dayOfWeek(ms);
+      if (buckets[d]) buckets[d].push(r.pm25);
+    });
+
+    const avgByDay = DAYS.map(d => {
+      const arr = buckets[d];
+      if (!arr.length) return { day: d, avg: null };
+      const sum = arr.reduce((a,b) => a + b, 0);
+      return { day: d, avg: sum / arr.length };
+    });
+
+    status.textContent = `Loaded ${rows.length.toLocaleString()} records for ${sensorName}.`;
+
+    const ctx = document.getElementById("pm25-daily-chart").getContext("2d");
     if (chart) chart.destroy();
 
     chart = new Chart(ctx, {
       type: "bar",
       data: {
-        labels,
+        labels: avgByDay.map(x => x.day),
         datasets: [{
           label: "PM2.5 (µg/m³)",
-          data: avgs
+          data: avgByDay.map(x => x.avg)
         }]
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              label: (item) => {
-                const v = item.raw;
-                if (v === null || v === undefined) return "No data";
-                return `PM2.5: ${Number(v).toFixed(1)} µg/m³`;
-              }
-            }
-          }
-        },
+        plugins: { legend: { display: false } },
         scales: {
           y: { beginAtZero: true, title: { display: true, text: "PM2.5 (µg/m³)" } }
         }
       }
     });
 
-    const tbody = document.getElementById("tbl-body");
+    const tbody = document.querySelector("#pm25-daily-table tbody");
     tbody.innerHTML = "";
-    for (let i = 0; i < labels.length; i++) {
+    avgByDay.forEach(d => {
       const tr = document.createElement("tr");
-      const v = avgs[i];
-      tr.innerHTML = `<td>${labels[i]}</td><td>${(v === null ? "" : Number(v).toFixed(1))}</td><td>${counts[i]}</td>`;
+      tr.innerHTML = `<td>${d.day}</td><td>${d.avg === null ? "" : fmtNumber(d.avg)}</td>`;
       tbody.appendChild(tr);
-    }
-  }
-
-  function populateDropdown() {
-    const sel = document.getElementById("sensor-select");
-    sel.innerHTML = "";
-
-    const keys = Array.from(bySensor.keys()).sort((a,b) => {
-      const la = bySensor.get(a)?.label || a;
-      const lb = bySensor.get(b)?.label || b;
-      return la.localeCompare(lb);
     });
-
-    for (const k of keys) {
-      const opt = document.createElement("option");
-      opt.value = k;
-      opt.textContent = bySensor.get(k)?.label || k;
-      sel.appendChild(opt);
-    }
-
-    sel.addEventListener("change", e => render(e.target.value));
-
-    if (keys.length) render(keys[0]);
   }
 
-  async function load() {
-    const statusEl = document.getElementById("status");
+  async function loadArchive() {
+    const status = document.getElementById("status");
     try {
       const res = await fetch(CSV_URL, { cache: "no-store" });
       if (!res.ok) throw new Error(`Archive CSV not found: ${CSV_URL} (HTTP ${res.status})`);
@@ -223,47 +198,46 @@
 
       const idxDatetime = header.indexOf("datetime");
       const idxDeviceName = header.indexOf("device_name");
-      const idxSiteName = header.indexOf("site_name");
       const idxPm25Cal = header.indexOf("pm2_5_calibrated_value");
 
       if (idxDatetime < 0 || idxDeviceName < 0 || idxPm25Cal < 0) {
-        throw new Error("CSV header does not include datetime, device_name, and pm2_5_calibrated_value");
+        throw new Error("CSV header missing required columns: datetime, device_name, pm2_5_calibrated_value");
       }
 
-      bySensor = new Map();
+      bySensor = {};
 
-      for (let r = 1; r < rows.length; r++) {
-        const cols = rows[r];
-        const t = cols[idxDatetime];
-        const ms = parseTimeMs(t);
-        if (ms === null) continue;
+      for (let i = 1; i < rows.length; i++) {
+        const cols = rows[i];
+        const datetime = cols[idxDatetime];
+        const device = cols[idxDeviceName];
+        const pm25 = Number(cols[idxPm25Cal]);
 
-        const pm25 = toNumberOrNull(cols[idxPm25Cal]);
-        if (pm25 === null) continue;
+        if (!datetime || !device) continue;
+        if (!Number.isFinite(pm25)) continue; // only keep valid calibrated values
 
-        const device = String(cols[idxDeviceName] || "").trim();
-        if (!device) continue;
-
-        const site = idxSiteName >= 0 ? String(cols[idxSiteName] || "").trim() : "";
-        const label = site || device;
-
-        if (!bySensor.has(device)) bySensor.set(device, { label, points: [] });
-        bySensor.get(device).points.push({ ms, pm25 });
+        if (!bySensor[device]) bySensor[device] = [];
+        bySensor[device].push({ datetime, pm25 });
       }
 
-      for (const v of bySensor.values()) v.points.sort((a,b) => a.ms - b.ms);
+      const sensorNames = Object.keys(bySensor).sort((a,b) => a.localeCompare(b));
+      if (!sensorNames.length) {
+        status.textContent = "No usable calibrated PM2.5 data found in the archive.";
+        return;
+      }
 
-      if (!bySensor.size) throw new Error("No usable pm2_5_calibrated_value rows found");
+      sensorNames.forEach(name => {
+        bySensor[name].sort((a,b) => (parseTimeMs(a.datetime) ?? 0) - (parseTimeMs(b.datetime) ?? 0));
+      });
 
-      statusEl.textContent = "";
-      populateDropdown();
+      buildDropdown(sensorNames);
+      render(sensorNames[0]);
     } catch (e) {
       console.error(e);
-      statusEl.textContent = "Could not load archived data for daily averages.";
+      status.textContent = "Could not load the archive data for this page.";
     }
   }
 
-  load();
+  loadArchive();
 </script>
 </body>
 </html>
