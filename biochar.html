@@ -60,13 +60,13 @@
 
     main { max-width: 960px; margin: 2rem auto 3rem auto; padding: 0 1rem; }
 
+    .hero-figure { margin: 0 0 1rem 0; }
     .hero {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 0.9rem;
       overflow: hidden;
       box-shadow: 0 8px 20px rgba(15,35,52,0.04);
-      margin-bottom: 1rem;
     }
 
     .hero-img {
@@ -90,11 +90,16 @@
       text-align: center;
       color: var(--muted);
       font-size: 0.9rem;
-      padding: 0.6rem 1rem 0.2rem 1rem;
+      margin-top: 0.45rem;
     }
 
     .hero-body {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.9rem;
+      box-shadow: 0 8px 20px rgba(15,35,52,0.04);
       padding: 0.9rem 1rem 1.1rem 1rem;
+      margin-top: 0.9rem;
     }
 
     .kicker {
@@ -135,41 +140,53 @@
 
     .section p:last-child { margin-bottom: 0; }
 
-    .callout {
-      background: #ffffff;
+    figure.inline-figure{
+      margin: 0.75rem 0 0.25rem 0;
       border: 1px solid var(--border);
-      border-radius: 0.75rem;
-      padding: 0.85rem;
+      border-radius: 0.9rem;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .imgwrap{
+      width: 100%;
+      background: #f2f4f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .imgwrap.contain{ height: 240px; }
+    .imgwrap.cover{ height: 240px; }
+
+    .imgwrap img{
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .imgwrap.contain img{ object-fit: contain; }
+    .imgwrap.cover img{ object-fit: cover; object-position: center; }
+
+    figcaption.inline-caption{
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 0.6rem 0.8rem 0.75rem 0.8rem;
+      background: #fff;
+    }
+
+    .photo-grid{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.9rem;
       margin-top: 0.75rem;
     }
 
-    .btnrow {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 0.65rem;
+    @media (max-width: 760px){
+      .photo-grid{ grid-template-columns: 1fr; }
     }
-
-    .btn {
-      display: inline-block;
-      background: var(--accent);
-      color: #fff;
-      padding: 0.55rem 0.85rem;
-      border-radius: 0.7rem;
-      text-decoration: none;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .btn:hover { filter: brightness(0.95); text-decoration: none; }
-
-    .btn.secondary {
-      background: #ffffff;
-      color: var(--dark);
-      border: 1px solid var(--border);
-    }
-
-    .btn.secondary:hover { background: #f7f9fb; }
 
     footer {
       border-top: 1px solid var(--border);
@@ -193,6 +210,7 @@
       .nav-inner { flex-direction: column; align-items: flex-start; }
       .nav-links { justify-content: flex-start; }
       .hero-img { height: 240px; }
+      .imgwrap.contain, .imgwrap.cover { height: 220px; }
     }
   </style>
 </head>
@@ -211,37 +229,64 @@
   </header>
 
   <main>
-    <section class="hero">
-      <div class="hero-img">
-        <img src="images/research/biochar.png" alt="Biochar">
+    <section class="hero-figure">
+      <div class="hero">
+        <div class="hero-img">
+          <img src="images/research/biochar.png" alt="Biochar">
+        </div>
       </div>
-      <div class="hero-caption">Biochar produced wood chips</div>
+      <div class="hero-caption">Biochar produced from wood chips</div>
+
       <div class="hero-body">
         <div class="kicker">Research & Extension</div>
         <h1 class="page-title">Biochar</h1>
         <p class="subtitle">
-          Biochar is produced through pyrolysis of feedstocks and is commponly used as a soil amendment but designer biochars have the potential to be used in a variety of end uses.         </p>
+          Biochar is produced through pyrolysis of feedstocks and is commonly used as a soil amendment, but designer biochars have the potential to be used in a variety of end uses.
+        </p>
       </div>
     </section>
 
     <section class="section">
       <h2>What biochar is</h2>
       <p>
-        Biochar is a carbon-rich material produced by pyrolysis, where biomass is heated at high temperature under oxygen-limited conditions. Pyrolysis generates three products: syngas and bio-oil (which can be used for energy) and the solid residual biochar. 
+        Biochar is a carbon-rich material produced by pyrolysis, where biomass is heated at high temperature under oxygen-limited conditions. Pyrolysis generates three products: syngas and bio-oil (which can be used for energy) and the solid residual biochar.
       </p>
       <p>
         Biochar is typically porous with high carbon content and low density, and it is often used as a soil amendment that can support soil health and nutrient management.
       </p>
+
+      <figure class="inline-figure">
+        <div class="imgwrap contain">
+          <img src="images/research/biochar/biocharprod.png" alt="Pyrolysis system">
+        </div>
+        <figcaption class="inline-caption">Pyrolysis system.</figcaption>
+      </figure>
     </section>
 
     <section class="section">
       <h2>How biochar is produced</h2>
       <p>
-        Slow pyrolysis is commonly used when the goal is to maximize biochar recovery. Operating conditions vary by reactor design, but slow pyrolysis is typically described across roughly 300–700°C with slow heating rates, and systems can be designed as batch or continuous operations. 
+        Slow pyrolysis is commonly used when the goal is to maximize biochar recovery. Operating conditions vary by reactor design, but slow pyrolysis is typically described across roughly 300–700°C with slow heating rates, and systems can be designed as batch or continuous operations.
       </p>
       <p>
         Feedstock moisture matters for performance and energy requirements, and guidance commonly recommends keeping moisture below about 30% (or drying when higher) to reduce energy demand and reach target temperatures.
       </p>
+
+      <div class="photo-grid">
+        <figure class="inline-figure" style="margin:0;">
+          <div class="imgwrap cover">
+            <img src="images/research/biochar/biocharexamples.jpg" alt="Biochar examples">
+          </div>
+          <figcaption class="inline-caption">Biochar examples.</figcaption>
+        </figure>
+
+        <figure class="inline-figure" style="margin:0;">
+          <div class="imgwrap cover">
+            <img src="images/research/biochar/biocharpilot.jpg" alt="Biochar pilot system at University of Wisconsin-Platteville">
+          </div>
+          <figcaption class="inline-caption">Biochar pilot system at University of Wisconsin-Platteville run by Dr. Joe Sanford.</figcaption>
+        </figure>
+      </div>
     </section>
 
     <section class="section">
@@ -250,33 +295,44 @@
         Converting separated manure solids to biochar can substantially reduce mass and volume, which can make storage and transportation easier compared to handling the original separated solids.
       </p>
       <p>
-        During pyrolysis, reported phosphorus recovery in manure-derived biochar is high, while nitrogen recovery is lower because some nitrogen is volatilized; recovery depends on temperature and operating conditions. However, when separated sooids are used the majority of nitrogen is in organic form which improves nitrogen retention.  
+        During pyrolysis, reported phosphorus recovery in manure-derived biochar is high, while nitrogen recovery is lower because some nitrogen is volatilized; recovery depends on temperature and operating conditions. However, when separated solids are used the majority of nitrogen is in organic form which improves nitrogen retention.
       </p>
     </section>
 
     <section class="section">
       <h2>Biochar use</h2>
       <p>
-        Biochar is used most commonly as a soil amendment, and it is also explored for filtration applications and integration into manure systems (for example, as a cover or as part of broader nutrient management strategies). 
+        Biochar is used most commonly as a soil amendment, and it is also explored for filtration applications and integration into manure systems (for example, as a cover or as part of broader nutrient management strategies).
       </p>
       <p>
-        Research findings across studies show that biochar can improve nutrient retention and reduce nitrate leaching in some contexts, while crop yield responses can vary by soil, climate, feedstock, and application conditions. 
+        Research findings across studies show that biochar can improve nutrient retention and reduce nitrate leaching in some contexts, while crop yield responses can vary by soil, climate, feedstock, and application conditions.
       </p>
+
+      <figure class="inline-figure">
+        <div class="imgwrap cover">
+          <img src="images/research/biochar/biocharsoilamend.png" alt="Biochar application to a field trial at Arlington Agricultural Research Station">
+        </div>
+        <figcaption class="inline-caption">Biochar application to a field trial at Arlington Agricultural Research Station.</figcaption>
+      </figure>
     </section>
 
     <section class="section">
       <h2>Practical considerations</h2>
       <p>
-        Costs and feasibility depend heavily on system scale, and whether energy recovery is integrated. On-farm deployment can also require pretreatment steps such as solid-liquid separation and drying to meet moisture requirements. 
+        Costs and feasibility depend heavily on system scale, and whether energy recovery is integrated. On-farm deployment can also require pretreatment steps such as solid-liquid separation and drying to meet moisture requirements.
       </p>
     </section>
 
     <section class="section">
       <h2>Related fact sheet and resources</h2>
-             <a href="https://cdn.shopify.com/s/files/1/0145/8808/4272/files/A4192-006.pdf" target="_blank" rel="noopener">
-                      Biochar Production through Slow Pyrolysis of Animal Manure
-                    </a>
-      </div>
+      <p>
+        <a href="factsheets.html">See all Resources and fact sheets</a>
+      </p>
+      <p>
+        <a href="https://cdn.shopify.com/s/files/1/0145/8808/4272/files/A4192-006.pdf" target="_blank" rel="noopener">
+          Biochar Production through Slow Pyrolysis of Animal Manure
+        </a>
+      </p>
     </section>
   </main>
 
