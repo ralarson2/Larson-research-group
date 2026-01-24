@@ -1,6 +1,7 @@
 import csv
 import json
 import os
+import time
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -149,59 +150,63 @@ def _load_existing_keys(path: Path):
     return keys
 
 
-def _fetch_airqo(url: str, token: str):
-    # Try style 1: Authorization header
-    r1 = requests.get(
-        url,
-        headers={"Accept": "application/json", "Authorization": f"Bearer {token}"},
-        timeout=45,
-    )
+def _try_fetch(url: str, token: str):
+    # Try header auth, then query-token auth
+    r1 = requests.get(url, headers={"Accept": "application/json", "Authorization": f"Bearer {token}"}, timeout=45)
     if r1.ok:
-        return r1, "Authorization: Bearer"
-
-    # Try style 2: query-string token
-    r2 = requests.get(
-        f"{url}?token={token}",
-        headers={"Accept": "application/json"},
-        timeout=45,
-    )
+        return r1, "bearer"
+    r2 = requests.get(f"{url}?token={token}", headers={"Accept": "application/json"}, timeout=45)
     if r2.ok:
-        return r2, "?token="
+        return r2, "query"
+    return r2, f"failed(bearer={r1.status_code},query={r2.status_code})"
 
-    # Return both failures for debugging
-    return (r2 if r2 is not None else r1), f"failed (bearer={r1.status_code}, query={r2.status_code})"
+
+def fetch_with_retries(url: str, token: str, attempts: int = 4):
+    last_resp = None
+    last_mode = ""
+    for i in range(attempts):
+        resp, mode = _try_fetch(url, token)
+        last_resp, last_mode = resp, mode
+        if resp.ok:
+            return resp, mode
+        # backoff: 3s, 9s, 18s...
+        time.sleep(3 * (i + 1) ** 2)
+    return last_resp, last_mode
 
 
 def main():
     token = os.environ.get("AIRQO_TOKEN", "").strip()
     cohort_id = os.environ.get("AIRQO_COHORT_ID", "").strip()
-
-    if not token:
-        raise SystemExit("Missing AIRQO_TOKEN env var")
-    if not cohort_id:
-        raise SystemExit("Missing AIRQO_COHORT_ID env var")
+    if not token or not cohort_id:
+        print("Missing AIRQO_TOKEN or AIRQO_COHORT_ID; exiting without failure to avoid notification spam.")
+        return
 
     Path("data").mkdir(parents=True, exist_ok=True)
-
     url = f"https://api.airqo.net/api/v2/devices/measurements/cohorts/{cohort_id}"
 
-    resp, auth_mode = _fetch_airqo(url, token)
+    resp, mode = fetch_with_retries(url, token, attempts=4)
 
-    if not resp.ok:
+    if resp is None or not resp.ok:
+        preview = ""
+        status = None
+        if resp is not None:
+            status = resp.status_code
+            preview = (resp.text or "")[:500]
         RECENT_JSON_PATH.write_text(
             json.dumps(
                 {
-                    "error": "AirQo request failed",
-                    "status_code": resp.status_code,
-                    "auth_mode_tried": auth_mode,
-                    "hint": "Check that AIRQO_TOKEN is valid for this cohort and that AIRQO_COHORT_ID is correct.",
-                    "response_text_preview": resp.text[:500],
+                    "error": "AirQo fetch failed on this run",
+                    "status_code": status,
+                    "auth_mode": mode,
+                    "note": "Workflow will try again next hour. This run exited successfully to avoid email spam.",
+                    "response_text_preview": preview,
                 },
                 indent=2,
             ),
             encoding="utf-8",
         )
-        raise SystemExit(f"AirQo request failed (auth {auth_mode}): HTTP {resp.status_code} :: {resp.text[:200]}")
+        print(f"AirQo fetch failed (mode={mode}, status={status}). Exiting 0.")
+        return
 
     data = resp.json()
 
@@ -237,11 +242,10 @@ def main():
             writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
             writer.writerows(new_rows)
 
-    print(f"Auth mode used: {auth_mode}")
-    print(f"Wrote recent JSON: {RECENT_JSON_PATH}")
-    print(f"Appended {len(new_rows)} new archive rows to: {ARCHIVE_CSV_PATH}")
+    print(f"AirQo fetch OK using {mode}. Appended {len(new_rows)} rows. Recent JSON updated.")
 
 
 if __name__ == "__main__":
     main()
+
 
