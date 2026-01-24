@@ -543,84 +543,98 @@
     markersLayer = L.layerGroup().addTo(map);
   }
 
-  async function loadUgandaData() {
-    const tbody = document.getElementById("uganda-data-body");
-    const statusEl = document.getElementById("uganda-status");
-    const table = document.getElementById("uganda-data-table");
+async function loadUgandaData() {
+  const tbody = document.getElementById("uganda-data-body");
+  const statusEl = document.getElementById("uganda-status");
+  const table = document.getElementById("uganda-data-table");
 
-    try {
-      const res = await fetch(COHORT_URL);
-      if (!res.ok) throw new Error("Request failed");
-      const data = await res.json();
+  try {
+    const res = await fetch(COHORT_URL, { cache: "no-store" });
+    if (!res.ok) throw new Error(`Request failed (HTTP ${res.status})`);
 
-      const measurements = (data.measurements || data.results || []).slice(0, 15);
-      if (!measurements.length) {
-        statusEl.textContent = "No recent measurements available.";
-        return;
-      }
+    const data = await res.json();
 
-      tbody.innerHTML = "";
-      markersLayer.clearLayers();
-
-      const bounds = [];
-
-      measurements.forEach(item => {
-        const rawId = item.device || item.device_id || item.deviceId || item.name || "";
-        const id = normalizeDeviceId(rawId);
-        const site = sites[id] || { name: (rawId || "Unknown"), district: "Kampala" };
-
-        const pm25 = Number(item?.pm2_5?.value);
-        const pm10 = Number(item?.pm10?.value);
-        const when = fmtDateTimeKampala(item.time || item.created_at || item.createdAt || item.timestamp);
-
-        const cls = whoClass(pm25);
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>
-            <div>${site.name}</div>
-            <div style="font-size:0.8em;color:#4b5c67;">${site.district}, Uganda</div>
-          </td>
-          <td>${when}</td>
-          <td class="pm25 ${cls}">${fmtNumber(pm25)}</td>
-          <td>${fmtNumber(pm10)}</td>
-        `;
-        tbody.appendChild(tr);
-
-        if (Number.isFinite(site.lat) && Number.isFinite(site.lon) && Number.isFinite(pm25)) {
-          const fill = aqiFillColor(cls);
-
-          const popupHtml = `
-            <div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
-              <div style="color:#143541; margin-bottom:4px;">${site.name}</div>
-              <div style="color:#4b5c67; font-size:12px; margin-bottom:6px;">${site.district}, Uganda</div>
-              <div style="font-size:13px;">PM2.5: ${fmtNumber(pm25)} µg/m³ (${whoLabel(pm25)})</div>
-              <div style="font-size:13px;">PM10: ${fmtNumber(pm10)} µg/m³</div>
-              <div style="color:#4b5c67; font-size:12px; margin-top:6px;">${when} (EAT)</div>
-            </div>
-          `;
-
-          L.circleMarker([site.lat, site.lon], {
-            radius: 10,
-            color: "#333",
-            weight: 1,
-            fillColor: fill,
-            fillOpacity: 0.9
-          }).bindPopup(popupHtml).addTo(markersLayer);
-
-          bounds.push([site.lat, site.lon]);
-        }
-      });
-
-      statusEl.textContent = "";
-      table.style.display = "";
-
-      if (bounds.length >= 2) map.fitBounds(bounds, { padding: [25, 25] });
-      else if (bounds.length === 1) map.setView(bounds[0], 13);
-    } catch (e) {
-      statusEl.textContent = "Could not load data from AirQo right now.";
+    // If the workflow wrote an error JSON, show that clearly
+    if (data && typeof data === "object" && data.error) {
+      const code = data.status_code ? ` (HTTP ${data.status_code})` : "";
+      statusEl.textContent = `Recent AirQo data is temporarily unavailable${code}. Historical data remains available below.`;
+      table.style.display = "none";
+      return;
     }
+
+    const measurements = (data.measurements || data.results || []).slice(0, 15);
+
+    if (!measurements.length) {
+      statusEl.textContent = "No recent measurements available.";
+      table.style.display = "none";
+      return;
+    }
+
+    tbody.innerHTML = "";
+    markersLayer.clearLayers();
+
+    const bounds = [];
+
+    measurements.forEach(item => {
+      const rawId = item.device || item.device_id || item.deviceId || item.name || "";
+      const id = normalizeDeviceId(rawId);
+      const site = sites[id] || { name: (rawId || "Unknown"), district: "Kampala" };
+
+      const pm25 = Number(item?.pm2_5?.value);
+      const pm10 = Number(item?.pm10?.value);
+      const when = fmtDateTimeKampala(item.time || item.created_at || item.createdAt || item.timestamp);
+
+      const cls = whoClass(pm25);
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>
+          <div>${site.name}</div>
+          <div style="font-size:0.8em;color:#4b5c67;">${site.district}, Uganda</div>
+        </td>
+        <td>${when}</td>
+        <td class="pm25 ${cls}">${fmtNumber(pm25)}</td>
+        <td>${fmtNumber(pm10)}</td>
+      `;
+      tbody.appendChild(tr);
+
+      if (Number.isFinite(site.lat) && Number.isFinite(site.lon) && Number.isFinite(pm25)) {
+        const fill = aqiFillColor(cls);
+
+        const popupHtml = `
+          <div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+            <div style="color:#143541; margin-bottom:4px;">${site.name}</div>
+            <div style="color:#4b5c67; font-size:12px; margin-bottom:6px;">${site.district}, Uganda</div>
+            <div style="font-size:13px;">PM2.5: ${fmtNumber(pm25)} µg/m³ (${whoLabel(pm25)})</div>
+            <div style="font-size:13px;">PM10: ${fmtNumber(pm10)} µg/m³</div>
+            <div style="color:#4b5c67; font-size:12px; margin-top:6px;">${when} (EAT)</div>
+          </div>
+        `;
+
+        L.circleMarker([site.lat, site.lon], {
+          radius: 10,
+          color: "#333",
+          weight: 1,
+          fillColor: fill,
+          fillOpacity: 0.9
+        }).bindPopup(popupHtml).addTo(markersLayer);
+
+        bounds.push([site.lat, site.lon]);
+      }
+    });
+
+    statusEl.textContent = "";
+    table.style.display = "";
+
+    if (bounds.length >= 2) map.fitBounds(bounds, { padding: [25, 25] });
+    else if (bounds.length === 1) map.setView(bounds[0], 13);
+
+  } catch (e) {
+    statusEl.textContent = "Recent AirQo data is temporarily unavailable. Historical data remains available below.";
+    table.style.display = "none";
   }
+}
+
 
   function parseCsv(text) {
     const rows = [];
