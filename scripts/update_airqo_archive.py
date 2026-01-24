@@ -39,7 +39,6 @@ def _iso(dt_like) -> str:
     if not s:
         return ""
     try:
-        # allow "Z"
         if s.endswith("Z"):
             s2 = s[:-1] + "+00:00"
             return datetime.fromisoformat(s2).astimezone(timezone.utc).isoformat()
@@ -53,7 +52,7 @@ def _num(x):
         if x is None:
             return ""
         v = float(x)
-        if v != v:  # NaN
+        if v != v:
             return ""
         return v
     except Exception:
@@ -68,14 +67,6 @@ def _pick(d: dict, *keys, default=None):
 
 
 def _extract_pollutant(item: dict, keys):
-    """
-    Returns (raw_value, calibrated_value) as floats or "".
-    Handles shapes like:
-      pm2_5: { value: 12.3, calibratedValue: 11.9 }
-      pm2_5: { value: 12.3 }
-      pm2_5: 12.3
-      pm2_5: { calibrated_value: 11.9 }
-    """
     obj = None
     for k in keys:
         if k in item:
@@ -87,22 +78,13 @@ def _extract_pollutant(item: dict, keys):
 
     if isinstance(obj, dict):
         raw = _pick(obj, "value", "rawValue", "raw_value", "raw", default="")
-        cal = _pick(
-            obj,
-            "calibratedValue",
-            "calibrated_value",
-            "calibrated",
-            "calibratedValueUg",
-            "calibratedValueUG",
-            default="",
-        )
+        cal = _pick(obj, "calibratedValue", "calibrated_value", "calibrated", default="")
         raw_n = _num(raw)
         cal_n = _num(cal)
         if cal_n == "" and raw_n != "":
             cal_n = raw_n
         return raw_n, cal_n
 
-    # numeric or string
     raw_n = _num(obj)
     cal_n = raw_n if raw_n != "" else ""
     return raw_n, cal_n
@@ -122,7 +104,6 @@ def _extract_row(item: dict) -> dict:
     longitude = _pick(item, "longitude", "lon", "lng", default="")
 
     network = _pick(item, "network", default="")
-
     frequency = _pick(item, "frequency", default="")
 
     pm25_raw, pm25_cal = _extract_pollutant(item, ("pm2_5", "pm25", "pm_2_5"))
@@ -144,7 +125,6 @@ def _extract_row(item: dict) -> dict:
         "temperature": temperature if temperature != "" else "",
     }
 
-    # stringify all for csv writer
     out = {}
     for k in CSV_COLUMNS:
         v = row.get(k, "")
@@ -169,6 +149,29 @@ def _load_existing_keys(path: Path):
     return keys
 
 
+def _fetch_airqo(url: str, token: str):
+    # Try style 1: Authorization header
+    r1 = requests.get(
+        url,
+        headers={"Accept": "application/json", "Authorization": f"Bearer {token}"},
+        timeout=45,
+    )
+    if r1.ok:
+        return r1, "Authorization: Bearer"
+
+    # Try style 2: query-string token
+    r2 = requests.get(
+        f"{url}?token={token}",
+        headers={"Accept": "application/json"},
+        timeout=45,
+    )
+    if r2.ok:
+        return r2, "?token="
+
+    # Return both failures for debugging
+    return (r2 if r2 is not None else r1), f"failed (bearer={r1.status_code}, query={r2.status_code})"
+
+
 def main():
     token = os.environ.get("AIRQO_TOKEN", "").strip()
     cohort_id = os.environ.get("AIRQO_COHORT_ID", "").strip()
@@ -179,20 +182,29 @@ def main():
         raise SystemExit("Missing AIRQO_COHORT_ID env var")
 
     Path("data").mkdir(parents=True, exist_ok=True)
-    Path("scripts").mkdir(parents=True, exist_ok=True)
 
     url = f"https://api.airqo.net/api/v2/devices/measurements/cohorts/{cohort_id}"
 
-    headers = {
-        "Accept": "application/json",
-        "Authorization": f"Bearer {token}",
-    }
+    resp, auth_mode = _fetch_airqo(url, token)
 
-    resp = requests.get(url, headers=headers, timeout=45)
-    resp.raise_for_status()
+    if not resp.ok:
+        RECENT_JSON_PATH.write_text(
+            json.dumps(
+                {
+                    "error": "AirQo request failed",
+                    "status_code": resp.status_code,
+                    "auth_mode_tried": auth_mode,
+                    "hint": "Check that AIRQO_TOKEN is valid for this cohort and that AIRQO_COHORT_ID is correct.",
+                    "response_text_preview": resp.text[:500],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        raise SystemExit(f"AirQo request failed (auth {auth_mode}): HTTP {resp.status_code} :: {resp.text[:200]}")
+
     data = resp.json()
 
-    # Always write the full recent response for the website to read
     with RECENT_JSON_PATH.open("w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
@@ -202,8 +214,7 @@ def main():
 
     existing = _load_existing_keys(ARCHIVE_CSV_PATH)
 
-    file_exists = ARCHIVE_CSV_PATH.exists()
-    if not file_exists:
+    if not ARCHIVE_CSV_PATH.exists():
         with ARCHIVE_CSV_PATH.open("w", encoding="utf-8", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
             writer.writeheader()
@@ -226,9 +237,11 @@ def main():
             writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
             writer.writerows(new_rows)
 
+    print(f"Auth mode used: {auth_mode}")
     print(f"Wrote recent JSON: {RECENT_JSON_PATH}")
     print(f"Appended {len(new_rows)} new archive rows to: {ARCHIVE_CSV_PATH}")
 
 
 if __name__ == "__main__":
     main()
+
