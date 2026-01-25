@@ -1,7 +1,17 @@
 {
-  "error": "AirQo fetch failed on this run",
-  "status_code": 401,
-  "auth_mode": "failed(bearer=401,query=401)",
-  "note": "Workflow will try again next hour. This run exited successfully to avoid email spam.",
-  "response_text_preview": " <!DOCTYPE html> <html> <head> <title>401 - Unauthorized</title> <style> * { margin: 0; padding: 0; box-sizing: border-box; } body { font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; background: #f5f7fa; color: #2d3748; min-height: 100vh; display: flex; flex-direction: column; } .container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; text-align: center; } .error-code { font-size: 8re"
+  "success": true,
+  "isCache": true,
+  "message": "Successfully retrieved the measurements",
+  "meta": {
+    "total": 0,
+    "skip": 0,
+    "limit": 30,
+    "page": 1,
+    "pages": 1,
+    "startTime": "2026-01-22T02:20:00.667Z",
+    "endTime": "2026-01-25T02:20:00.667Z",
+    "optimized": false,
+    "countSkipped": true
+  },
+  "measurements": []
 }
