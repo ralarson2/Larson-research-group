@@ -1,15 +1,15 @@
 {
   "success": true,
-  "isCache": true,
-  "message": "Successfully retrieved the measurements",
+  "isCache": false,
+  "message": "no measurements for this search",
   "meta": {
     "total": 0,
     "skip": 0,
     "limit": 30,
     "page": 1,
     "pages": 1,
-    "startTime": "2026-01-22T16:15:00.440Z",
-    "endTime": "2026-01-25T16:15:00.440Z",
+    "startTime": "2026-01-22T17:32:48.744Z",
+    "endTime": "2026-01-25T17:32:48.744Z",
     "optimized": false,
     "countSkipped": true
   },
