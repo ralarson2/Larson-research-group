@@ -8,574 +8,22 @@
     "limit": 30,
     "page": 1,
     "pages": 1,
-    "startTime": "2026-01-25T19:40:00.548Z",
-    "endTime": "2026-01-28T19:40:00.548Z",
+    "startTime": "2026-01-25T20:20:00.555Z",
+    "endTime": "2026-01-28T20:20:00.555Z",
     "optimized": false,
     "countSkipped": true
   },
   "measurements": [
     {
-      "device": "airqo_g5567",
-      "device_id": "68638eae0aef8b001385d467",
-      "site_id": "68d69d0f4b74ad0012a58685",
-      "time": "2026-01-28T17:00:00.000Z",
-      "pm2_5": {
-        "value": 41.58
-      },
-      "pm10": {
-        "value": 50.575
-      },
-      "frequency": "hourly",
-      "no2": {},
-      "deviceDetails": {
-        "_id": "68638eae0aef8b001385d467",
-        "isOnline": true,
-        "claim_status": "unclaimed",
-        "name": "airqo_g5567",
-        "lastRawData": "2026-01-28T19:33:50.000Z",
-        "rawOnlineStatus": true,
-        "deployment_type": "static",
-        "latitude": 0.3468257915673872,
-        "longitude": 32.58904740585272,
-        "latest_pm2_5": {
-          "raw": {
-            "value": 49.07,
-            "time": "2026-01-28T19:33:50.000Z"
-          },
-          "calibrated": {
-            "value": 42.51583333333333,
-            "time": "2026-01-28T16:00:00.000Z"
-          }
-        }
-      },
-      "is_reading_primary": false,
-      "health_tips": [
-        {
-          "_id": "64283dc7e57ef7001e74007d",
-          "title": "Unhealthy for Sensitive Groups",
-          "description": "Sensitive individuals should reduce the intensity of their outdoor activities, especially if they experience symptoms like a cough or a sore throat.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        },
-        {
-          "_id": "64283e11e57ef7001e74008c",
-          "title": "For pregnant women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        },
-        {
-          "_id": "64283e529c7eaf001ea5e9b4",
-          "title": "For elderly people",
-          "description": "Reduce the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        },
-        {
-          "_id": "64283e6e9c7eaf001ea5e9b7",
-          "title": "For Children",
-          "description": "Reduce the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fchild.png?alt=media&token=0c983e57-90df-425d-9bd4-294dc0eacada",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        }
-      ],
-      "timeDifferenceHours": 2.6668191666666665,
-      "aqi_ranges": {
-        "good": {
-          "min": 0,
-          "max": 9.1
-        },
-        "moderate": {
-          "min": 9.101,
-          "max": 35.49
-        },
-        "u4sg": {
-          "min": 35.491,
-          "max": 55.49
-        },
-        "unhealthy": {
-          "min": 55.491,
-          "max": 125.49
-        },
-        "very_unhealthy": {
-          "min": 125.491,
-          "max": 225.49
-        },
-        "hazardous": {
-          "min": 225.491
-        }
-      },
-      "aqi_color": "FF851F",
-      "aqi_category": "Unhealthy for Sensitive Groups",
-      "aqi_color_name": "Orange"
-    },
-    {
-      "device": "aq_g5_43",
-      "device_id": "61960c7139ae8a002ae72d7c",
-      "site_id": "62cd2d8ff49973002b21583f",
-      "time": "2026-01-28T17:00:00.000Z",
-      "pm2_5": {
-        "value": 61.14690000000018
-      },
-      "pm10": {
-        "value": 82.67380958161559
-      },
-      "frequency": "hourly",
-      "no2": {},
-      "deviceDetails": {
-        "_id": "61960c7139ae8a002ae72d7c",
-        "name": "aq_g5_43",
-        "latitude": 0.2969255477613093,
-        "longitude": 32.57664109478158,
-        "isOnline": true,
-        "lastRawData": "2026-01-28T18:50:56.000Z",
-        "rawOnlineStatus": true,
-        "latest_pm2_5": {
-          "raw": {
-            "value": 63.87,
-            "time": "2026-01-28T18:50:56.000Z"
-          },
-          "calibrated": {
-            "value": 36.441100000000034,
-            "time": "2026-01-28T16:00:00.000Z"
-          }
-        }
-      },
-      "is_reading_primary": true,
-      "health_tips": [
-        {
-          "_id": "64283ec79c7eaf001ea5e9c9",
-          "title": "Unhealthy Air Quality",
-          "description": "Everyone should limit the intensity of outdoor activities. Poor air quality can increase respiratory discomfort and dehydration. Stay hydrated by drinking plenty of water.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
-          "tag_line": "The air quality today might irritate your lungs."
-        }
-      ],
-      "timeDifferenceHours": 2.6668191666666665,
-      "aqi_ranges": {
-        "good": {
-          "min": 0,
-          "max": 9.1
-        },
-        "moderate": {
-          "min": 9.101,
-          "max": 35.49
-        },
-        "u4sg": {
-          "min": 35.491,
-          "max": 55.49
-        },
-        "unhealthy": {
-          "min": 55.491,
-          "max": 125.49
-        },
-        "very_unhealthy": {
-          "min": 125.491,
-          "max": 225.49
-        },
-        "hazardous": {
-          "min": 225.491
-        }
-      },
-      "aqi_color": "F7453C",
-      "aqi_category": "Unhealthy",
-      "aqi_color_name": "Red"
-    },
-    {
-      "device": "aq_g520",
-      "device_id": "60a81edac01cec5f7fa4d1be",
-      "site_id": "624a91c9a7d118001dfacd8d",
-      "time": "2026-01-28T17:00:00.000Z",
-      "pm2_5": {
-        "value": 40.99229999999993
-      },
-      "pm10": {
-        "value": 63.76682228824807
-      },
-      "frequency": "hourly",
-      "no2": {},
-      "deviceDetails": {
-        "_id": "60a81edac01cec5f7fa4d1be",
-        "name": "aq_g520",
-        "latitude": 0.30991,
-        "longitude": 32.60045,
-        "isOnline": true,
-        "lastRawData": "2026-01-28T19:10:19.000Z",
-        "rawOnlineStatus": true,
-        "latest_pm2_5": {
-          "raw": {
-            "value": 87.12,
-            "time": "2026-01-28T19:10:19.000Z"
-          },
-          "calibrated": {
-            "value": 31.34090000000004,
-            "time": "2026-01-28T16:00:00.000Z"
-          }
-        }
-      },
-      "is_reading_primary": true,
-      "health_tips": [
-        {
-          "_id": "64283dc7e57ef7001e74007d",
-          "title": "Unhealthy for Sensitive Groups",
-          "description": "Sensitive individuals should reduce the intensity of their outdoor activities, especially if they experience symptoms like a cough or a sore throat.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        },
-        {
-          "_id": "64283e11e57ef7001e74008c",
-          "title": "For pregnant women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        },
-        {
-          "_id": "64283e529c7eaf001ea5e9b4",
-          "title": "For elderly people",
-          "description": "Reduce the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        },
-        {
-          "_id": "64283e6e9c7eaf001ea5e9b7",
-          "title": "For Children",
-          "description": "Reduce the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fchild.png?alt=media&token=0c983e57-90df-425d-9bd4-294dc0eacada",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        }
-      ],
-      "timeDifferenceHours": 2.6668191666666665,
-      "aqi_ranges": {
-        "good": {
-          "min": 0,
-          "max": 9.1
-        },
-        "moderate": {
-          "min": 9.101,
-          "max": 35.49
-        },
-        "u4sg": {
-          "min": 35.491,
-          "max": 55.49
-        },
-        "unhealthy": {
-          "min": 55.491,
-          "max": 125.49
-        },
-        "very_unhealthy": {
-          "min": 125.491,
-          "max": 225.49
-        },
-        "hazardous": {
-          "min": 225.491
-        }
-      },
-      "aqi_color": "FF851F",
-      "aqi_category": "Unhealthy for Sensitive Groups",
-      "aqi_color_name": "Orange"
-    },
-    {
-      "device": "airqo_g5548",
-      "device_id": "68638317fe855700134d6f1d",
-      "site_id": "68d657764d739f001352c12c",
-      "time": "2026-01-28T17:00:00.000Z",
-      "pm2_5": {
-        "value": 27.773700000000023
-      },
-      "pm10": {
-        "value": 44.59057368139192
-      },
-      "frequency": "hourly",
-      "no2": {},
-      "deviceDetails": {
-        "_id": "68638317fe855700134d6f1d",
-        "isOnline": true,
-        "claim_status": "unclaimed",
-        "name": "airqo_g5548",
-        "lastRawData": "2026-01-28T18:56:21.000Z",
-        "rawOnlineStatus": true,
-        "deployment_type": "static",
-        "latitude": 0.3232013699891734,
-        "longitude": 32.63197194130845,
-        "latest_pm2_5": {
-          "raw": {
-            "value": 119.25,
-            "time": "2026-01-28T18:56:21.000Z"
-          },
-          "calibrated": {
-            "value": 33.32559999999998,
-            "time": "2026-01-28T16:00:00.000Z"
-          }
-        }
-      },
-      "is_reading_primary": false,
-      "health_tips": [
-        {
-          "_id": "64283ce9e82a77001e55c0b5",
-          "title": "Moderate Air Quality - Elderly People",
-          "description": "Take it easy and limit the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "64283d37b2e9e5001e69c872",
-          "title": "For pregnant women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "64283d749c7eaf001ea5e99d",
-          "title": "For elderly people",
-          "description": "Reduce the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "6833213e306187693c1a3cc8",
-          "title": "Moderate Air Quality - Everyone",
-          "description": "Pace yourself during outdoor work and avoid overexertion.",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "6833213e306187693c1a3cc9",
-          "title": "Moderate Air Quality - Pregnant Women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "tag_line": "The air quality today is moderate."
-        }
-      ],
-      "timeDifferenceHours": 2.6668191666666665,
-      "aqi_ranges": {
-        "good": {
-          "min": 0,
-          "max": 9.1
-        },
-        "moderate": {
-          "min": 9.101,
-          "max": 35.49
-        },
-        "u4sg": {
-          "min": 35.491,
-          "max": 55.49
-        },
-        "unhealthy": {
-          "min": 55.491,
-          "max": 125.49
-        },
-        "very_unhealthy": {
-          "min": 125.491,
-          "max": 225.49
-        },
-        "hazardous": {
-          "min": 225.491
-        }
-      },
-      "aqi_color": "ECAA06",
-      "aqi_category": "Moderate",
-      "aqi_color_name": "Yellow"
-    },
-    {
-      "device": "airqo_g5438",
-      "device_id": "67d1436d0008850013050fd4",
-      "site_id": "6244479fd676e8001fdc4e08",
-      "time": "2026-01-28T17:00:00.000Z",
-      "pm2_5": {
-        "value": 18.84840000000002
-      },
-      "pm10": {
-        "value": 32.33077823651655
-      },
-      "frequency": "hourly",
-      "no2": {},
-      "deviceDetails": {
-        "_id": "67d1436d0008850013050fd4",
-        "isOnline": true,
-        "name": "airqo_g5438",
-        "deployment_type": "static",
-        "latitude": 0.25811888345721734,
-        "longitude": 32.60911233898054,
-        "lastRawData": "2026-01-28T18:57:01.000Z",
-        "rawOnlineStatus": true,
-        "latest_pm2_5": {
-          "raw": {
-            "value": 108.45,
-            "time": "2026-01-28T18:57:01.000Z"
-          },
-          "calibrated": {
-            "value": 26.865899999999996,
-            "time": "2026-01-28T16:00:00.000Z"
-          }
-        }
-      },
-      "is_reading_primary": true,
-      "health_tips": [
-        {
-          "_id": "64283ce9e82a77001e55c0b5",
-          "title": "Moderate Air Quality - Elderly People",
-          "description": "Take it easy and limit the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "64283d37b2e9e5001e69c872",
-          "title": "For pregnant women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "64283d749c7eaf001ea5e99d",
-          "title": "For elderly people",
-          "description": "Reduce the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "6833213e306187693c1a3cc8",
-          "title": "Moderate Air Quality - Everyone",
-          "description": "Pace yourself during outdoor work and avoid overexertion.",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "6833213e306187693c1a3cc9",
-          "title": "Moderate Air Quality - Pregnant Women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "tag_line": "The air quality today is moderate."
-        }
-      ],
-      "timeDifferenceHours": 2.6668191666666665,
-      "aqi_ranges": {
-        "good": {
-          "min": 0,
-          "max": 9.1
-        },
-        "moderate": {
-          "min": 9.101,
-          "max": 35.49
-        },
-        "u4sg": {
-          "min": 35.491,
-          "max": 55.49
-        },
-        "unhealthy": {
-          "min": 55.491,
-          "max": 125.49
-        },
-        "very_unhealthy": {
-          "min": 125.491,
-          "max": 225.49
-        },
-        "hazardous": {
-          "min": 225.491
-        }
-      },
-      "aqi_color": "ECAA06",
-      "aqi_category": "Moderate",
-      "aqi_color_name": "Yellow"
-    },
-    {
-      "device": "aq_g5_46",
-      "device_id": "61960cf5d9e5ce0029d2613e",
-      "site_id": "623d84340e8054001eaaaa13",
-      "time": "2026-01-28T17:00:00.000Z",
-      "pm2_5": {
-        "value": 55.44780000000011
-      },
-      "pm10": {
-        "value": 65.70648081256579
-      },
-      "frequency": "hourly",
-      "no2": {},
-      "deviceDetails": {
-        "_id": "61960cf5d9e5ce0029d2613e",
-        "name": "aq_g5_46",
-        "latitude": 0.25776,
-        "longitude": 32.63686,
-        "isOnline": true,
-        "lastRawData": "2026-01-28T17:21:19.000Z",
-        "rawOnlineStatus": false,
-        "latest_pm2_5": {
-          "raw": {
-            "value": 89.37,
-            "time": "2026-01-28T17:21:19.000Z"
-          },
-          "calibrated": {
-            "value": 63.7466999999999,
-            "time": "2026-01-28T16:00:00.000Z"
-          }
-        }
-      },
-      "is_reading_primary": true,
-      "health_tips": [
-        {
-          "_id": "64283dc7e57ef7001e74007d",
-          "title": "Unhealthy for Sensitive Groups",
-          "description": "Sensitive individuals should reduce the intensity of their outdoor activities, especially if they experience symptoms like a cough or a sore throat.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        },
-        {
-          "_id": "64283e11e57ef7001e74008c",
-          "title": "For pregnant women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        },
-        {
-          "_id": "64283e529c7eaf001ea5e9b4",
-          "title": "For elderly people",
-          "description": "Reduce the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        },
-        {
-          "_id": "64283e6e9c7eaf001ea5e9b7",
-          "title": "For Children",
-          "description": "Reduce the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fchild.png?alt=media&token=0c983e57-90df-425d-9bd4-294dc0eacada",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        }
-      ],
-      "timeDifferenceHours": 2.6668191666666665,
-      "aqi_ranges": {
-        "good": {
-          "min": 0,
-          "max": 9.1
-        },
-        "moderate": {
-          "min": 9.101,
-          "max": 35.49
-        },
-        "u4sg": {
-          "min": 35.491,
-          "max": 55.49
-        },
-        "unhealthy": {
-          "min": 55.491,
-          "max": 125.49
-        },
-        "very_unhealthy": {
-          "min": 125.491,
-          "max": 225.49
-        },
-        "hazardous": {
-          "min": 225.491
-        }
-      },
-      "aqi_color": "FF851F",
-      "aqi_category": "Unhealthy for Sensitive Groups",
-      "aqi_color_name": "Orange"
-    },
-    {
       "device": "airqo_g5563",
       "device_id": "6863872c339f1b0013a7edbc",
       "site_id": "68d658118162eb0013efffdc",
-      "time": "2026-01-28T17:00:00.000Z",
+      "time": "2026-01-28T18:00:00.000Z",
       "pm2_5": {
-        "value": 31.292799999999968
+        "value": 43.344699999999946
       },
       "pm10": {
-        "value": 41.927071350456416
+        "value": 49.259589447628514
       },
       "frequency": "hourly",
       "no2": {},
@@ -595,48 +43,43 @@
             "time": "2026-01-28T18:55:32.000Z"
           },
           "calibrated": {
-            "value": 31.14049999999997,
-            "time": "2026-01-28T16:00:00.000Z"
+            "value": 31.292799999999968,
+            "time": "2026-01-28T17:00:00.000Z"
           }
         }
       },
       "is_reading_primary": false,
       "health_tips": [
         {
-          "_id": "64283ce9e82a77001e55c0b5",
-          "title": "Moderate Air Quality - Elderly People",
-          "description": "Take it easy and limit the intensity of your outdoor activities.",
+          "_id": "64283dc7e57ef7001e74007d",
+          "title": "Unhealthy for Sensitive Groups",
+          "description": "Sensitive individuals should reduce the intensity of their outdoor activities, especially if they experience symptoms like a cough or a sore throat.",
           "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
-          "tag_line": "The air quality today is moderate."
+          "tag_line": "The air quality is unhealthy for sensitive people."
         },
         {
-          "_id": "64283d37b2e9e5001e69c872",
+          "_id": "64283e11e57ef7001e74008c",
           "title": "For pregnant women",
           "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
           "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
-          "tag_line": "The air quality today is moderate."
+          "tag_line": "The air quality is unhealthy for sensitive people."
         },
         {
-          "_id": "64283d749c7eaf001ea5e99d",
+          "_id": "64283e529c7eaf001ea5e9b4",
           "title": "For elderly people",
           "description": "Reduce the intensity of your outdoor activities.",
           "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
-          "tag_line": "The air quality today is moderate."
+          "tag_line": "The air quality is unhealthy for sensitive people."
         },
         {
-          "_id": "6833213e306187693c1a3cc8",
-          "title": "Moderate Air Quality - Everyone",
-          "description": "Pace yourself during outdoor work and avoid overexertion.",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "6833213e306187693c1a3cc9",
-          "title": "Moderate Air Quality - Pregnant Women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "tag_line": "The air quality today is moderate."
+          "_id": "64283e6e9c7eaf001ea5e9b7",
+          "title": "For Children",
+          "description": "Reduce the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fchild.png?alt=media&token=0c983e57-90df-425d-9bd4-294dc0eacada",
+          "tag_line": "The air quality is unhealthy for sensitive people."
         }
       ],
-      "timeDifferenceHours": 2.6668191666666665,
+      "timeDifferenceHours": 2.3334877777777776,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -662,93 +105,20 @@
           "min": 225.491
         }
       },
-      "aqi_color": "ECAA06",
-      "aqi_category": "Moderate",
-      "aqi_color_name": "Yellow"
-    },
-    {
-      "device": "airqo_g5446",
-      "device_id": "67d1445c13e5ea001494f37b",
-      "site_id": "68d658de8162eb0013f0001e",
-      "time": "2026-01-28T17:00:00.000Z",
-      "pm2_5": {
-        "value": 57.36699999999999
-      },
-      "pm10": {
-        "value": 72.21893603330776
-      },
-      "frequency": "hourly",
-      "no2": {},
-      "deviceDetails": {
-        "_id": "67d1445c13e5ea001494f37b",
-        "isOnline": true,
-        "name": "airqo_g5446",
-        "lastRawData": "2026-01-28T17:12:11.000Z",
-        "rawOnlineStatus": false,
-        "deployment_type": "static",
-        "latitude": 0.3156788593479292,
-        "longitude": 32.635063348773784,
-        "latest_pm2_5": {
-          "raw": {
-            "value": 0,
-            "time": "2026-01-28T17:12:11.000Z"
-          },
-          "calibrated": {
-            "value": 47.80589999999989,
-            "time": "2026-01-28T16:00:00.000Z"
-          }
-        }
-      },
-      "is_reading_primary": false,
-      "health_tips": [
-        {
-          "_id": "64283ec79c7eaf001ea5e9c9",
-          "title": "Unhealthy Air Quality",
-          "description": "Everyone should limit the intensity of outdoor activities. Poor air quality can increase respiratory discomfort and dehydration. Stay hydrated by drinking plenty of water.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
-          "tag_line": "The air quality today might irritate your lungs."
-        }
-      ],
-      "timeDifferenceHours": 2.6668191666666665,
-      "aqi_ranges": {
-        "good": {
-          "min": 0,
-          "max": 9.1
-        },
-        "moderate": {
-          "min": 9.101,
-          "max": 35.49
-        },
-        "u4sg": {
-          "min": 35.491,
-          "max": 55.49
-        },
-        "unhealthy": {
-          "min": 55.491,
-          "max": 125.49
-        },
-        "very_unhealthy": {
-          "min": 125.491,
-          "max": 225.49
-        },
-        "hazardous": {
-          "min": 225.491
-        }
-      },
-      "aqi_color": "F7453C",
-      "aqi_category": "Unhealthy",
-      "aqi_color_name": "Red"
+      "aqi_color": "FF851F",
+      "aqi_category": "Unhealthy for Sensitive Groups",
+      "aqi_color_name": "Orange"
     },
     {
       "device": "aq_g5_97",
       "device_id": "6332a879d8a1ef001e01384e",
       "site_id": "60d058c8048305120d2d6169",
-      "time": "2026-01-28T16:00:00.000Z",
+      "time": "2026-01-28T18:00:00.000Z",
       "pm2_5": {
-        "value": 50.475
+        "value": 55.028000000000006
       },
       "pm10": {
-        "value": 60.757000000000005
+        "value": 66.543
       },
       "frequency": "hourly",
       "no2": {},
@@ -802,7 +172,7 @@
           "tag_line": "The air quality is unhealthy for sensitive people."
         }
       ],
-      "timeDifferenceHours": 3.6668191666666665,
+      "timeDifferenceHours": 2.3334877777777776,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -833,34 +203,34 @@
       "aqi_color_name": "Orange"
     },
     {
-      "device": "aq_72",
-      "device_id": "5f2036bc70223655545a8b80",
-      "site_id": "60d058c8048305120d2d616e",
+      "device": "aq_g5_46",
+      "device_id": "61960cf5d9e5ce0029d2613e",
+      "site_id": "623d84340e8054001eaaaa13",
       "time": "2026-01-28T17:00:00.000Z",
       "pm2_5": {
-        "value": 45.29349999999995
+        "value": 55.44780000000011
       },
       "pm10": {
-        "value": 65.49810669421677
+        "value": 65.70648081256579
       },
       "frequency": "hourly",
       "no2": {},
       "deviceDetails": {
-        "_id": "5f2036bc70223655545a8b80",
-        "latitude": 0.2689,
-        "longitude": 32.588,
-        "name": "aq_72",
+        "_id": "61960cf5d9e5ce0029d2613e",
+        "name": "aq_g5_46",
+        "latitude": 0.25776,
+        "longitude": 32.63686,
         "isOnline": true,
-        "lastRawData": "2026-01-28T19:02:00.000Z",
-        "rawOnlineStatus": true,
+        "lastRawData": "2026-01-28T17:21:19.000Z",
+        "rawOnlineStatus": false,
         "latest_pm2_5": {
           "raw": {
-            "value": 58.05,
-            "time": "2026-01-28T19:02:00.000Z"
+            "value": 89.37,
+            "time": "2026-01-28T17:21:19.000Z"
           },
           "calibrated": {
-            "value": 47.55400000000006,
-            "time": "2026-01-28T16:00:00.000Z"
+            "value": 55.44780000000011,
+            "time": "2026-01-28T17:00:00.000Z"
           }
         }
       },
@@ -895,7 +265,7 @@
           "tag_line": "The air quality is unhealthy for sensitive people."
         }
       ],
-      "timeDifferenceHours": 2.6668191666666665,
+      "timeDifferenceHours": 3.3334877777777776,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -924,6 +294,522 @@
       "aqi_color": "FF851F",
       "aqi_category": "Unhealthy for Sensitive Groups",
       "aqi_color_name": "Orange"
+    },
+    {
+      "device": "airqo_g5548",
+      "device_id": "68638317fe855700134d6f1d",
+      "site_id": "68d657764d739f001352c12c",
+      "time": "2026-01-28T18:00:00.000Z",
+      "pm2_5": {
+        "value": 32.29670000000002
+      },
+      "pm10": {
+        "value": 44.69820017765413
+      },
+      "frequency": "hourly",
+      "no2": {},
+      "deviceDetails": {
+        "_id": "68638317fe855700134d6f1d",
+        "isOnline": true,
+        "claim_status": "unclaimed",
+        "name": "airqo_g5548",
+        "lastRawData": "2026-01-28T18:56:21.000Z",
+        "rawOnlineStatus": true,
+        "deployment_type": "static",
+        "latitude": 0.3232013699891734,
+        "longitude": 32.63197194130845,
+        "latest_pm2_5": {
+          "raw": {
+            "value": 119.25,
+            "time": "2026-01-28T18:56:21.000Z"
+          },
+          "calibrated": {
+            "value": 27.773700000000023,
+            "time": "2026-01-28T17:00:00.000Z"
+          }
+        }
+      },
+      "is_reading_primary": false,
+      "health_tips": [
+        {
+          "_id": "64283ce9e82a77001e55c0b5",
+          "title": "Moderate Air Quality - Elderly People",
+          "description": "Take it easy and limit the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d37b2e9e5001e69c872",
+          "title": "For pregnant women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d749c7eaf001ea5e99d",
+          "title": "For elderly people",
+          "description": "Reduce the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc8",
+          "title": "Moderate Air Quality - Everyone",
+          "description": "Pace yourself during outdoor work and avoid overexertion.",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc9",
+          "title": "Moderate Air Quality - Pregnant Women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "tag_line": "The air quality today is moderate."
+        }
+      ],
+      "timeDifferenceHours": 2.3334877777777776,
+      "aqi_ranges": {
+        "good": {
+          "min": 0,
+          "max": 9.1
+        },
+        "moderate": {
+          "min": 9.101,
+          "max": 35.49
+        },
+        "u4sg": {
+          "min": 35.491,
+          "max": 55.49
+        },
+        "unhealthy": {
+          "min": 55.491,
+          "max": 125.49
+        },
+        "very_unhealthy": {
+          "min": 125.491,
+          "max": 225.49
+        },
+        "hazardous": {
+          "min": 225.491
+        }
+      },
+      "aqi_color": "ECAA06",
+      "aqi_category": "Moderate",
+      "aqi_color_name": "Yellow"
+    },
+    {
+      "device": "airqo_g5438",
+      "device_id": "67d1436d0008850013050fd4",
+      "site_id": "6244479fd676e8001fdc4e08",
+      "time": "2026-01-28T18:00:00.000Z",
+      "pm2_5": {
+        "value": 18.08930000000004
+      },
+      "pm10": {
+        "value": 27.130631145466477
+      },
+      "frequency": "hourly",
+      "no2": {},
+      "deviceDetails": {
+        "_id": "67d1436d0008850013050fd4",
+        "isOnline": true,
+        "name": "airqo_g5438",
+        "deployment_type": "static",
+        "latitude": 0.25811888345721734,
+        "longitude": 32.60911233898054,
+        "lastRawData": "2026-01-28T18:57:01.000Z",
+        "rawOnlineStatus": true,
+        "latest_pm2_5": {
+          "raw": {
+            "value": 108.45,
+            "time": "2026-01-28T18:57:01.000Z"
+          },
+          "calibrated": {
+            "value": 18.84840000000002,
+            "time": "2026-01-28T17:00:00.000Z"
+          }
+        }
+      },
+      "is_reading_primary": true,
+      "health_tips": [
+        {
+          "_id": "64283ce9e82a77001e55c0b5",
+          "title": "Moderate Air Quality - Elderly People",
+          "description": "Take it easy and limit the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d37b2e9e5001e69c872",
+          "title": "For pregnant women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d749c7eaf001ea5e99d",
+          "title": "For elderly people",
+          "description": "Reduce the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc8",
+          "title": "Moderate Air Quality - Everyone",
+          "description": "Pace yourself during outdoor work and avoid overexertion.",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc9",
+          "title": "Moderate Air Quality - Pregnant Women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "tag_line": "The air quality today is moderate."
+        }
+      ],
+      "timeDifferenceHours": 2.3334877777777776,
+      "aqi_ranges": {
+        "good": {
+          "min": 0,
+          "max": 9.1
+        },
+        "moderate": {
+          "min": 9.101,
+          "max": 35.49
+        },
+        "u4sg": {
+          "min": 35.491,
+          "max": 55.49
+        },
+        "unhealthy": {
+          "min": 55.491,
+          "max": 125.49
+        },
+        "very_unhealthy": {
+          "min": 125.491,
+          "max": 225.49
+        },
+        "hazardous": {
+          "min": 225.491
+        }
+      },
+      "aqi_color": "ECAA06",
+      "aqi_category": "Moderate",
+      "aqi_color_name": "Yellow"
+    },
+    {
+      "device": "aq_g520",
+      "device_id": "60a81edac01cec5f7fa4d1be",
+      "site_id": "624a91c9a7d118001dfacd8d",
+      "time": "2026-01-28T18:00:00.000Z",
+      "pm2_5": {
+        "value": 34.37050000000002
+      },
+      "pm10": {
+        "value": 56.54064255977613
+      },
+      "frequency": "hourly",
+      "no2": {},
+      "deviceDetails": {
+        "_id": "60a81edac01cec5f7fa4d1be",
+        "name": "aq_g520",
+        "latitude": 0.30991,
+        "longitude": 32.60045,
+        "isOnline": true,
+        "lastRawData": "2026-01-28T19:10:19.000Z",
+        "rawOnlineStatus": true,
+        "latest_pm2_5": {
+          "raw": {
+            "value": 87.12,
+            "time": "2026-01-28T19:10:19.000Z"
+          },
+          "calibrated": {
+            "value": 40.99229999999993,
+            "time": "2026-01-28T17:00:00.000Z"
+          }
+        }
+      },
+      "is_reading_primary": true,
+      "health_tips": [
+        {
+          "_id": "64283ce9e82a77001e55c0b5",
+          "title": "Moderate Air Quality - Elderly People",
+          "description": "Take it easy and limit the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d37b2e9e5001e69c872",
+          "title": "For pregnant women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d749c7eaf001ea5e99d",
+          "title": "For elderly people",
+          "description": "Reduce the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc8",
+          "title": "Moderate Air Quality - Everyone",
+          "description": "Pace yourself during outdoor work and avoid overexertion.",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc9",
+          "title": "Moderate Air Quality - Pregnant Women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "tag_line": "The air quality today is moderate."
+        }
+      ],
+      "timeDifferenceHours": 2.3334877777777776,
+      "aqi_ranges": {
+        "good": {
+          "min": 0,
+          "max": 9.1
+        },
+        "moderate": {
+          "min": 9.101,
+          "max": 35.49
+        },
+        "u4sg": {
+          "min": 35.491,
+          "max": 55.49
+        },
+        "unhealthy": {
+          "min": 55.491,
+          "max": 125.49
+        },
+        "very_unhealthy": {
+          "min": 125.491,
+          "max": 225.49
+        },
+        "hazardous": {
+          "min": 225.491
+        }
+      },
+      "aqi_color": "ECAA06",
+      "aqi_category": "Moderate",
+      "aqi_color_name": "Yellow"
+    },
+    {
+      "device": "aq_g5_43",
+      "device_id": "61960c7139ae8a002ae72d7c",
+      "site_id": "62cd2d8ff49973002b21583f",
+      "time": "2026-01-28T18:00:00.000Z",
+      "pm2_5": {
+        "value": 57.49620000000019
+      },
+      "pm10": {
+        "value": 67.76706093625751
+      },
+      "frequency": "hourly",
+      "no2": {},
+      "deviceDetails": {
+        "_id": "61960c7139ae8a002ae72d7c",
+        "name": "aq_g5_43",
+        "latitude": 0.2969255477613093,
+        "longitude": 32.57664109478158,
+        "isOnline": true,
+        "lastRawData": "2026-01-28T18:50:56.000Z",
+        "rawOnlineStatus": true,
+        "latest_pm2_5": {
+          "raw": {
+            "value": 63.87,
+            "time": "2026-01-28T18:50:56.000Z"
+          },
+          "calibrated": {
+            "value": 61.14690000000018,
+            "time": "2026-01-28T17:00:00.000Z"
+          }
+        }
+      },
+      "is_reading_primary": true,
+      "health_tips": [
+        {
+          "_id": "64283ec79c7eaf001ea5e9c9",
+          "title": "Unhealthy Air Quality",
+          "description": "Everyone should limit the intensity of outdoor activities. Poor air quality can increase respiratory discomfort and dehydration. Stay hydrated by drinking plenty of water.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
+          "tag_line": "The air quality today might irritate your lungs."
+        }
+      ],
+      "timeDifferenceHours": 2.3334877777777776,
+      "aqi_ranges": {
+        "good": {
+          "min": 0,
+          "max": 9.1
+        },
+        "moderate": {
+          "min": 9.101,
+          "max": 35.49
+        },
+        "u4sg": {
+          "min": 35.491,
+          "max": 55.49
+        },
+        "unhealthy": {
+          "min": 55.491,
+          "max": 125.49
+        },
+        "very_unhealthy": {
+          "min": 125.491,
+          "max": 225.49
+        },
+        "hazardous": {
+          "min": 225.491
+        }
+      },
+      "aqi_color": "F7453C",
+      "aqi_category": "Unhealthy",
+      "aqi_color_name": "Red"
+    },
+    {
+      "device": "airqo_g5446",
+      "device_id": "67d1445c13e5ea001494f37b",
+      "site_id": "68d658de8162eb0013f0001e",
+      "time": "2026-01-28T17:00:00.000Z",
+      "pm2_5": {
+        "value": 57.36699999999999
+      },
+      "pm10": {
+        "value": 72.21893603330776
+      },
+      "frequency": "hourly",
+      "no2": {},
+      "deviceDetails": {
+        "_id": "67d1445c13e5ea001494f37b",
+        "isOnline": true,
+        "name": "airqo_g5446",
+        "lastRawData": "2026-01-28T17:12:11.000Z",
+        "rawOnlineStatus": false,
+        "deployment_type": "static",
+        "latitude": 0.3156788593479292,
+        "longitude": 32.635063348773784,
+        "latest_pm2_5": {
+          "raw": {
+            "value": 0,
+            "time": "2026-01-28T17:12:11.000Z"
+          },
+          "calibrated": {
+            "value": 57.36699999999999,
+            "time": "2026-01-28T17:00:00.000Z"
+          }
+        }
+      },
+      "is_reading_primary": false,
+      "health_tips": [
+        {
+          "_id": "64283ec79c7eaf001ea5e9c9",
+          "title": "Unhealthy Air Quality",
+          "description": "Everyone should limit the intensity of outdoor activities. Poor air quality can increase respiratory discomfort and dehydration. Stay hydrated by drinking plenty of water.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
+          "tag_line": "The air quality today might irritate your lungs."
+        }
+      ],
+      "timeDifferenceHours": 3.3334877777777776,
+      "aqi_ranges": {
+        "good": {
+          "min": 0,
+          "max": 9.1
+        },
+        "moderate": {
+          "min": 9.101,
+          "max": 35.49
+        },
+        "u4sg": {
+          "min": 35.491,
+          "max": 55.49
+        },
+        "unhealthy": {
+          "min": 55.491,
+          "max": 125.49
+        },
+        "very_unhealthy": {
+          "min": 125.491,
+          "max": 225.49
+        },
+        "hazardous": {
+          "min": 225.491
+        }
+      },
+      "aqi_color": "F7453C",
+      "aqi_category": "Unhealthy",
+      "aqi_color_name": "Red"
+    },
+    {
+      "device": "airqo_g5567",
+      "device_id": "68638eae0aef8b001385d467",
+      "site_id": "68d69d0f4b74ad0012a58685",
+      "time": "2026-01-28T18:00:00.000Z",
+      "pm2_5": {
+        "value": 83.73169999999982
+      },
+      "pm10": {
+        "value": 144.67984237733117
+      },
+      "frequency": "hourly",
+      "no2": {},
+      "deviceDetails": {
+        "_id": "68638eae0aef8b001385d467",
+        "isOnline": true,
+        "claim_status": "unclaimed",
+        "name": "airqo_g5567",
+        "lastRawData": "2026-01-28T19:33:50.000Z",
+        "rawOnlineStatus": true,
+        "deployment_type": "static",
+        "latitude": 0.3468257915673872,
+        "longitude": 32.58904740585272,
+        "latest_pm2_5": {
+          "raw": {
+            "value": 49.07,
+            "time": "2026-01-28T19:33:50.000Z"
+          },
+          "calibrated": {
+            "value": 41.58,
+            "time": "2026-01-28T17:00:00.000Z"
+          }
+        }
+      },
+      "is_reading_primary": false,
+      "health_tips": [
+        {
+          "_id": "64283ec79c7eaf001ea5e9c9",
+          "title": "Unhealthy Air Quality",
+          "description": "Everyone should limit the intensity of outdoor activities. Poor air quality can increase respiratory discomfort and dehydration. Stay hydrated by drinking plenty of water.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
+          "tag_line": "The air quality today might irritate your lungs."
+        }
+      ],
+      "timeDifferenceHours": 2.3334877777777776,
+      "aqi_ranges": {
+        "good": {
+          "min": 0,
+          "max": 9.1
+        },
+        "moderate": {
+          "min": 9.101,
+          "max": 35.49
+        },
+        "u4sg": {
+          "min": 35.491,
+          "max": 55.49
+        },
+        "unhealthy": {
+          "min": 55.491,
+          "max": 125.49
+        },
+        "very_unhealthy": {
+          "min": 125.491,
+          "max": 225.49
+        },
+        "hazardous": {
+          "min": 225.491
+        }
+      },
+      "aqi_color": "F7453C",
+      "aqi_category": "Unhealthy",
+      "aqi_color_name": "Red"
     },
     {
       "device": "airqo_g5564",
@@ -995,7 +881,105 @@
           "tag_line": "The air quality today is moderate."
         }
       ],
-      "timeDifferenceHours": 6.6668191666666665,
+      "timeDifferenceHours": 7.333487777777778,
+      "aqi_ranges": {
+        "good": {
+          "min": 0,
+          "max": 9.1
+        },
+        "moderate": {
+          "min": 9.101,
+          "max": 35.49
+        },
+        "u4sg": {
+          "min": 35.491,
+          "max": 55.49
+        },
+        "unhealthy": {
+          "min": 55.491,
+          "max": 125.49
+        },
+        "very_unhealthy": {
+          "min": 125.491,
+          "max": 225.49
+        },
+        "hazardous": {
+          "min": 225.491
+        }
+      },
+      "aqi_color": "ECAA06",
+      "aqi_category": "Moderate",
+      "aqi_color_name": "Yellow"
+    },
+    {
+      "device": "aq_72",
+      "device_id": "5f2036bc70223655545a8b80",
+      "site_id": "60d058c8048305120d2d616e",
+      "time": "2026-01-28T18:00:00.000Z",
+      "pm2_5": {
+        "value": 31.470800000000008
+      },
+      "pm10": {
+        "value": 51.32579599107056
+      },
+      "frequency": "hourly",
+      "no2": {},
+      "deviceDetails": {
+        "_id": "5f2036bc70223655545a8b80",
+        "latitude": 0.2689,
+        "longitude": 32.588,
+        "name": "aq_72",
+        "isOnline": true,
+        "lastRawData": "2026-01-28T19:02:00.000Z",
+        "rawOnlineStatus": true,
+        "latest_pm2_5": {
+          "raw": {
+            "value": 58.05,
+            "time": "2026-01-28T19:02:00.000Z"
+          },
+          "calibrated": {
+            "value": 45.29349999999995,
+            "time": "2026-01-28T17:00:00.000Z"
+          }
+        }
+      },
+      "is_reading_primary": true,
+      "health_tips": [
+        {
+          "_id": "64283ce9e82a77001e55c0b5",
+          "title": "Moderate Air Quality - Elderly People",
+          "description": "Take it easy and limit the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d37b2e9e5001e69c872",
+          "title": "For pregnant women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d749c7eaf001ea5e99d",
+          "title": "For elderly people",
+          "description": "Reduce the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc8",
+          "title": "Moderate Air Quality - Everyone",
+          "description": "Pace yourself during outdoor work and avoid overexertion.",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc9",
+          "title": "Moderate Air Quality - Pregnant Women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "tag_line": "The air quality today is moderate."
+        }
+      ],
+      "timeDifferenceHours": 2.3334877777777776,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -1088,7 +1072,7 @@
           "tag_line": "The air quality is unhealthy for sensitive people."
         }
       ],
-      "timeDifferenceHours": 8.666819166666667,
+      "timeDifferenceHours": 9.333487777777778,
       "aqi_ranges": {
         "good": {
           "min": 0,
