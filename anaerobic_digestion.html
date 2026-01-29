@@ -150,23 +150,25 @@
       margin:0 0 0.9rem 0;
     }
 
-    /* changed: let the image define the box size (no fixed height) */
-    .hero-img{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:0.9rem;
-      overflow:hidden;
-      box-shadow:0 8px 20px rgba(15,35,52,0.04);
-      width:100%;
-      background:#f2f4f7;
-    }
+.hero-img{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:0.9rem;
+  overflow:hidden;
+  box-shadow:0 8px 20px rgba(15,35,52,0.04);
+  width:100%;
+  aspect-ratio: 16 / 6;
+  background:#f2f4f7;
+}
 
-    /* changed: no cropping, no contain-with-empty-space problem */
-    .hero-img img{
-      width:100%;
-      height:auto;
-      display:block;
-    }
+.hero-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
+
 
     .hero-caption{
       text-align:center;
