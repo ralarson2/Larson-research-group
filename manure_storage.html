@@ -2,117 +2,86 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PROJECT TITLE — Larson Research Group</title>
+  <title>Manure Storage — Larson Research Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --accent: #1b7c6d;
-      --accent-light: #e2f3f0;
-      --dark: #143541;
-      --text: #222222;
-      --bg: #f7f9fb;
-      --card: #ffffff;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-    }
-
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    header {
-      background: var(--card);
-      border-bottom: 1px solid #dde3ea;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .nav-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0.75rem 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .nav-title {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--dark);
-      white-space: nowrap;
-    }
-
-    .nav-links { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.9rem; }
-    .nav-links a { padding-bottom: 0.15rem; border-bottom: 2px solid transparent; }
-    .nav-links a:hover { border-color: var(--accent); }
-
-    main { max-width: 960px; margin: 2.5rem auto; padding: 0 1rem; }
-
-    .page-title { font-size: 2rem; margin-bottom: 1rem; text-align:center; color:var(--dark); }
-    .page-image { width: 100%; max-height: 300px; object-fit: cover; border-radius: 0.6rem; margin-bottom: 1rem; }
-    .page-text { font-size: 1rem; color: #4b5c67; line-height:1.6; margin-bottom:2rem; }
-
-    footer {
-      border-top: 1px solid #dde3ea;
-      padding: 1.2rem 1rem 2rem 1rem;
-      font-size: 0.8rem;
-      color: #6b7c88;
-    }
-
-    .footer-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      text-align: center;
-    }
-
-    @media (max-width: 720px) {
-      .nav-inner { flex-direction: column; align-items: flex-start; }
-      .nav-links { justify-content: flex-start; }
-    }
-  </style>
 </head>
+
 <body>
-  <header>
-    <div class="nav-inner">
-      <div class="nav-title">Larson Research Group</div>
-      <nav class="nav-links">
-        <a href="index.html">About</a>
-        <a href="index.html#people">People</a>
-        <a href="research.html">Research & Extension</a>
-        <a href="factsheets.html">Resources</a>
-        <a href="index.html#contact">Contact</a>
-      </nav>
-    </div>
-  </header>
+<header>
+  <div class="nav-inner">
+    <div class="nav-title">Larson Research Group</div>
+    <nav class="nav-links">
+      <a href="index.html">About</a>
+      <a href="index.html#people">People</a>
+      <a href="research.html">Research & Extension</a>
+      <a href="factsheets.html">Resources</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
 
-  <main>
-    <div class="page-title">PROJECT TITLE</div>
-    <img src="IMAGE PATH" alt="PROJECT TITLE" class="page-image">
-    <div class="page-text">
-      Detailed description of the research project. Include objectives, methods, key findings, and relevance. You can also link to publications, datasets, or related projects.
-    </div>
-  </main>
+<main class="page">
+  <div class="layout">
 
-  <footer>
-    <div class="footer-inner">
-      <div>Larson Research Group · University of Wisconsin–Madison</div>
-      <div>Hosted on GitHub Pages</div>
+    <aside class="side">
+      <h2>Research topics</h2>
+      <a href="anaerobic_digestion.html">Anaerobic Digestion</a>
+      <a href="biochar.html">Biochar</a>
+      <a href="manure_nutrient_recovery.html">Manure Separation and Nutrient Recovery</a>
+      <a href="climate_impacts.html">Manure Management to Mitigate Climate Impacts</a>
+      <a href="nitrogen_loss.html">Manure Management to Mitigate Nitrogen Losses</a>
+      <a href="sand_separation.html">Manure Sand Separation</a>
+      <a href="land_application.html">Manure Land Application</a>
+      <a class="active" href="manure_storage.html">Manure Storage</a>
+      <a href="composting.html">Composting</a>
+      <a href="uganda.html">Uganda Air Quality</a>
+      <div class="divider"></div>
+      <a href="research.html">Back to Research & Extension</a>
+    </aside>
+
+    <div>
+      <section class="hero">
+        <div class="hero-img">
+          <img src="images/research/manure_storage.jpg" alt="Manure storage systems">
+        </div>
+        <div class="hero-body">
+          <div class="kicker">Research & Extension</div>
+          <h1 class="title">Manure Storage</h1>
+          <p class="subtitle">
+            Manure storage systems provide flexibility in nutrient management and play a critical role in reducing risks to water quality and air emissions.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h3>Storage types</h3>
+        <p>
+          Agricultural manure is commonly stored as a solid or as a liquid or slurry. Solid manure is typically stored in stacks or bunkers, while liquid and slurry manure are stored in earthen basins, concrete tanks, or lined structures. Storage design influences emissions, nutrient preservation, and management options.
+        </p>
+      </section>
+
+      <section class="section">
+        <h3>Why storage matters</h3>
+        <p>
+          Adequate storage capacity allows producers to avoid land application during frozen ground conditions, periods of heavy precipitation, or other times when runoff and leaching risks are elevated. This flexibility is one of the most effective tools for protecting surface and groundwater quality.
+        </p>
+      </section>
+
+      <section class="section">
+        <h3>Research focus</h3>
+        <p>
+          Our work evaluates how storage type, duration, and management influence nutrient losses, greenhouse gas emissions, and downstream land application outcomes. This includes assessment of covered and uncovered systems, seasonal emptying strategies, and integration with other manure treatment practices.
+        </p>
+      </section>
+
     </div>
-  </footer>
+  </div>
+</main>
+
+<footer>
+  <div>Larson Research Group · University of Wisconsin–Madison</div>
+  <div>Hosted on GitHub Pages</div>
+</footer>
 </body>
 </html>
+
