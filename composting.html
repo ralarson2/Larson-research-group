@@ -2,87 +2,366 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PROJECT TITLE — Larson Research Group</title>
+  <title>Composting — Larson Research Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root {
-      --accent: #1b7c6d;
-      --accent-light: #e2f3f0;
-      --dark: #143541;
-      --text: #222222;
-      --bg: #f7f9fb;
-      --card: #ffffff;
+    :root{
+      --accent:#1b7c6d;
+      --accent-light:#e2f3f0;
+      --dark:#143541;
+      --text:#222;
+      --bg:#f7f9fb;
+      --card:#fff;
+      --border:#dde3ea;
+      --muted:#4b5c67;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *{box-sizing:border-box;margin:0;padding:0}
 
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
     }
 
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
 
-    header {
-      background: var(--card);
-      border-bottom: 1px solid #dde3ea;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+    header{
+      background:var(--card);
+      border-bottom:1px solid var(--border);
+      position:sticky;
+      top:0;
+      z-index:10;
     }
 
-    .nav-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0.75rem 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
+    .nav-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:0.75rem 1rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
     }
 
-    .nav-title {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--dark);
-      white-space: nowrap;
+    .nav-title{
+      font-size:1rem;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      color:var(--dark);
+      white-space:nowrap;
     }
 
-    .nav-links { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.9rem; }
-    .nav-links a { padding-bottom: 0.15rem; border-bottom: 2px solid transparent; }
-    .nav-links a:hover { border-color: var(--accent); }
-
-    main { max-width: 960px; margin: 2.5rem auto; padding: 0 1rem; }
-
-    .page-title { font-size: 2rem; margin-bottom: 1rem; text-align:center; color:var(--dark); }
-    .page-image { width: 100%; max-height: 300px; object-fit: cover; border-radius: 0.6rem; margin-bottom: 1rem; }
-    .page-text { font-size: 1rem; color: #4b5c67; line-height:1.6; margin-bottom:2rem; }
-
-    footer {
-      border-top: 1px solid #dde3ea;
-      padding: 1.2rem 1rem 2rem 1rem;
-      font-size: 0.8rem;
-      color: #6b7c88;
+    .nav-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:1rem;
+      font-size:0.9rem;
     }
 
-    .footer-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      text-align: center;
+    .nav-links a{
+      padding-bottom:0.15rem;
+      border-bottom:2px solid transparent;
     }
 
-    @media (max-width: 720px) {
-      .nav-inner { flex-direction: column; align-items: flex-start; }
-      .nav-links { justify-content: flex-start; }
+    .nav-links a:hover{
+      border-color:var(--accent);
+      text-decoration:none;
+    }
+
+    .page{
+      max-width:1100px;
+      margin:0 auto;
+      padding:1.25rem 1rem 3rem 1rem;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:260px 1fr;
+      gap:1.25rem;
+      align-items:start;
+    }
+
+    @media (max-width:900px){
+      .layout{grid-template-columns:1fr}
+    }
+
+    .side{
+      position:sticky;
+      top:80px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    @media (max-width:900px){
+      .side{position:relative;top:0}
+    }
+
+    .side h2{
+      font-size:0.95rem;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      color:var(--dark);
+      margin-bottom:0.75rem;
+    }
+
+    .side a{
+      display:block;
+      padding:0.55rem 0.6rem;
+      border-radius:0.6rem;
+      color:var(--dark);
+      border:1px solid transparent;
+    }
+
+    .side a:hover{
+      background:var(--accent-light);
+      text-decoration:none;
+      border-color:#cfe8e4;
+    }
+
+    .side a.active{
+      background:var(--accent-light);
+      border-color:#cfe8e4;
+      color:var(--dark);
+      font-weight:600;
+    }
+
+    .divider{
+      height:1px;
+      background:var(--border);
+      margin:1rem 0;
+    }
+
+    .hero{
+      margin-bottom:1rem;
+    }
+
+    .hero-figure{
+      margin:0 0 0.9rem 0;
+    }
+
+    .hero-img{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      overflow:hidden;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+      width:100%;
+      height:240px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#f2f4f7;
+    }
+
+    .hero-img img{
+      max-width:100%;
+      max-height:100%;
+      object-fit:contain;
+      display:block;
+    }
+
+    .hero-caption{
+      text-align:center;
+      color:var(--muted);
+      font-size:0.9rem;
+      margin-top:0.45rem;
+    }
+
+    .hero-body{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+      padding:1.1rem 1.1rem 1.2rem 1.1rem;
+    }
+
+    .kicker{
+      display:inline-block;
+      font-size:0.8rem;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--dark);
+      background:var(--accent-light);
+      padding:0.25rem 0.5rem;
+      border-radius:999px;
+      margin-bottom:0.7rem;
+    }
+
+    .title{
+      font-size:1.8rem;
+      color:var(--dark);
+      line-height:1.2;
+      margin-bottom:0.55rem;
+    }
+
+    .subtitle{
+      color:var(--muted);
+      font-size:1rem;
+      max-width:80ch;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:1rem;
+      margin-top:1rem;
+    }
+
+    @media (max-width:700px){
+      .cards{grid-template-columns:1fr}
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    .card h3{
+      font-size:1.05rem;
+      color:var(--dark);
+      margin-bottom:0.5rem;
+    }
+
+    .card p{
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+
+    .section{
+      margin-top:1rem;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    .section h3{
+      font-size:1.15rem;
+      color:var(--dark);
+      margin-bottom:0.4rem;
+    }
+
+    .section p{
+      color:var(--muted);
+      margin-bottom:0.75rem;
+      max-width:90ch;
+    }
+
+    .section p:last-child{margin-bottom:0}
+
+    .section ul{
+      margin:0.25rem 0 0 1.1rem;
+      color:var(--muted);
+    }
+
+    .section li{
+      margin:0.35rem 0;
+    }
+
+    .mini-table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border-radius:0.75rem;
+      border:1px solid var(--border);
+      background:#fff;
+      margin-top:0.6rem;
+    }
+
+    .mini-table th, .mini-table td{
+      text-align:left;
+      padding:0.65rem 0.75rem;
+      border-bottom:1px solid var(--border);
+      vertical-align:top;
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+
+    .mini-table th{
+      color:var(--dark);
+      background:var(--accent-light);
+      font-weight:600;
+      width:34%;
+    }
+
+    .mini-table tr:last-child th,
+    .mini-table tr:last-child td{
+      border-bottom:none;
+    }
+
+    .digester-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:0.9rem;
+      margin-top:0.75rem;
+    }
+
+    @media (max-width:900px){
+      .digester-grid{grid-template-columns:1fr}
+    }
+
+    figure.digester{
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      overflow:hidden;
+      background:#fff;
+    }
+
+    figure.digester .imgwrap{
+      width:100%;
+      height:190px;
+      background:#f2f4f7;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+
+    figure.digester img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    figure.digester figcaption{
+      padding:0.65rem 0.75rem 0.75rem 0.75rem;
+      color:var(--muted);
+      font-size:0.9rem;
+    }
+
+    footer{
+      border-top:1px solid var(--border);
+      padding:1.2rem 1rem 2rem 1rem;
+      font-size:0.8rem;
+      color:#6b7c88;
+    }
+
+    .footer-inner{
+      max-width:1100px;
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:0.4rem;
+      text-align:center;
+    }
+
+    @media (max-width:720px){
+      .nav-inner{flex-direction:column;align-items:flex-start}
+      .nav-links{justify-content:flex-start}
     }
   </style>
 </head>
@@ -100,11 +379,146 @@
     </div>
   </header>
 
-  <main>
-    <div class="page-title">PROJECT TITLE</div>
-    <img src="IMAGE PATH" alt="PROJECT TITLE" class="page-image">
-    <div class="page-text">
-      Detailed description of the research project. Include objectives, methods, key findings, and relevance. You can also link to publications, datasets, or related projects.
+  <main class="page">
+    <div class="layout">
+
+      <aside class="side" aria-label="Research topics">
+        <h2>Research topics</h2>
+        <a href="anaerobic_digestion.html">Anaerobic Digestion</a>
+        <a href="biochar.html">Biochar</a>
+        <a href="manure_nutrient_recovery.html">Manure Separation and Nutrient Recovery</a>
+        <a href="climate_impacts.html">Manure Management to Mitigate Climate Impacts</a>
+        <a href="nitrogen_loss.html">Manure Management to Mitigate Nitrogen Losses</a>
+        <a href="sand_separation.html">Manure Sand Separation</a>
+        <a href="land_application.html">Manure Land Application</a>
+        <a href="manure_storage.html">Manure Storage</a>
+        <a class="active" href="composting.html">Composting</a>
+        <a href="uganda.html">Uganda Air Quality</a>
+        <div class="divider"></div>
+        <a href="research.html">Back to Research & Extension</a>
+      </aside>
+
+      <div>
+        <section class="hero">
+          <figure class="hero-figure">
+            <div class="hero-img">
+              <img src="images/research/composting.jpg" alt="Composting">
+            </div>
+            <figcaption class="hero-caption">On-farm composting system for organic residuals</figcaption>
+          </figure>
+
+          <div class="hero-body">
+            <div class="kicker">Research & Extension</div>
+            <h1 class="title">Composting</h1>
+            <p class="subtitle">
+              Composting stabilizes organic materials through aerobic decomposition, producing a soil amendment that can support nutrient cycling and soil health.
+            </p>
+          </div>
+        </section>
+
+        <div class="cards">
+          <section class="card">
+            <h3>What it is</h3>
+            <p>
+              Composting is an aerobic biological process where microorganisms break down organic materials in the presence of oxygen, generating heat, carbon dioxide, water vapor, and a more stable final product. The heat produced can reduce pathogens and weed seeds when piles reach and maintain adequate temperatures.
+            </p>
+          </section>
+          <section class="card">
+            <h3>Why it matters</h3>
+            <p>
+              Composting can reduce volume and odor, improve handling and transport, and create a stabilized amendment that supports soil organic matter. Outcomes depend on feedstock mix, moisture and oxygen management, and how the compost is stored and applied.
+            </p>
+          </section>
+        </div>
+
+        <section class="section">
+          <h3>How the system works</h3>
+          <p>
+            Composting relies on balancing moisture, oxygen, and the carbon-to-nitrogen ratio to support microbial activity. Materials are typically mixed (for example, manure with bedding or other high-carbon bulking agents) and managed as windrows, static piles, or aerated systems. Turning or forced aeration replenishes oxygen and helps regulate temperature.
+          </p>
+          <p>
+            As decomposition progresses, compost temperatures commonly rise into the thermophilic range, then decline as readily degradable material is consumed. Management focuses on maintaining aeration and moisture to avoid anaerobic zones that can increase odors and methane production.
+          </p>
+        </section>
+
+        <section class="section">
+          <h3>Common composting approaches and outputs</h3>
+          <p>
+            On-farm composting approaches include turned windrows, aerated static piles, and in-vessel systems. Choice depends on scale, available space, labor, equipment, and weather protection.
+          </p>
+
+          <div class="digester-grid" aria-label="Composting approach photos">
+            <figure class="digester">
+              <div class="imgwrap">
+                <img src="images/research/composting/windrow.jpg" alt="Turned windrow composting">
+              </div>
+              <figcaption>Turned windrow composting</figcaption>
+            </figure>
+
+            <figure class="digester">
+              <div class="imgwrap">
+                <img src="images/research/composting/aerated_static_pile.jpg" alt="Aerated static pile composting">
+              </div>
+              <figcaption>Aerated static pile</figcaption>
+            </figure>
+
+            <figure class="digester">
+              <div class="imgwrap">
+                <img src="images/research/composting/in_vessel.jpg" alt="In-vessel composting system">
+              </div>
+              <figcaption>In-vessel composting</figcaption>
+            </figure>
+          </div>
+
+          <table class="mini-table" aria-label="Compost outputs">
+            <tr>
+              <th>Finished compost</th>
+              <td>Stabilized organic matter and nutrients that can be used as a soil amendment. Nutrients are typically more slowly available than in fresh manure, and the material is often easier to store and apply.</td>
+            </tr>
+            <tr>
+              <th>Emissions</th>
+              <td>Carbon is released primarily as carbon dioxide under aerobic conditions, but poor aeration or excess moisture can create anaerobic zones that increase methane. Nitrogen losses can occur as ammonia, especially when piles are warm and high in pH.</td>
+            </tr>
+          </table>
+        </section>
+
+        <section class="section">
+          <h3>Benefits and tradeoffs</h3>
+          <ul>
+            <li>Can reduce odors and stabilize material, with potential pathogen and weed seed reduction when temperature targets are met.</li>
+            <li>Management is critical: moisture, aeration, and feedstock mixing strongly influence performance and emissions.</li>
+            <li>Ammonia losses can be meaningful, particularly for high-nitrogen feedstocks; covering piles, optimizing C:N, and minimizing over-turning can help.</li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <h3>Economics and the current market context</h3>
+          <p>
+            Economics depend on equipment needs (turner, loader, aeration infrastructure), labor, space, and the value of the end product. Compost can reduce hauling costs by concentrating nutrients and may create opportunities for bedding reuse or off-farm sales when markets exist.
+          </p>
+          <p>
+            Project evaluation should include feedstock preparation, seasonal constraints, leachate and runoff controls, and quality assurance for the intended end use.
+          </p>
+        </section>
+
+        <section class="section">
+          <h3>Related fact sheets and resources</h3>
+          <p>
+            <a href="factsheets.html">See all Resources and fact sheets</a>
+          </p>
+          <p>
+            <a href="mp-series-composting.pdf" target="_blank" rel="noopener">
+              Manure Processing Fact Sheet Series: Composting from Animal Manure
+            </a>
+          </p>
+          <p>
+            <a href="composting-best-practices.pdf" target="_blank" rel="noopener">
+              Composting best practices for odor, nutrient retention, and emissions mitigation
+            </a>
+          </p>
+        </section>
+
+      </div>
     </div>
   </main>
 
