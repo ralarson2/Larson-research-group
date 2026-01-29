@@ -31,3 +31,404 @@
     header{
       background:var(--card);
       border-bottom:1px solid var(--border);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .nav-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:0.75rem 1rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+    }
+
+    .nav-title{
+      font-size:1rem;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      color:var(--dark);
+      white-space:nowrap;
+    }
+
+    .nav-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:1rem;
+      font-size:0.9rem;
+    }
+
+    .nav-links a{
+      padding-bottom:0.15rem;
+      border-bottom:2px solid transparent;
+    }
+
+    .nav-links a:hover{
+      border-color:var(--accent);
+      text-decoration:none;
+    }
+
+    .page{
+      max-width:1100px;
+      margin:0 auto;
+      padding:1.25rem 1rem 3rem 1rem;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:260px 1fr;
+      gap:1.25rem;
+      align-items:start;
+    }
+
+    @media (max-width:900px){
+      .layout{grid-template-columns:1fr}
+    }
+
+    .side{
+      position:sticky;
+      top:80px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    @media (max-width:900px){
+      .side{position:relative;top:0}
+    }
+
+    .side h2{
+      font-size:0.95rem;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      color:var(--dark);
+      margin-bottom:0.75rem;
+    }
+
+    .side a{
+      display:block;
+      padding:0.55rem 0.6rem;
+      border-radius:0.6rem;
+      color:var(--dark);
+      border:1px solid transparent;
+    }
+
+    .side a:hover{
+      background:var(--accent-light);
+      text-decoration:none;
+      border-color:#cfe8e4;
+    }
+
+    .side a.active{
+      background:var(--accent-light);
+      border-color:#cfe8e4;
+      color:var(--dark);
+      font-weight:600;
+    }
+
+    .divider{
+      height:1px;
+      background:var(--border);
+      margin:1rem 0;
+    }
+
+    .hero{
+      margin-bottom:1rem;
+    }
+
+    .hero-figure{
+      margin:0 0 0.9rem 0;
+    }
+
+    .hero-img{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      overflow:hidden;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+      width:100%;
+      aspect-ratio: 16 / 6;
+      background:#f2f4f7;
+    }
+
+    .hero-img img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      display:block;
+    }
+
+    .hero-caption{
+      text-align:center;
+      color:var(--muted);
+      font-size:0.9rem;
+      margin-top:0.45rem;
+    }
+
+    .hero-body{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+      padding:1.1rem 1.1rem 1.2rem 1.1rem;
+    }
+
+    .kicker{
+      display:inline-block;
+      font-size:0.8rem;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--dark);
+      background:var(--accent-light);
+      padding:0.25rem 0.5rem;
+      border-radius:999px;
+      margin-bottom:0.7rem;
+    }
+
+    .title{
+      font-size:1.8rem;
+      color:var(--dark);
+      line-height:1.2;
+      margin-bottom:0.55rem;
+    }
+
+    .subtitle{
+      color:var(--muted);
+      font-size:1rem;
+      max-width:80ch;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:1rem;
+      margin-top:1rem;
+    }
+
+    @media (max-width:700px){
+      .cards{grid-template-columns:1fr}
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    .card h3{
+      font-size:1.05rem;
+      color:var(--dark);
+      margin-bottom:0.5rem;
+    }
+
+    .card p{
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+
+    .section{
+      margin-top:1rem;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    .section h3{
+      font-size:1.15rem;
+      color:var(--dark);
+      margin-bottom:0.4rem;
+    }
+
+    .section p{
+      color:var(--muted);
+      margin-bottom:0.75rem;
+      max-width:90ch;
+    }
+
+    .section p:last-child{margin-bottom:0}
+
+    .section ul{
+      margin:0.25rem 0 0 1.1rem;
+      color:var(--muted);
+    }
+
+    .section li{
+      margin:0.35rem 0;
+    }
+
+    .mini-table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border-radius:0.75rem;
+      border:1px solid var(--border);
+      background:#fff;
+      margin-top:0.6rem;
+    }
+
+    .mini-table th, .mini-table td{
+      text-align:left;
+      padding:0.65rem 0.75rem;
+      border-bottom:1px solid var(--border);
+      vertical-align:top;
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+
+    .mini-table th{
+      color:var(--dark);
+      background:var(--accent-light);
+      font-weight:600;
+      width:34%;
+    }
+
+    .mini-table tr:last-child th,
+    .mini-table tr:last-child td{
+      border-bottom:none;
+    }
+
+    footer{
+      border-top:1px solid var(--border);
+      padding:1.2rem 1rem 2rem 1rem;
+      font-size:0.8rem;
+      color:#6b7c88;
+    }
+
+    .footer-inner{
+      max-width:1100px;
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:0.4rem;
+      text-align:center;
+    }
+
+    @media (max-width:720px){
+      .nav-inner{flex-direction:column;align-items:flex-start}
+      .nav-links{justify-content:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-inner">
+      <div class="nav-title">Larson Research Group</div>
+      <nav class="nav-links">
+        <a href="index.html">About</a>
+        <a href="index.html#people">People</a>
+        <a href="research.html">Research & Extension</a>
+        <a href="factsheets.html">Resources</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="layout">
+
+      <div id="research-sidebar"></div>
+
+      <div>
+        <section class="hero">
+          <figure class="hero-figure">
+            <div class="hero-img">
+              <img src="images/research/nitrogen_loss.jpg" alt="Manure management and nitrogen losses">
+            </div>
+            <figcaption class="hero-caption">Reducing nitrogen losses improves fertilizer value and protects air and water quality</figcaption>
+          </figure>
+
+          <div class="hero-body">
+            <div class="kicker">Research & Extension</div>
+            <h1 class="title">Manure Management to Mitigate Nitrogen Losses</h1>
+            <p class="subtitle">
+              Nitrogen can be lost as ammonia, nitrous oxide, nitrate leaching, or runoff. Management across storage, treatment, and land application determines how much nitrogen is retained for crops versus lost to the environment.
+            </p>
+          </div>
+        </section>
+
+        <div class="cards">
+          <section class="card">
+            <h3>Major loss pathways</h3>
+            <p>
+              Ammonia volatilization can occur during housing, storage, and land application. Nitrous oxide emissions are associated with nitrification and denitrification in soils. Nitrate leaching and runoff losses increase when application timing or placement increases exposure to water movement.
+            </p>
+          </section>
+
+          <section class="card">
+            <h3>What reduces losses</h3>
+            <p>
+              Practices that improve placement and timing, reduce surface exposure, and protect nitrogen during storage can improve nitrogen use efficiency. Examples include covers, injection or rapid incorporation, urease inhibitors in some cases, and strategies that align manure nitrogen availability with crop uptake.
+            </p>
+          </section>
+        </div>
+
+        <section class="section">
+          <h3>Management strategies</h3>
+          <p>
+            Nitrogen loss mitigation depends on where losses occur in your system. Storage-focused practices include covers and acidification (where applicable). Application-focused practices include injection, rapid incorporation, and avoiding high-risk conditions such as frozen or saturated soils or imminent heavy rainfall.
+          </p>
+        </section>
+
+        <section class="section">
+          <h3>Whole-system evaluation</h3>
+          <p>
+            Reducing one loss pathway can increase another if management shifts nitrogen to a different form or location. Our work evaluates nitrogen outcomes alongside greenhouse gas emissions, odor, and water quality to support practical recommendations that retain nitrogen for crops while reducing impacts.
+          </p>
+        </section>
+
+        <section class="section">
+          <h3>Related fact sheets and resources</h3>
+          <p>
+            <a href="factsheets.html">See all Resources and fact sheets</a>
+          </p>
+          <p>
+            <a href="mp-series-nitrogen-loss.pdf" target="_blank" rel="noopener">
+              Manure Processing Fact Sheet Series: Nitrogen Losses
+            </a>
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>Larson Research Group · University of Wisconsin–Madison</div>
+      <div>Hosted on GitHub Pages</div>
+    </div>
+  </footer>
+
+  <script>
+    (async function () {
+      const target = document.getElementById("research-sidebar");
+      if (!target) return;
+
+      const res = await fetch("/Larson-research-group/partials/research_sidebar.html", { cache: "no-store" });
+      if (!res.ok) {
+        target.innerHTML = "<aside class='side'><h2>Research topics</h2><p style='color:#4b5c67;margin-top:0.5rem'>Sidebar failed to load.</p></aside>";
+        return;
+      }
+
+      target.innerHTML = await res.text();
+
+      const current = location.pathname.split('/').pop() || "index.html";
+      const link = target.querySelector(`[data-page="${current}"]`);
+      if (link) link.classList.add("active");
+    })();
+  </script>
+</body>
+</html>
