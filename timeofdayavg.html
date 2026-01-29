@@ -1,31 +1,223 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>Uganda air quality – Time-of-day averages</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
   <style>
-    body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7f9fb;color:#222;margin:0;}
-    .wrap{max-width:960px;margin:0 auto;padding:1.5rem 1rem 2.5rem;}
-    .card{background:#fff;border:1px solid #dde3ea;border-radius:14px;padding:1rem 1.1rem;box-shadow:0 8px 20px rgba(15,35,52,0.04);}
-    h1{margin:0 0 .35rem 0;font-size:1.4rem;color:#143541;}
-    p{margin:.25rem 0 .9rem 0;color:#4b5c67;max-width:52rem;line-height:1.5;}
-    .toolbar{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin:.8rem 0 1rem 0;}
-    select{padding:.45rem .55rem;border-radius:10px;border:1px solid #cfd8e3;background:#fff;}
-    canvas{width:100% !important;height:520px !important;}
-    a{color:#1b7c6d;text-decoration:none;}
-    a:hover{text-decoration:underline;}
-    .small{font-size:.9rem;color:#4b5c67;}
+    :root{
+      --accent:#1b7c6d;
+      --accent-light:#e2f3f0;
+      --dark:#143541;
+      --text:#222;
+      --bg:#f7f9fb;
+      --card:#fff;
+      --border:#dde3ea;
+      --muted:#4b5c67;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
+    }
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    header{
+      background:var(--card);
+      border-bottom:1px solid var(--border);
+      position:sticky;
+      top:0;
+      z-index:20;
+    }
+    .nav-inner{
+      max-width:960px;
+      margin:0 auto;
+      padding:.75rem 1rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:1rem;
+    }
+    .nav-title{
+      font-size:1rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--dark);
+      white-space:nowrap;
+    }
+    .nav-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:1rem;
+      font-size:.9rem;
+      justify-content:flex-end;
+    }
+    .nav-links a{
+      padding-bottom:.15rem;
+      border-bottom:2px solid transparent;
+    }
+    .nav-links a:hover{
+      border-color:var(--accent);
+      text-decoration:none;
+    }
+
+    .hero{
+      background:radial-gradient(circle at top left,var(--accent-light),var(--bg));
+      border-bottom:1px solid var(--border);
+    }
+    .hero-inner{
+      max-width:960px;
+      margin:0 auto;
+      padding:2.2rem 1rem;
+    }
+    .hero-title{
+      font-size:clamp(2rem,3vw,2.3rem);
+      color:var(--dark);
+      margin-bottom:.5rem;
+    }
+    .hero-subtitle{
+      font-size:1rem;
+      max-width:52rem;
+      color:#2f3e47;
+    }
+
+    .page{
+      max-width:960px;
+      margin:0 auto;
+      padding:2rem 1rem 3rem;
+    }
+    .card{
+      background:var(--card);
+      border-radius:.9rem;
+      border:1px solid var(--border);
+      padding:1.1rem 1.25rem;
+      box-shadow:0 8px 20px rgba(15,35,52,.04);
+    }
+
+    .section-title{
+      font-size:1.3rem;
+      color:var(--dark);
+      margin-bottom:.35rem;
+    }
+    .section-text{
+      font-size:.96rem;
+      margin-bottom:.9rem;
+      max-width:52rem;
+      color:#2f3e47;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:.6rem;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin:.2rem 0 .9rem 0;
+    }
+    .small{font-size:.9rem;color:#2f3e47}
+    select{
+      margin-left:.35rem;
+      padding:.35rem .45rem;
+      border:1px solid #cfd8e3;
+      border-radius:.55rem;
+      background:#fff;
+      color:#143541;
+    }
+    .btn{
+      appearance:none;
+      border:1px solid #cfd8e3;
+      background:#fff;
+      color:#143541;
+      border-radius:.7rem;
+      padding:.5rem .65rem;
+      font-size:.9rem;
+      cursor:pointer;
+    }
+    .btn:hover{border-color:#98a9b8}
+
+    #controls{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:.35rem .75rem;
+      margin:.3rem 0 1rem 0;
+    }
+    #controls label{
+      display:flex;
+      gap:.45rem;
+      align-items:flex-start;
+      font-size:.9rem;
+      color:#2f3e47;
+    }
+
+    .chart-wrap{
+      height:520px;
+      width:100%;
+    }
+    #todChart{width:100% !important;height:100% !important}
+
+    footer{
+      border-top:1px solid var(--border);
+      padding:1.2rem 1rem 2rem 1rem;
+      font-size:.8rem;
+      color:#6b7c88;
+    }
+    .footer-inner{
+      max-width:960px;
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      gap:.35rem;
+      text-align:center;
+    }
+
+    @media (max-width:900px){
+      #controls{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media (max-width:720px){
+      .nav-inner{flex-direction:column;align-items:flex-start}
+      .nav-links{justify-content:flex-start}
+      #controls{grid-template-columns:1fr}
+    }
   </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
+
 <body>
-  <div class="wrap">
+  <header>
+    <div class="nav-inner">
+      <div class="nav-title">Larson Research Group</div>
+      <nav class="nav-links">
+        <a href="index.html#about">About</a>
+        <a href="index.html#people">People</a>
+        <a href="research.html">Research &amp; Extension</a>
+        <a href="factsheets.html">Resources</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-title">Time-of-day averages</div>
+      <p class="hero-subtitle">
+        Average concentrations by hour of day (EAT, UTC+3), filtered by day of week if desired, using the archived AirQo data.
+      </p>
+    </div>
+  </section>
+
+  <main class="page">
     <div class="card">
-      <h1>Average by time of day (by sensor)</h1>
-      <p>
-        This chart groups archived measurements by hour of day in Kampala time (EAT, UTC+3), then averages within each hour.
-        Use the dropdown to switch pollutant.
+      <div class="section-title">Average PM by hour of day</div>
+      <p class="section-text">
+        Choose a day-of-week filter (or whole-week average), then toggle locations on/off to compare typical hourly patterns.
       </p>
 
       <div class="toolbar">
@@ -36,138 +228,210 @@
             <option value="pm10">PM10 (calibrated)</option>
           </select>
         </label>
-        <div class="small">
-          <a href="uganda_air_quality.html">Back to main page</a>
-        </div>
+
+        <label class="small">
+          Day of week
+          <select id="dow">
+            <option value="all">Whole-week average</option>
+            <option value="0">Sunday</option>
+            <option value="1">Monday</option>
+            <option value="2">Tuesday</option>
+            <option value="3">Wednesday</option>
+            <option value="4">Thursday</option>
+            <option value="5">Friday</option>
+            <option value="6">Saturday</option>
+          </select>
+        </label>
+
+        <button id="allOn" class="btn" type="button">Select all</button>
+        <button id="allOff" class="btn" type="button">Select none</button>
+
+        <div class="small"><a href="uganda_air_quality.html">Back to main page</a></div>
         <div class="small" id="meta"></div>
       </div>
 
-      <canvas id="todChart"></canvas>
+      <div id="controls" aria-label="Location selection"></div>
+
+      <div class="chart-wrap">
+        <canvas id="todChart"></canvas>
+      </div>
     </div>
-  </div>
+  </main>
 
-<script>
-  const ARCHIVE_CSV_URL = "data/uganda_pm25_archive.csv";
+  <footer>
+    <div class="footer-inner">
+      <div>Larson Research Group · University of Wisconsin–Madison</div>
+      <div>Hosted on GitHub Pages</div>
+    </div>
+  </footer>
 
-  function normalizeDeviceId(raw) {
-    if (!raw) return "";
-    const s = String(raw).trim().toLowerCase();
-    if (s.startsWith("aq_g5_")) return s;
-    if (s.startsWith("aq_g")) return s;
-    if (s.startsWith("aq_")) return s;
-    if (s.startsWith("airqo_g")) return s;
-    return s.replace(/[^a-z0-9_]/g, "_");
-  }
+  <script>
+    const ARCHIVE_CSV_URL = "data/uganda_pm25_archive.csv";
 
-  function parseCsv(text) {
-    const rows = [];
-    let row = [];
-    let field = "";
-    let inQuotes = false;
+    const sites = {
+      "airqo_g5564": { name: "Busabala, Makindye", district: "Kampala", lat: 0.2182, lon: 32.6176 },
+      "aq_72":       { name: "Luwafu, Makindye", district: "Kampala", lat: 0.2689, lon: 32.588 },
+      "aq_43":       { name: "Lukuli, Makindye", district: "Kampala", lat: 0.28904, lon: 32.58958 },
+      "aq_g520":     { name: "Mbogo Road, Wabigalo", district: "Kampala", lat: 0.30991, lon: 32.60045 },
+      "aq_g5_97":    { name: "Mbuya II, Nakawa", district: "Kampala", lat: 0.325346, lon: 32.632288 },
+      "aq_g5_46":    { name: "Ggaba Bypass, Makindye", district: "Kampala", lat: 0.25776, lon: 32.63686 },
+      "airqo_g5438": { name: "Salaama Rd, Makindye", district: "Kampala", lat: 0.258119, lon: 32.609112 },
+      "aq_g5_53":    { name: "Kansanga, Makindye", district: "Kampala", lat: 0.28863, lon: 32.60297 },
+      "aq_g5_48":    { name: "Kabalagala, Makindye", district: "Kampala", lat: 0.29833, lon: 32.60074 },
+      "aq_g5_43":    { name: "Katwe 1, Makindye", district: "Kampala", lat: 0.30047, lon: 32.5794 },
+      "airqo_g5548": { name: "Nadiope Rd Mbuya, Nakawa", district: "Kampala", lat: 0.323201, lon: 32.631972 },
+      "airqo_g5567": { name: "Old Kira Rd Kamwokya, Kampala Central", district: "Kampala", lat: 0.346826, lon: 32.589047 },
+      "airqo_g5563": { name: "Bulange, Rubaga", district: "Kampala", lat: 0.311874, lon: 32.562351 },
+      "airqo_g5449": { name: "Forest Village Muyenga, Makindye", district: "Kampala", lat: 0.287828, lon: 32.624583 },
+      "airqo_g5446": { name: "Kitintale, Nakawa", district: "Kampala", lat: 0.315679, lon: 32.635063 }
+    };
 
-    for (let i = 0; i < text.length; i++) {
-      const c = text[i];
-      const next = text[i + 1];
+    function normalizeDeviceId(raw) {
+      if (!raw) return "";
+      const s = String(raw).trim().toLowerCase();
+      if (s.startsWith("aq_g5_")) return s;
+      if (s.startsWith("aq_g")) return s;
+      if (s.startsWith("aq_")) return s;
+      if (s.startsWith("airqo_g")) return s;
+      return s.replace(/[^a-z0-9_]/g, "_");
+    }
 
-      if (inQuotes) {
-        if (c === '"' && next === '"') { field += '"'; i++; continue; }
-        if (c === '"') { inQuotes = false; continue; }
+    function friendlyLabel(id){
+      const s = sites[id];
+      return s ? s.name : id;
+    }
+
+    function parseCsv(text) {
+      const rows = [];
+      let row = [];
+      let field = "";
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        const next = text[i + 1];
+
+        if (inQuotes) {
+          if (c === '"' && next === '"') { field += '"'; i++; continue; }
+          if (c === '"') { inQuotes = false; continue; }
+          field += c;
+          continue;
+        }
+
+        if (c === '"') { inQuotes = true; continue; }
+        if (c === ",") { row.push(field); field = ""; continue; }
+        if (c === "\n") {
+          row.push(field);
+          if (row.length > 1 || row[0].trim() !== "") rows.push(row);
+          row = [];
+          field = "";
+          continue;
+        }
+        if (c === "\r") continue;
         field += c;
-        continue;
       }
 
-      if (c === '"') { inQuotes = true; continue; }
-      if (c === ",") { row.push(field); field = ""; continue; }
-      if (c === "\n") {
+      if (field.length || row.length) {
         row.push(field);
         if (row.length > 1 || row[0].trim() !== "") rows.push(row);
-        row = [];
-        field = "";
-        continue;
       }
-      if (c === "\r") continue;
-      field += c;
+      return rows;
     }
 
-    if (field.length || row.length) {
-      row.push(field);
-      if (row.length > 1 || row[0].trim() !== "") rows.push(row);
-    }
-    return rows;
-  }
+    function kampalaParts(isoLike) {
+      const d = new Date(isoLike);
+      if (isNaN(d.getTime())) return null;
 
-  function getKampalaHour(isoLike) {
-    const d = new Date(isoLike);
-    if (isNaN(d.getTime())) return null;
-    const parts = new Intl.DateTimeFormat("en-GB", {
-      timeZone: "Africa/Kampala",
-      hour: "2-digit",
-      hour12: false
-    }).formatToParts(d);
-    const h = parts.find(p => p.type === "hour")?.value;
-    const n = Number(h);
-    return Number.isFinite(n) ? n : null;
-  }
+      const parts = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Africa/Kampala",
+        weekday: "short",
+        hour: "2-digit",
+        hour12: false
+      }).formatToParts(d);
 
-  let chart = null;
+      const hourStr = parts.find(p => p.type === "hour")?.value;
+      const wdStr = parts.find(p => p.type === "weekday")?.value;
 
-  async function loadAndRender() {
-    const pollutantSel = document.getElementById("pollutant");
-    const metaEl = document.getElementById("meta");
-    const canvas = document.getElementById("todChart");
+      const hour = Number(hourStr);
+      const wdMap = { Sun:0, Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6 };
+      const dow = wdMap[wdStr];
 
-    const res = await fetch(ARCHIVE_CSV_URL, { cache: "no-store" });
-    if (!res.ok) throw new Error(`Archive CSV not found: ${ARCHIVE_CSV_URL} (HTTP ${res.status})`);
-    const text = await res.text();
-    const rows = parseCsv(text);
-    if (rows.length < 2) throw new Error("Archive CSV is empty");
+      if (!Number.isFinite(hour)) return null;
+      if (!Number.isFinite(dow)) return null;
 
-    const header = rows[0].map(h => h.trim());
-    const idxDatetime = header.indexOf("datetime");
-    const idxDeviceName = header.indexOf("device_name");
-    const idxPm25Cal = header.indexOf("pm2_5_calibrated_value");
-    const idxPm10Cal = header.indexOf("pm10_calibrated_value");
-
-    if (idxDatetime < 0 || idxDeviceName < 0 || idxPm25Cal < 0) {
-      throw new Error("CSV header missing required columns (datetime, device_name, pm2_5_calibrated_value).");
+      return { hour, dow };
     }
 
-    const bucketsByDevice = new Map(); // device -> hour -> {sum,count}
-    let minT = null, maxT = null;
+    let chart = null;
+    let allRows = null;
+    let header = null;
+    let idxDatetime = -1, idxDeviceName = -1, idxPm25Cal = -1, idxPm10Cal = -1;
 
-    const pollutantKey = () => (pollutantSel.value === "pm10" ? "pm10" : "pm25");
+    let selected = new Set();
+    let devicesInData = [];
 
-    function addPoint(device, hour, val) {
-      if (!bucketsByDevice.has(device)) bucketsByDevice.set(device, new Map());
-      const hm = bucketsByDevice.get(device);
-      if (!hm.has(hour)) hm.set(hour, { sum: 0, count: 0 });
-      const b = hm.get(hour);
-      b.sum += val;
-      b.count += 1;
+    function buildControls() {
+      const controls = document.getElementById("controls");
+      controls.innerHTML = "";
+
+      devicesInData.forEach(id => {
+        const label = document.createElement("label");
+
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = selected.has(id);
+        cb.addEventListener("change", () => {
+          if (cb.checked) selected.add(id);
+          else selected.delete(id);
+          render();
+        });
+
+        const text = document.createElement("span");
+        text.textContent = friendlyLabel(id);
+
+        label.appendChild(cb);
+        label.appendChild(text);
+        controls.appendChild(label);
+      });
     }
 
-    function rebuildBuckets() {
-      bucketsByDevice.clear();
-      minT = null; maxT = null;
+    function computeBuckets(pollutant, dowFilter) {
+      const bucketsByDevice = new Map();
+      let minT = null, maxT = null;
 
-      for (let r = 1; r < rows.length; r++) {
-        const cols = rows[r];
+      const addPoint = (device, hour, val) => {
+        if (!bucketsByDevice.has(device)) bucketsByDevice.set(device, new Map());
+        const hm = bucketsByDevice.get(device);
+        if (!hm.has(hour)) hm.set(hour, { sum: 0, count: 0 });
+        const b = hm.get(hour);
+        b.sum += val;
+        b.count += 1;
+      };
+
+      for (let r = 1; r < allRows.length; r++) {
+        const cols = allRows[r];
         const dt = cols[idxDatetime] ?? "";
         const deviceName = cols[idxDeviceName] ?? "";
         const device = normalizeDeviceId(deviceName);
         if (!dt || !device) continue;
+        if (!selected.has(device)) continue;
 
-        const hour = getKampalaHour(dt);
-        if (hour === null) continue;
+        const kp = kampalaParts(dt);
+        if (!kp) continue;
+
+        if (dowFilter !== "all") {
+          const want = Number(dowFilter);
+          if (!Number.isFinite(want) || kp.dow !== want) continue;
+        }
 
         const val =
-          pollutantKey() === "pm10"
+          pollutant === "pm10"
             ? Number((idxPm10Cal >= 0 ? cols[idxPm10Cal] : NaN))
             : Number(cols[idxPm25Cal]);
 
         if (!Number.isFinite(val) || val <= 0) continue;
 
-        addPoint(device, hour, val);
+        addPoint(device, kp.hour, val);
 
         const t = new Date(dt).getTime();
         if (Number.isFinite(t)) {
@@ -175,9 +439,11 @@
           if (maxT === null || t > maxT) maxT = t;
         }
       }
+
+      return { bucketsByDevice, minT, maxT };
     }
 
-    function datasetsFromBuckets() {
+    function datasetsFromBuckets(bucketsByDevice) {
       const datasets = [];
       for (const [device, hm] of bucketsByDevice.entries()) {
         const points = [];
@@ -187,8 +453,9 @@
           points.push({ x: h, y: b.sum / b.count });
         }
         points.sort((a,b) => a.x - b.x);
+
         datasets.push({
-          label: device,
+          label: friendlyLabel(device),
           data: points,
           borderWidth: 2,
           pointRadius: 0,
@@ -201,10 +468,16 @@
     }
 
     function render() {
-      rebuildBuckets();
-      const datasets = datasetsFromBuckets();
+      const pollutant = document.getElementById("pollutant").value;
+      const dowFilter = document.getElementById("dow").value;
+      const metaEl = document.getElementById("meta");
+      const canvas = document.getElementById("todChart");
+
+      const { bucketsByDevice, minT, maxT } = computeBuckets(pollutant, dowFilter);
+      const datasets = datasetsFromBuckets(bucketsByDevice);
 
       if (chart) chart.destroy();
+
       chart = new Chart(canvas, {
         type: "line",
         data: { datasets },
@@ -225,7 +498,7 @@
               beginAtZero: true,
               title: {
                 display: true,
-                text: pollutantSel.value === "pm10" ? "PM10 (µg/m³, calibrated)" : "PM2.5 (µg/m³, calibrated)"
+                text: pollutant === "pm10" ? "PM10 (µg/m³, calibrated)" : "PM2.5 (µg/m³, calibrated)"
               }
             }
           },
@@ -235,32 +508,86 @@
         }
       });
 
+      const fmt = (ms) => new Date(ms).toLocaleString("en-GB", {
+        timeZone: "Africa/Kampala",
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+      }).replace(",", "");
+
+      const dayLabel = (() => {
+        if (dowFilter === "all") return "Whole-week average";
+        const map = { "0":"Sunday","1":"Monday","2":"Tuesday","3":"Wednesday","4":"Thursday","5":"Friday","6":"Saturday" };
+        return map[dowFilter] || "Selected day";
+      })();
+
       if (minT !== null && maxT !== null) {
-        const minD = new Date(minT);
-        const maxD = new Date(maxT);
-        const fmt = (d) => d.toLocaleString("en-GB", {
-          timeZone: "Africa/Kampala",
-          year: "numeric",
-          month: "short",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false
-        }).replace(",", "");
-        metaEl.textContent = `Archive range: ${fmt(minD)} to ${fmt(maxD)} (EAT)`;
+        metaEl.textContent = `${dayLabel} · Archive range: ${fmt(minT)} to ${fmt(maxT)} (EAT)`;
       } else {
-        metaEl.textContent = "";
+        metaEl.textContent = `${dayLabel}`;
       }
     }
 
-    pollutantSel.addEventListener("change", render);
-    render();
-  }
+    async function init() {
+      const pollutantSel = document.getElementById("pollutant");
+      const dowSel = document.getElementById("dow");
+      const allOn = document.getElementById("allOn");
+      const allOff = document.getElementById("allOff");
 
-  loadAndRender().catch(err => {
-    console.error(err);
-    document.getElementById("meta").textContent = "Could not load archive CSV.";
-  });
-</script>
+      const res = await fetch(ARCHIVE_CSV_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error(`Archive CSV not found: ${ARCHIVE_CSV_URL} (HTTP ${res.status})`);
+      const text = await res.text();
+      const rows = parseCsv(text);
+      if (rows.length < 2) throw new Error("Archive CSV is empty");
+
+      allRows = rows;
+      header = rows[0].map(h => h.trim());
+      idxDatetime = header.indexOf("datetime");
+      idxDeviceName = header.indexOf("device_name");
+      idxPm25Cal = header.indexOf("pm2_5_calibrated_value");
+      idxPm10Cal = header.indexOf("pm10_calibrated_value");
+
+      if (idxDatetime < 0 || idxDeviceName < 0 || idxPm25Cal < 0) {
+        throw new Error("CSV header missing required columns (datetime, device_name, pm2_5_calibrated_value).");
+      }
+
+      const found = new Set();
+      for (let r = 1; r < rows.length; r++) {
+        const deviceName = rows[r][idxDeviceName] ?? "";
+        const id = normalizeDeviceId(deviceName);
+        if (id) found.add(id);
+      }
+
+      devicesInData = Array.from(found).sort();
+      selected = new Set(devicesInData);
+
+      buildControls();
+
+      pollutantSel.addEventListener("change", render);
+      dowSel.addEventListener("change", render);
+
+      allOn.addEventListener("click", () => {
+        selected = new Set(devicesInData);
+        buildControls();
+        render();
+      });
+
+      allOff.addEventListener("click", () => {
+        selected.clear();
+        buildControls();
+        render();
+      });
+
+      render();
+    }
+
+    init().catch(err => {
+      console.error(err);
+      document.getElementById("meta").textContent = "Could not load archive CSV.";
+    });
+  </script>
 </body>
 </html>
