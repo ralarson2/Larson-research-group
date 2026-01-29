@@ -1,0 +1,31 @@
+name: Update Uganda recent JSON
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch latest JSON from droplet
+        run: |
+          mkdir -p data
+          curl -fsSL "http://159.203.110.200/data/uganda_recent.json" -o data/uganda_recent.json
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- data/uganda_recent.json; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/uganda_recent.json
+          git commit -m "Update uganda_recent.json"
+          git push
