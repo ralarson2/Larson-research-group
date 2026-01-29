@@ -36,7 +36,7 @@
     }
 
     .nav-inner {
-      max-width: 960px;
+      max-width: 1100px; /* was 960px */
       margin: 0 auto;
       padding: 0.75rem 1rem;
       display: flex;
@@ -77,7 +77,7 @@
     }
 
     .hero-inner {
-      max-width: 960px;
+      max-width: 1100px; /* was 960px */
       margin: 0 auto;
       padding: 2.4rem 1rem;
     }
@@ -94,8 +94,31 @@
       color: #2f3e47;
     }
 
+    .jump-links{
+      max-width: 52rem;
+      display:flex;
+      flex-wrap:wrap;
+      gap:0.5rem 0.75rem;
+      margin-top:0.9rem;
+    }
+
+    .jump-links a{
+      display:inline-block;
+      padding:0.35rem 0.6rem;
+      border:1px solid #dde3ea;
+      border-radius:999px;
+      background:#fff;
+      color:#143541;
+      font-size:0.9rem;
+    }
+
+    .jump-links a:hover{
+      border-color:#98a9b8;
+      text-decoration:none;
+    }
+
     main {
-      max-width: 960px;
+      max-width: 1100px; /* was 960px */
       margin: 0 auto;
       padding: 2.2rem 1rem 3rem;
       display: flex;
@@ -244,7 +267,7 @@
     }
 
     .footer-inner {
-      max-width: 960px;
+      max-width: 1100px; /* was 960px */
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -295,11 +318,18 @@
     <div class="hero-inner">
       <div class="hero-title">Uganda air quality project</div>
       <p class="hero-subtitle">Low-cost sensors and modeling to understand urban air quality in Kampala, Uganda.</p>
+
+      <div class="jump-links" aria-label="Jump links">
+        <a href="#recent">Recent measurements</a>
+        <a href="#map">Map</a>
+        <a href="#historical">Historical data</a>
+        <a href="#downloads">Downloads &amp; notes</a>
+      </div>
     </div>
   </section>
 
   <main>
-    <section>
+    <section id="recent">
       <div class="section-title">Recent measurements</div>
 
       <div class="card">
@@ -333,13 +363,13 @@
       </div>
     </section>
 
-    <section>
+    <section id="map">
       <div class="section-title">Map of PM2.5 (µg/m³) concentrations</div>
       <p class="section-text">Markers use fixed sensor coordinates and are colored by PM2.5 category.</p>
 
       <div id="uganda-map"></div>
 
-      <div class="card" style="margin-top:1.2rem; font-size:0.9rem;">
+      <div class="card" id="historical" style="margin-top:1.2rem; font-size:0.9rem;">
         <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Historical data</div>
         <div class="small-muted">
           Select sensors to show/hide on the chart. Use the download button to export the same plotted data as CSV.
@@ -395,7 +425,7 @@
         </div>
       </div>
 
-      <div class="card" style="margin-top:1.2rem; font-size:0.9rem;">
+      <div class="card" id="downloads" style="margin-top:1.2rem; font-size:0.9rem;">
         <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Sensor locations</div>
         <div style="color:#4b5c67;">
           Geographic coordinates for all monitoring locations shown on this page are available for download as a CSV file:
@@ -979,4 +1009,5 @@ async function loadUgandaData() {
 
 </body>
 </html>
+
 
