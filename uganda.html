@@ -13,9 +13,13 @@
       --text: #222222;
       --bg: #f7f9fb;
       --card: #ffffff;
+      --border: #dde3ea;
+      --muted: #4b5c67;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -27,16 +31,16 @@
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    header {
+    header{
       background: var(--card);
-      border-bottom: 1px solid #dde3ea;
+      border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
     }
 
-    .nav-inner {
-      max-width: 1100px; /* was 960px */
+    .nav-inner{
+      max-width: 960px;
       margin: 0 auto;
       padding: 0.75rem 1rem;
       display: flex;
@@ -45,7 +49,7 @@
       gap: 1rem;
     }
 
-    .nav-title {
+    .nav-title{
       font-size: 1rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -53,7 +57,7 @@
       white-space: nowrap;
     }
 
-    .nav-links {
+    .nav-links{
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
@@ -61,92 +65,152 @@
       justify-content: flex-end;
     }
 
-    .nav-links a {
+    .nav-links a{
       padding-bottom: 0.15rem;
       border-bottom: 2px solid transparent;
     }
 
-    .nav-links a:hover {
+    .nav-links a:hover{
       border-color: var(--accent);
       text-decoration: none;
     }
 
-    .hero {
+    .hero{
       background: radial-gradient(circle at top left, var(--accent-light), var(--bg));
-      border-bottom: 1px solid #dde3ea;
+      border-bottom: 1px solid var(--border);
     }
 
-    .hero-inner {
-      max-width: 1100px; /* was 960px */
+    .hero-inner{
+      max-width: 960px;
       margin: 0 auto;
-      padding: 2.4rem 1rem;
+      padding: 2.2rem 1rem;
     }
 
-    .hero-title {
+    .hero-title{
       font-size: clamp(2rem, 3vw, 2.3rem);
       color: var(--dark);
       margin-bottom: 0.5rem;
     }
 
-    .hero-subtitle {
+    .hero-subtitle{
       font-size: 1.0rem;
       max-width: 52rem;
       color: #2f3e47;
     }
 
     .jump-links{
-      max-width: 52rem;
-      display:flex;
-      flex-wrap:wrap;
-      gap:0.5rem 0.75rem;
-      margin-top:0.9rem;
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem 0.8rem;
+      align-items: center;
     }
 
     .jump-links a{
-      display:inline-block;
-      padding:0.35rem 0.6rem;
-      border:1px solid #dde3ea;
-      border-radius:999px;
-      background:#fff;
-      color:#143541;
-      font-size:0.9rem;
+      display: inline-block;
+      font-size: 0.9rem;
+      color: var(--dark);
+      background: rgba(255,255,255,0.7);
+      border: 1px solid #cfe8e4;
+      padding: 0.35rem 0.6rem;
+      border-radius: 999px;
+      text-decoration: none;
     }
 
     .jump-links a:hover{
-      border-color:#98a9b8;
-      text-decoration:none;
+      background: #fff;
+      border-color: #bfe0db;
+      text-decoration: none;
     }
 
-    main {
-      max-width: 1100px; /* was 960px */
+    .page{
+      max-width: 960px;
       margin: 0 auto;
       padding: 2.2rem 1rem 3rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.6rem;
     }
 
-    .section-title {
+    .layout{
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    @media (max-width: 900px){
+      .layout{ grid-template-columns: 1fr; }
+    }
+
+    .side{
+      position: sticky;
+      top: 84px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.9rem;
+      padding: 1rem;
+      box-shadow: 0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    @media (max-width: 900px){
+      .side{ position: relative; top: 0; }
+    }
+
+    .side h2{
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--dark);
+      margin-bottom: 0.75rem;
+    }
+
+    .side a{
+      display: block;
+      padding: 0.55rem 0.6rem;
+      border-radius: 0.6rem;
+      color: var(--dark);
+      border: 1px solid transparent;
+    }
+
+    .side a:hover{
+      background: var(--accent-light);
+      text-decoration: none;
+      border-color: #cfe8e4;
+    }
+
+    .side a.active{
+      background: var(--accent-light);
+      border-color: #cfe8e4;
+      color: var(--dark);
+      font-weight: 600;
+    }
+
+    .divider{
+      height: 1px;
+      background: var(--border);
+      margin: 1rem 0;
+    }
+
+    .section-title{
       font-size: 1.3rem;
       color: var(--dark);
       margin-bottom: 0.4rem;
     }
 
-    .section-text {
+    .section-text{
       font-size: 0.96rem;
       margin-bottom: 0.8rem;
       max-width: 52rem;
+      color: #2f3e47;
     }
 
-    .card {
+    .card{
       background: var(--card);
       border-radius: 0.9rem;
-      border: 1px solid #dde3ea;
+      border: 1px solid var(--border);
       padding: 1.1rem 1.25rem;
       box-shadow: 0 8px 20px rgba(15,35,52,0.04);
     }
 
-    #uganda-data-table {
+    #uganda-data-table{
       width: 100%;
       border-collapse: collapse;
       font-size: 0.9rem;
@@ -154,23 +218,23 @@
     }
 
     #uganda-data-table th,
-    #uganda-data-table td {
-      border: 1px solid #dde3ea;
+    #uganda-data-table td{
+      border: 1px solid var(--border);
       padding: 0.45rem 0.55rem;
       text-align: left;
       vertical-align: top;
       white-space: nowrap;
     }
 
-    #uganda-data-table th {
+    #uganda-data-table th{
       background: #eef3f7;
       font-weight: 500;
     }
 
-    #uganda-status {
+    #uganda-status{
       font-size: 0.88rem;
       margin-top: 0.2rem;
-      color: #4b5c67;
+      color: var(--muted);
     }
 
     td.pm25.aq_who_g1   { background: #00e400; color:#000; }
@@ -180,65 +244,67 @@
     td.pm25.aq_who_it1  { background: #8f3f97; color:#fff; }
     td.pm25.aq_who_high { background: #7e0023; color:#fff; }
 
-    .legend {
+    .legend{
       margin-top: 0.85rem;
       padding: 0.75rem 0.85rem;
-      border: 1px solid #dde3ea;
+      border: 1px solid var(--border);
       border-radius: 0.75rem;
       background: #fafbfd;
       font-size: 0.85rem;
-      color: #4b5c67;
+      color: var(--muted);
     }
 
-    .legend-title {
+    .legend-title{
       color: #2f3e47;
       margin-bottom: 0.45rem;
       font-size: 0.9rem;
     }
 
-    .legend-items {
+    .legend-items{
       display: flex;
       flex-wrap: wrap;
       gap: 0.55rem 0.8rem;
       align-items: center;
     }
 
-    .legend-item {
+    .legend-item{
       display: flex;
       align-items: center;
       gap: 0.35rem;
       white-space: nowrap;
     }
 
-    .swatch {
+    .swatch{
       width: 12px;
       height: 12px;
       border-radius: 3px;
       border: 1px solid rgba(0,0,0,0.08);
     }
 
-    #uganda-map {
+    #uganda-map{
       width: 100%;
       height: 420px;
       margin-top: 0.8rem;
       border-radius: 0.9rem;
-      border: 1px solid #dde3ea;
+      border: 1px solid var(--border);
     }
 
-    .hist-controls {
+    .hist-controls{
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0.35rem 0.75rem;
       margin-top: 0.6rem;
     }
-    .hist-controls label {
+
+    .hist-controls label{
       display: flex;
       gap: 0.45rem;
       align-items: flex-start;
       font-size: 0.9rem;
       color: #2f3e47;
     }
-    .hist-toolbar {
+
+    .hist-toolbar{
       display: flex;
       gap: 0.6rem;
       align-items: center;
@@ -246,7 +312,8 @@
       flex-wrap: wrap;
       margin-top: 0.85rem;
     }
-    .btn {
+
+    .btn{
       appearance: none;
       border: 1px solid #cfd8e3;
       background: #ffffff;
@@ -256,18 +323,30 @@
       font-size: 0.9rem;
       cursor: pointer;
     }
-    .btn:hover { border-color: #98a9b8; }
-    .small-muted { color: #4b5c67; font-size: 0.88rem; }
 
-    footer {
-      border-top: 1px solid #dde3ea;
+    .btn:hover{ border-color: #98a9b8; }
+
+    .small-muted{ color: var(--muted); font-size: 0.88rem; }
+
+    .pm25-chart-wrap{
+      height: 520px;
+      width: 100%;
+    }
+
+    #pm25-chart{
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    footer{
+      border-top: 1px solid var(--border);
       padding: 1.2rem 1rem 2rem 1rem;
       font-size: 0.8rem;
       color: #6b7c88;
     }
 
-    .footer-inner {
-      max-width: 1100px; /* was 960px */
+    .footer-inner{
+      max-width: 960px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -277,21 +356,12 @@
       text-align: center;
     }
 
-    .pm25-chart-wrap {
-      height: 520px;
-      width: 100%;
-    }
-
-    #pm25-chart {
-      width: 100% !important;
-      height: 100% !important;
-    }
-
-    @media (max-width: 720px) {
+    @media (max-width: 720px){
       .nav-inner { flex-direction: column; align-items: flex-start; }
       .nav-links { justify-content: flex-start; }
       #uganda-data-table th, #uganda-data-table td { white-space: normal; }
       .hist-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .jump-links a { font-size: 0.88rem; }
     }
   </style>
 
@@ -307,7 +377,7 @@
       <nav class="nav-links">
         <a href="index.html#about">About</a>
         <a href="index.html#people">People</a>
-        <a href="research.html">Research & Extension</a>
+        <a href="research.html">Research &amp; Extension</a>
         <a href="factsheets.html">Resources</a>
         <a href="index.html#contact">Contact</a>
       </nav>
@@ -328,122 +398,139 @@
     </div>
   </section>
 
-  <main>
-    <section id="recent">
-      <div class="section-title">Recent measurements</div>
+  <main class="page">
+    <div class="layout">
+      <aside class="side" aria-label="On this page">
+        <h2>On this page</h2>
+        <a href="#recent" data-jump="recent">Recent measurements</a>
+        <a href="#map" data-jump="map">Map</a>
+        <a href="#historical" data-jump="historical">Historical data</a>
+        <a href="#downloads" data-jump="downloads">Downloads &amp; notes</a>
 
-      <div class="card">
-        <div id="uganda-status">Loading data from AirQo…</div>
+        <div class="divider"></div>
 
-        <div style="overflow-x:auto; margin-top:0.5rem;">
-          <table id="uganda-data-table" style="display:none;">
-            <thead>
-              <tr>
-                <th>Location</th>
-                <th>Date &amp; time (EAT, UTC+3)</th>
-                <th>PM2.5 (µg/m³)</th>
-                <th>PM10 (µg/m³)</th>
-              </tr>
-            </thead>
-            <tbody id="uganda-data-body"></tbody>
-          </table>
-        </div>
-
-        <div class="legend" aria-label="PM2.5 legend">
-          <div class="legend-title">PM2.5 category colors (WHO thresholds, classic AQI color palette)</div>
-          <div class="legend-items">
-            <div class="legend-item"><span class="swatch" style="background:#00e400;"></span>≤15 µg/m³ — Good</div>
-            <div class="legend-item"><span class="swatch" style="background:#ffff00;"></span>15–25 µg/m³ — Moderate</div>
-            <div class="legend-item"><span class="swatch" style="background:#ff7e00;"></span>25–37.5 µg/m³ — Elevated</div>
-            <div class="legend-item"><span class="swatch" style="background:#ff0000;"></span>37.5–50 µg/m³ — High</div>
-            <div class="legend-item"><span class="swatch" style="background:#8f3f97;"></span>50–75 µg/m³ — Very high</div>
-            <div class="legend-item"><span class="swatch" style="background:#7e0023;"></span>&gt;75 µg/m³ — Extremely high</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="map">
-      <div class="section-title">Map of PM2.5 (µg/m³) concentrations</div>
-      <p class="section-text">Markers use fixed sensor coordinates and are colored by PM2.5 category.</p>
-
-      <div id="uganda-map"></div>
-
-      <div class="card" id="historical" style="margin-top:1.2rem; font-size:0.9rem;">
-        <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Historical data</div>
         <div class="small-muted">
-          Select sensors to show/hide on the chart. Use the download button to export the same plotted data as CSV.
+          Tip: if recent data is temporarily unavailable, the historical chart and downloads still work.
         </div>
+      </aside>
 
-        <div id="hist-status" class="small-muted" style="margin-top:0.5rem;">Loading archived historical data…</div>
+      <div>
+        <section id="recent">
+          <div class="section-title">Recent measurements</div>
 
-        <div id="hist-controls" class="hist-controls" aria-label="Sensor selection" style="display:none;"></div>
+          <div class="card">
+            <div id="uganda-status">Loading data…</div>
 
-        <div class="hist-toolbar" style="margin-top:0.6rem;">
-          <label>
-            Pollutant
-            <select id="pollutant-select">
-              <option value="pm25">PM2.5 (calibrated)</option>
-              <option value="pm10">PM10 (calibrated)</option>
-            </select>
-          </label>
+            <div style="overflow-x:auto; margin-top:0.5rem;">
+              <table id="uganda-data-table" style="display:none;">
+                <thead>
+                  <tr>
+                    <th>Location</th>
+                    <th>Date &amp; time (EAT, UTC+3)</th>
+                    <th>PM2.5 (µg/m³)</th>
+                    <th>PM10 (µg/m³)</th>
+                  </tr>
+                </thead>
+                <tbody id="uganda-data-body"></tbody>
+              </table>
+            </div>
 
-          <label>
-            Time resolution
-            <select id="resolution-select">
-              <option value="hourly">Hourly</option>
-              <option value="daily">Daily</option>
-              <option value="monthly">Monthly</option>
-            </select>
-          </label>
-        </div>
+            <div class="legend" aria-label="PM2.5 legend">
+              <div class="legend-title">PM2.5 category colors (WHO thresholds, classic AQI color palette)</div>
+              <div class="legend-items">
+                <div class="legend-item"><span class="swatch" style="background:#00e400;"></span>≤15 µg/m³ — Good</div>
+                <div class="legend-item"><span class="swatch" style="background:#ffff00;"></span>15–25 µg/m³ — Moderate</div>
+                <div class="legend-item"><span class="swatch" style="background:#ff7e00;"></span>25–37.5 µg/m³ — Elevated</div>
+                <div class="legend-item"><span class="swatch" style="background:#ff0000;"></span>37.5–50 µg/m³ — High</div>
+                <div class="legend-item"><span class="swatch" style="background:#8f3f97;"></span>50–75 µg/m³ — Very high</div>
+                <div class="legend-item"><span class="swatch" style="background:#7e0023;"></span>&gt;75 µg/m³ — Extremely high</div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-        <div class="hist-toolbar">
-          <button class="btn" id="download-csv" type="button" disabled>Download plotted data (CSV)</button>
-          <div class="small-muted" id="hist-meta"></div>
-        </div>
+        <section id="map" style="margin-top:1.6rem;">
+          <div class="section-title">Map of PM2.5 (µg/m³) concentrations</div>
+          <p class="section-text">Markers use fixed sensor coordinates and are colored by PM2.5 category.</p>
 
-        <div class="pm25-chart-wrap" style="margin-top:0.85rem;">
-          <canvas id="pm25-chart"></canvas>
-        </div>
+          <div id="uganda-map"></div>
+
+          <div class="card" id="historical" style="margin-top:1.2rem; font-size:0.9rem;">
+            <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Historical data</div>
+            <div class="small-muted">
+              Select sensors to show/hide on the chart. Use the download button to export the same plotted data as CSV.
+            </div>
+
+            <div id="hist-status" class="small-muted" style="margin-top:0.5rem;">Loading archived historical data…</div>
+            <div id="hist-controls" class="hist-controls" aria-label="Sensor selection" style="display:none;"></div>
+
+            <div class="hist-toolbar" style="margin-top:0.6rem;">
+              <label>
+                Pollutant
+                <select id="pollutant-select">
+                  <option value="pm25">PM2.5 (calibrated)</option>
+                  <option value="pm10">PM10 (calibrated)</option>
+                </select>
+              </label>
+
+              <label>
+                Time resolution
+                <select id="resolution-select">
+                  <option value="hourly">Hourly</option>
+                  <option value="daily">Daily</option>
+                  <option value="monthly">Monthly</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="hist-toolbar">
+              <button class="btn" id="download-csv" type="button" disabled>Download plotted data (CSV)</button>
+              <div class="small-muted" id="hist-meta"></div>
+            </div>
+
+            <div class="pm25-chart-wrap" style="margin-top:0.85rem;">
+              <canvas id="pm25-chart"></canvas>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:1rem; font-size:0.9rem;">
+            <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Analyzed data</div>
+            <div style="color:var(--muted);">
+              See PM2.5 average concentrations by day of the week:
+              <a href="dailyavg.html">View daily averages</a>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:1.2rem; font-size:0.9rem;">
+            <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Data description and licensing</div>
+            <div style="color:var(--muted);">
+              PM concentrations shown here represent short-term averaged measurements as reported by the AirQo monitoring network and are provided at sub-daily resolution in near-real time.
+              <br><br>
+              Air quality monitoring data displayed on this page are provided by AirQo and are made available under the Creative Commons Attribution 4.0 International (CC BY 4.0) license.
+            </div>
+          </div>
+
+          <div class="card" id="downloads" style="margin-top:1.2rem; font-size:0.9rem;">
+            <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Downloads</div>
+            <div style="color:var(--muted);">
+              Geographic coordinates for all monitoring locations shown on this page are available for download as a CSV file:
+              <br><br>
+              <a href="sensor_locations_kampala.csv" download>Download sensor coordinates (CSV)</a>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:1.2rem; font-size:0.9rem;">
+            <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Funding and data acknowledgment</div>
+            <div style="color:var(--muted);">
+              This work is supported by the Energy Policy Institute at the University of Chicago (EPIC).<br><br>
+              Air quality monitoring data are provided by AirQo through its open data access program.
+              <a href="https://airqo.africa" target="_blank" rel="noopener">https://airqo.africa</a><br>
+              We acknowledge AirQo (Makerere University) for access to air quality monitoring data on this website.
+            </div>
+          </div>
+        </section>
       </div>
-
-      <div class="card" style="margin-top:1rem; font-size:0.9rem;">
-        <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Analyzed data</div>
-        <div style="color:#4b5c67;">
-          See PM2.5 average concentrations by day of the week:
-          <a href="dailyavg.html">View daily averages</a>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:1.2rem; font-size:0.9rem;">
-        <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Data description and licensing</div>
-        <div style="color:#4b5c67;">
-          PM concentrations shown here represent short-term averaged measurements as reported by the AirQo monitoring network and are provided at sub-daily resolution in near-real time.
-          <br><br>
-          Air quality monitoring data displayed on this page are provided by AirQo and are made available under the Creative Commons Attribution 4.0 International (CC BY 4.0) license.
-        </div>
-      </div>
-
-      <div class="card" id="downloads" style="margin-top:1.2rem; font-size:0.9rem;">
-        <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Sensor locations</div>
-        <div style="color:#4b5c67;">
-          Geographic coordinates for all monitoring locations shown on this page are available for download as a CSV file:
-          <br><br>
-          <a href="sensor_locations_kampala.csv" download>Download sensor coordinates (CSV)</a>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:1.2rem; font-size:0.9rem;">
-        <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Funding and data acknowledgment</div>
-        <div style="color:#4b5c67;">
-          This work is supported by the Energy Policy Institute at the University of Chicago (EPIC).<br><br>
-          Air quality monitoring data are provided by AirQo through its open data access program.
-          <a href="https://airqo.africa" target="_blank">https://airqo.africa</a><br>
-          We acknowledge AirQo (Makerere University) for access to air quality monitoring data on this website.
-        </div>
-      </div>
-    </section>
+    </div>
   </main>
 
   <footer>
@@ -454,6 +541,9 @@
   </footer>
 
 <script>
+  // If you're serving recent data from your DigitalOcean droplet (recommended for IP allowlisting),
+  // set COHORT_URL to the droplet URL, e.g.:
+  // const COHORT_URL = "https://YOUR_DROPLET_DOMAIN_OR_IP/uganda_recent.json";
   const COHORT_URL = "data/uganda_recent.json";
 
   const ARCHIVE_CSV_URL = "data/uganda_pm25_archive.csv";
@@ -573,98 +663,97 @@
     markersLayer = L.layerGroup().addTo(map);
   }
 
-async function loadUgandaData() {
-  const tbody = document.getElementById("uganda-data-body");
-  const statusEl = document.getElementById("uganda-status");
-  const table = document.getElementById("uganda-data-table");
+  async function loadUgandaData() {
+    const tbody = document.getElementById("uganda-data-body");
+    const statusEl = document.getElementById("uganda-status");
+    const table = document.getElementById("uganda-data-table");
 
-  try {
-    const res = await fetch(COHORT_URL, { cache: "no-store" });
-    if (!res.ok) throw new Error(`Request failed (HTTP ${res.status})`);
+    try {
+      const res = await fetch(COHORT_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error(`Request failed (HTTP ${res.status})`);
 
-    const data = await res.json();
+      const data = await res.json();
 
-    // If the workflow wrote an error JSON, show that clearly
-    if (data && typeof data === "object" && data.error) {
-      const code = data.status_code ? ` (HTTP ${data.status_code})` : "";
-      statusEl.textContent = `Recent AirQo data is temporarily unavailable${code}. Historical data remains available below.`;
-      table.style.display = "none";
-      return;
-    }
-
-    const measurements = (data.measurements || data.results || []).slice(0, 15);
-
-    if (!measurements.length) {
-      statusEl.textContent = "No recent measurements available.";
-      table.style.display = "none";
-      return;
-    }
-
-    tbody.innerHTML = "";
-    markersLayer.clearLayers();
-
-    const bounds = [];
-
-    measurements.forEach(item => {
-      const rawId = item.device || item.device_id || item.deviceId || item.name || "";
-      const id = normalizeDeviceId(rawId);
-      const site = sites[id] || { name: (rawId || "Unknown"), district: "Kampala" };
-
-      const pm25 = Number(item?.pm2_5?.value);
-      const pm10 = Number(item?.pm10?.value);
-      const when = fmtDateTimeKampala(item.time || item.created_at || item.createdAt || item.timestamp);
-
-      const cls = whoClass(pm25);
-
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>
-          <div>${site.name}</div>
-          <div style="font-size:0.8em;color:#4b5c67;">${site.district}, Uganda</div>
-        </td>
-        <td>${when}</td>
-        <td class="pm25 ${cls}">${fmtNumber(pm25)}</td>
-        <td>${fmtNumber(pm10)}</td>
-      `;
-      tbody.appendChild(tr);
-
-      if (Number.isFinite(site.lat) && Number.isFinite(site.lon) && Number.isFinite(pm25)) {
-        const fill = aqiFillColor(cls);
-
-        const popupHtml = `
-          <div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
-            <div style="color:#143541; margin-bottom:4px;">${site.name}</div>
-            <div style="color:#4b5c67; font-size:12px; margin-bottom:6px;">${site.district}, Uganda</div>
-            <div style="font-size:13px;">PM2.5: ${fmtNumber(pm25)} µg/m³ (${whoLabel(pm25)})</div>
-            <div style="font-size:13px;">PM10: ${fmtNumber(pm10)} µg/m³</div>
-            <div style="color:#4b5c67; font-size:12px; margin-top:6px;">${when} (EAT)</div>
-          </div>
-        `;
-
-        L.circleMarker([site.lat, site.lon], {
-          radius: 10,
-          color: "#333",
-          weight: 1,
-          fillColor: fill,
-          fillOpacity: 0.9
-        }).bindPopup(popupHtml).addTo(markersLayer);
-
-        bounds.push([site.lat, site.lon]);
+      if (data && typeof data === "object" && data.error) {
+        const code = data.status_code ? ` (HTTP ${data.status_code})` : "";
+        statusEl.textContent = `Recent AirQo data is temporarily unavailable${code}. Historical data remains available below.`;
+        table.style.display = "none";
+        return;
       }
-    });
 
-    statusEl.textContent = "";
-    table.style.display = "";
+      const measurements = (data.measurements || data.results || []).slice(0, 15);
 
-    if (bounds.length >= 2) map.fitBounds(bounds, { padding: [25, 25] });
-    else if (bounds.length === 1) map.setView(bounds[0], 13);
+      if (!measurements.length) {
+        statusEl.textContent = "No recent measurements available.";
+        table.style.display = "none";
+        return;
+      }
 
-  } catch (e) {
-    statusEl.textContent = "Recent AirQo data is temporarily unavailable. Historical data remains available below.";
-    table.style.display = "none";
+      tbody.innerHTML = "";
+      markersLayer.clearLayers();
+
+      const bounds = [];
+
+      measurements.forEach(item => {
+        const rawId = item.device || item.device_id || item.deviceId || item.name || "";
+        const id = normalizeDeviceId(rawId);
+        const site = sites[id] || { name: (rawId || "Unknown"), district: "Kampala" };
+
+        const pm25 = Number(item?.pm2_5?.value);
+        const pm10 = Number(item?.pm10?.value);
+        const when = fmtDateTimeKampala(item.time || item.created_at || item.createdAt || item.timestamp);
+
+        const cls = whoClass(pm25);
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>
+            <div>${site.name}</div>
+            <div style="font-size:0.8em;color:var(--muted);">${site.district}, Uganda</div>
+          </td>
+          <td>${when}</td>
+          <td class="pm25 ${cls}">${fmtNumber(pm25)}</td>
+          <td>${fmtNumber(pm10)}</td>
+        `;
+        tbody.appendChild(tr);
+
+        if (Number.isFinite(site.lat) && Number.isFinite(site.lon) && Number.isFinite(pm25)) {
+          const fill = aqiFillColor(cls);
+
+          const popupHtml = `
+            <div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+              <div style="color:${getComputedStyle(document.documentElement).getPropertyValue('--dark')}; margin-bottom:4px;">${site.name}</div>
+              <div style="color:${getComputedStyle(document.documentElement).getPropertyValue('--muted')}; font-size:12px; margin-bottom:6px;">${site.district}, Uganda</div>
+              <div style="font-size:13px;">PM2.5: ${fmtNumber(pm25)} µg/m³ (${whoLabel(pm25)})</div>
+              <div style="font-size:13px;">PM10: ${fmtNumber(pm10)} µg/m³</div>
+              <div style="color:${getComputedStyle(document.documentElement).getPropertyValue('--muted')}; font-size:12px; margin-top:6px;">${when} (EAT)</div>
+            </div>
+          `;
+
+          L.circleMarker([site.lat, site.lon], {
+            radius: 10,
+            color: "#333",
+            weight: 1,
+            fillColor: fill,
+            fillOpacity: 0.9
+          }).bindPopup(popupHtml).addTo(markersLayer);
+
+          bounds.push([site.lat, site.lon]);
+        }
+      });
+
+      statusEl.textContent = "";
+      table.style.display = "";
+
+      if (bounds.length >= 2) map.fitBounds(bounds, { padding: [25, 25] });
+      else if (bounds.length === 1) map.setView(bounds[0], 13);
+
+    } catch (e) {
+      document.getElementById("uganda-status").textContent =
+        "Recent AirQo data is temporarily unavailable. Historical data remains available below.";
+      document.getElementById("uganda-data-table").style.display = "none";
+    }
   }
-}
-
 
   function parseCsv(text) {
     const rows = [];
@@ -754,7 +843,6 @@ async function loadUgandaData() {
         if (ms === null) return;
 
         const value = selectedPollutant === "pm10" ? Number(p.pm10) : Number(p.pm25);
-
         if (!Number.isFinite(value) || value <= 0) return;
 
         const d = new Date(ms);
@@ -768,9 +856,7 @@ async function loadUgandaData() {
           key = `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}-${d.getUTCHours()}`;
         }
 
-        if (!buckets.has(key)) {
-          buckets.set(key, { sum: 0, count: 0, time: ms });
-        }
+        if (!buckets.has(key)) buckets.set(key, { sum: 0, count: 0, time: ms });
 
         const b = buckets.get(key);
         b.sum += value;
@@ -915,7 +1001,6 @@ async function loadUgandaData() {
       if (rows.length < 2) throw new Error("Archive CSV is empty");
 
       const header = rows[0].map(h => h.trim());
-
       const idxDatetime = header.indexOf("datetime");
       const idxDeviceName = header.indexOf("device_name");
       const idxPm25Cal = header.indexOf("pm2_5_calibrated_value");
@@ -1001,13 +1086,38 @@ async function loadUgandaData() {
     }
   }
 
+  function setActiveJumpLink() {
+    const links = Array.from(document.querySelectorAll('.side a[data-jump]'));
+    if (!links.length) return;
+
+    const sections = links
+      .map(a => document.getElementById(a.getAttribute('href').slice(1)))
+      .filter(Boolean);
+
+    const set = (id) => {
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${id}`));
+    };
+
+    const obs = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (visible && visible.target && visible.target.id) set(visible.target.id);
+    }, { rootMargin: "-30% 0px -60% 0px", threshold: [0.05, 0.2, 0.35, 0.5] });
+
+    sections.forEach(s => obs.observe(s));
+  }
+
   initMap();
   loadUgandaData();
   wireDownload();
   loadHistoricalFromCSV();
+  setActiveJumpLink();
 </script>
 
 </body>
 </html>
+
 
 
