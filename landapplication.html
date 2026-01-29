@@ -4,25 +4,469 @@
   <meta charset="UTF-8" />
   <title>Manure Land Application — Larson Research Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root{
+      --accent:#1b7c6d;
+      --accent-light:#e2f3f0;
+      --dark:#143541;
+      --text:#222;
+      --bg:#f7f9fb;
+      --card:#fff;
+      --border:#dde3ea;
+      --muted:#4b5c67;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    header{
+      background:var(--card);
+      border-bottom:1px solid var(--border);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .nav-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:0.75rem 1rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+    }
+
+    .nav-title{
+      font-size:1rem;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      color:var(--dark);
+      white-space:nowrap;
+    }
+
+    .nav-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:1rem;
+      font-size:0.9rem;
+    }
+
+    .nav-links a{
+      padding-bottom:0.15rem;
+      border-bottom:2px solid transparent;
+    }
+
+    .nav-links a:hover{
+      border-color:var(--accent);
+      text-decoration:none;
+    }
+
+    .page{
+      max-width:1100px;
+      margin:0 auto;
+      padding:1.25rem 1rem 3rem 1rem;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:260px 1fr;
+      gap:1.25rem;
+      align-items:start;
+    }
+
+    @media (max-width:900px){
+      .layout{grid-template-columns:1fr}
+    }
+
+    .side{
+      position:sticky;
+      top:80px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    @media (max-width:900px){
+      .side{position:relative;top:0}
+    }
+
+    .side h2{
+      font-size:0.95rem;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      color:var(--dark);
+      margin-bottom:0.75rem;
+    }
+
+    .side a{
+      display:block;
+      padding:0.55rem 0.6rem;
+      border-radius:0.6rem;
+      color:var(--dark);
+      border:1px solid transparent;
+    }
+
+    .side a:hover{
+      background:var(--accent-light);
+      text-decoration:none;
+      border-color:#cfe8e4;
+    }
+
+    .side a.active{
+      background:var(--accent-light);
+      border-color:#cfe8e4;
+      color:var(--dark);
+      font-weight:600;
+    }
+
+    .divider{
+      height:1px;
+      background:var(--border);
+      margin:1rem 0;
+    }
+
+    .hero{
+      margin-bottom:1rem;
+    }
+
+    .hero-figure{
+      margin:0 0 0.9rem 0;
+    }
+
+    .hero-img{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      overflow:hidden;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+      width:100%;
+      aspect-ratio: 16 / 6;
+      background:#f2f4f7;
+    }
+
+    .hero-img img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      display:block;
+    }
+
+    .hero-caption{
+      text-align:center;
+      color:var(--muted);
+      font-size:0.9rem;
+      margin-top:0.45rem;
+    }
+
+    .hero-body{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+      padding:1.1rem 1.1rem 1.2rem 1.1rem;
+    }
+
+    .kicker{
+      display:inline-block;
+      font-size:0.8rem;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--dark);
+      background:var(--accent-light);
+      padding:0.25rem 0.5rem;
+      border-radius:999px;
+      margin-bottom:0.7rem;
+    }
+
+    .title{
+      font-size:1.8rem;
+      color:var(--dark);
+      line-height:1.2;
+      margin-bottom:0.55rem;
+    }
+
+    .subtitle{
+      color:var(--muted);
+      font-size:1rem;
+      max-width:80ch;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:1rem;
+      margin-top:1rem;
+    }
+
+    @media (max-width:700px){
+      .cards{grid-template-columns:1fr}
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    .card h3{
+      font-size:1.05rem;
+      color:var(--dark);
+      margin-bottom:0.5rem;
+    }
+
+    .card p{
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+
+    .section{
+      margin-top:1rem;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:0.9rem;
+      padding:1rem;
+      box-shadow:0 8px 20px rgba(15,35,52,0.04);
+    }
+
+    .section h3{
+      font-size:1.15rem;
+      color:var(--dark);
+      margin-bottom:0.4rem;
+    }
+
+    .section p{
+      color:var(--muted);
+      margin-bottom:0.75rem;
+      max-width:90ch;
+    }
+
+    .section p:last-child{margin-bottom:0}
+
+    .section ul{
+      margin:0.25rem 0 0 1.1rem;
+      color:var(--muted);
+    }
+
+    .section li{
+      margin:0.35rem 0;
+    }
+
+    .mini-table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border-radius:0.75rem;
+      border:1px solid var(--border);
+      background:#fff;
+      margin-top:0.6rem;
+    }
+
+    .mini-table th, .mini-table td{
+      text-align:left;
+      padding:0.65rem 0.75rem;
+      border-bottom:1px solid var(--border);
+      vertical-align:top;
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+
+    .mini-table th{
+      color:var(--dark);
+      background:var(--accent-light);
+      font-weight:600;
+      width:34%;
+    }
+
+    .mini-table tr:last-child th,
+    .mini-table tr:last-child td{
+      border-bottom:none;
+    }
+
+    footer{
+      border-top:1px solid var(--border);
+      padding:1.2rem 1rem 2rem 1rem;
+      font-size:0.8rem;
+      color:#6b7c88;
+    }
+
+    .footer-inner{
+      max-width:1100px;
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:0.4rem;
+      text-align:center;
+    }
+
+    @media (max-width:720px){
+      .nav-inner{flex-direction:column;align-items:flex-start}
+      .nav-links{justify-content:flex-start}
+    }
+  </style>
 </head>
-
 <body>
-<header>
-  <div class="nav-inner">
-    <div class="nav-title">Larson Research Group</div>
-    <nav class="nav-links">
-      <a href="index.html">About</a>
-      <a href="index.html#people">People</a>
-      <a href="research.html">Research & Extension</a>
-      <a href="factsheets.html">Resources</a>
-      <a href="index.html#contact">Contact</a>
-    </nav>
-  </div>
-</header>
+  <header>
+    <div class="nav-inner">
+      <div class="nav-title">Larson Research Group</div>
+      <nav class="nav-links">
+        <a href="index.html">About</a>
+        <a href="index.html#people">People</a>
+        <a href="research.html">Research & Extension</a>
+        <a href="factsheets.html">Resources</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-<main class="page">
-  <div class="layout">
+  <main class="page">
+    <div class="layout">
 
-   <div id="research-sidebar"></div>
+      <div id="research-sidebar"></div>
 
+      <div>
+        <section class="hero">
+          <figure class="hero-figure">
+            <div class="hero-img">
+              <img src="images/research/land_application.jpg" alt="Manure land application">
+            </div>
+            <figcaption class="hero-caption">Manure application method and timing strongly influence nutrient retention and environmental outcomes</figcaption>
+          </figure>
+
+          <div class="hero-body">
+            <div class="kicker">Research & Extension</div>
+            <h1 class="title">Manure Land Application</h1>
+            <p class="subtitle">
+              Land application is the final step that determines how much manure nitrogen is retained for crops versus lost to air and water. Method, timing, and rate drive outcomes for productivity, water quality, and odor.
+            </p>
+          </div>
+        </section>
+
+        <div class="cards">
+          <section class="card">
+            <h3>What it includes</h3>
+            <p>
+              Land application includes surface broadcast, incorporation or injection, and in-season application approaches such as irrigation or dragline systems. Equipment selection and field conditions determine placement, disturbance, and practical application windows.
+            </p>
+          </section>
+          <section class="card">
+            <h3>Why it matters</h3>
+            <p>
+              The biggest controllable drivers of ammonia loss, odor, and runoff risk are application method and timing relative to weather, soil condition, and crop stage. Good application decisions increase fertilizer value and reduce risk.
+            </p>
+          </section>
+        </div>
+
+        <section class="section">
+          <h3>Key decision points</h3>
+          <p>
+            Effective land application matches nutrient supply to crop demand while reducing the chance of loss. This typically means applying at agronomic rates, avoiding high-risk conditions (frozen or saturated soils, imminent precipitation), and using placement methods that reduce exposure to air and runoff pathways.
+          </p>
+
+          <table class="mini-table" aria-label="Land application decision points">
+            <tr>
+              <th>Rate and nutrient basis</th>
+              <td>Rates are commonly set using nitrogen or phosphorus limits depending on nutrient planning and field history. Supplemental fertilizer nitrogen can be used when manure is applied to a phosphorus limit.</td>
+            </tr>
+            <tr>
+              <th>Timing</th>
+              <td>Timing aims to avoid high runoff risk and align nitrogen availability with crop uptake. Spring and in-season strategies can improve nitrogen use efficiency compared to long lead-time applications when conditions allow.</td>
+            </tr>
+            <tr>
+              <th>Field conditions</th>
+              <td>Soil moisture, compaction risk, slope, residue cover, and proximity to waterways influence runoff and infiltration. Setbacks and buffers remain important even with low-disturbance methods.</td>
+            </tr>
+          </table>
+        </section>
+
+        <section class="section">
+          <h3>Common application methods</h3>
+          <p>
+            Application method influences ammonia loss, odor, and runoff risk primarily through how much manure is exposed on the soil surface and whether placement keeps nutrients in contact with soil.
+          </p>
+
+          <table class="mini-table" aria-label="Manure application methods">
+            <tr>
+              <th>Surface broadcast</th>
+              <td>Fast and flexible, but higher odor and ammonia loss when manure remains on the surface. Rapid incorporation (where appropriate) can reduce losses and odor.</td>
+            </tr>
+            <tr>
+              <th>Injection or shallow placement</th>
+              <td>Places manure below or into the soil surface to reduce ammonia and odor. Performance depends on soil condition and equipment; placement can increase disturbance in some systems and may be limited in very wet or rocky soils.</td>
+            </tr>
+            <tr>
+              <th>In-season application</th>
+              <td>Includes irrigation or dragline approaches and systems such as “360 Rain” that aim to apply nutrients during crop growth. These approaches can better match crop demand but require careful management to avoid leaf burn, compaction, and losses during hot or windy conditions.</td>
+            </tr>
+          </table>
+        </section>
+
+        <section class="section">
+          <h3>Benefits and tradeoffs</h3>
+          <ul>
+            <li>Injection and rapid incorporation typically reduce ammonia and odor compared to surface application, but may increase equipment cost and can be constrained by soil and weather conditions.</li>
+            <li>In-season application can improve nitrogen use efficiency, but demands tighter logistics and weather awareness and may require specialized equipment.</li>
+            <li>Runoff risk is driven by timing and soil condition; avoiding frozen or saturated soils and avoiding application before major precipitation events is often the most important risk reduction step.</li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <h3>Related fact sheets and resources</h3>
+          <p>
+            <a href="factsheets.html">See all Resources and fact sheets</a>
+          </p>
+          <p>
+            <a href="mp-series-land-application.pdf" target="_blank" rel="noopener">
+              Manure Processing Fact Sheet Series: Land Application
+            </a>
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>Larson Research Group · University of Wisconsin–Madison</div>
+      <div>Hosted on GitHub Pages</div>
+    </div>
+  </footer>
+
+  <script>
+    (async function () {
+      const target = document.getElementById("research-sidebar");
+      if (!target) return;
+
+      const res = await fetch("/Larson-research-group/partials/research_sidebar.html", { cache: "no-store" });
+      if (!res.ok) {
+        target.innerHTML = "<aside class='side'><h2>Research topics</h2><p style='color:#4b5c67;margin-top:0.5rem'>Sidebar failed to load.</p></aside>";
+        return;
+      }
+
+      target.innerHTML = await res.text();
+
+      const current = location.pathname.split("/").pop() || "index.html";
+      const link = target.querySelector(`[data-page="${current}"]`);
+      if (link) link.classList.add("active");
+    })();
+  </script>
+</body>
+</html>
