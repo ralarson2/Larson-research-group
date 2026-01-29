@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Uganda air quality – Average by time of day</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background:#f7f9fb; color:#222; }
+    header { background:#fff; border-bottom:1px solid #dde3ea; }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 1rem; }
+    h1 { font-size: 1.5rem; margin: 0.75rem 0 0.25rem; }
+    p { margin: 0.25rem 0 0.75rem; color:#4b5c67; }
+    .card { background:#fff; border:1px solid #dde3ea; border-radius: 14px; padding: 1rem; box-shadow: 0 8px 20px rgba(15,35,52,0.04); }
+    .row { display:flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; margin: 0.5rem 0 0.75rem; }
+    select { padding: 0.5rem 0.6rem; border-radius: 10px; border:1px solid #cfd8e3; background:#fff; }
+    .note { font-size: 0.95rem; color:#2f3e47; }
+    .small { font-size: 0.9rem; color:#4b5c67; }
+    .chartWrap { height: 520px; }
+    canvas { width: 100% !important; height: 100% !important; }
+    a { color:#1b7c6d; text-decoration:none; }
+    a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; align-items:center; justify-content:space-between;">
+      <div style="letter-spacing:0.08em; text-transform:uppercase; color:#143541; font-size:0.95rem;">Larson Research Group</div>
+      <div style="display:flex; gap:1rem; flex-wrap:wrap; font-size:0.95rem;">
+        <a href="uganda.html">Back to Uganda page</a>
+        <a href="dailyavg.html">Average by day of week</a>
+      </div>
+    </div>
+    <h1>Average air quality by time of day (Kampala time)</h1>
+    <p>Hourly averages computed from the historical archive (Africa/Kampala). Use this to see when PM is typically lowest for outdoor activity.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="card">
+    <div id="status" class="small">Loading historical data…</div>
+
+    <div class="row">
+      <label class="note">Pollutant
+        <select id="pollutant">
+          <option value="pm25">PM2.5 (calibrated)</option>
+          <option value="pm10">PM10 (calibrated)</option>
+        </select>
+      </label>
+
+      <label class="note">Averaging window
+        <select id="window">
+          <option value="hour">Hour (0–23)</option>
+          <option value="2hour">2-hour blocks</option>
+          <option value="3hour">3-hour blocks</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="best" class="note" style="margin:0.25rem 0 0.75rem;"></div>
+
+    <div class="chartWrap">
+      <canvas id="chart"></canvas>
+    </div>
+
+    <div class="small" style="margin-top:0.75rem;">
+      Source: AirQo monitoring network; values are short-term averaged measurements as provided in the archive file.
+    </div>
+  </div>
+</main>
+
+<script>
+  const ARCHIVE_CSV_URL = "data/uganda_pm25_archive.csv"; // same file you already use
+  const TIMEZONE = "Africa/Kampala";
+
+  function parseCsv(text) {
+    const rows = [];
+    let row = [];
+    let field = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      const next = text[i + 1];
+
+      if (inQuotes) {
+        if (c === '"' && next === '"') { field += '"'; i++; continue; }
+        if (c === '"') { inQuotes = false; continue; }
+        field += c; continue;
+      }
+
+      if (c === '"') { inQuotes = true; continue; }
+      if (c === ",") { row.push(field); field = ""; continue; }
+      if (c === "\n") {
+        row.push(field);
+        if (row.length > 1 || row[0].trim() !== "") rows.push(row);
+        row = []; field = ""; continue;
+      }
+      if (c === "\r") continue;
+      field += c;
+    }
+
+    if (field.length || row.length) {
+      row.push(field);
+      if (row.length > 1 || row[0].trim() !== "") rows.push(row);
+    }
+    return rows;
+  }
+
+  function getKampalaHour(isoLike) {
+    const d = new Date(isoLike);
+    if (isNaN(d.getTime())) return null;
+
+    const parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone: TIMEZONE,
+      hour: "2-digit",
+      hour12: false
+    }).formatToParts(d);
+
+    const hourPart = parts.find(p => p.type === "hour");
+    if (!hourPart) return null;
+    const h = Number(hourPart.value);
+    return Number.isFinite(h) ? h : null;
+  }
+
+  function bucketLabel(startHour, size) {
+    if (size === 1) return String(startHour).padStart(2, "0") + ":00";
+    const end = (startHour + size) % 24;
+    return String(startHour).padStart(2, "0") + ":00–" + String(end).padStart(2, "0") + ":00";
+  }
+
+  let chart = null;
+  let allRows = [];
+  let header = [];
+
+  function computeAverages(pollutantKey, windowSize) {
+    const idxDatetime = header.indexOf("datetime");
+    const idxPm25 = header.indexOf("pm2_5_calibrated_value");
+    const idxPm10 = header.indexOf("pm10_calibrated_value");
+
+    const idxVal = (pollutantKey === "pm10") ? idxPm10 : idxPm25;
+    if (idxDatetime < 0 || idxVal < 0) return null;
+
+    const bucketCount = Math.floor(24 / windowSize);
+    const buckets = Array.from({length: bucketCount}, () => ({sum: 0, n: 0}));
+
+    for (let r = 0; r < allRows.length; r++) {
+      const cols = allRows[r];
+      const dt = cols[idxDatetime] ?? "";
+      const h = getKampalaHour(dt);
+      if (h === null) continue;
+
+      const v = Number(cols[idxVal]);
+      if (!Number.isFinite(v) || v <= 0) continue;
+
+      const b = Math.floor(h / windowSize);
+      if (b < 0 || b >= bucketCount) continue;
+
+      buckets[b].sum += v;
+      buckets[b].n += 1;
+    }
+
+    const labels = [];
+    const values = [];
+    for (let b = 0; b < bucketCount; b++) {
+      const start = b * windowSize;
+      labels.push(bucketLabel(start, windowSize));
+      values.push(buckets[b].n ? (buckets[b].sum / buckets[b].n) : null);
+    }
+
+    return { labels, values };
+  }
+
+  function findBestWindow(labels, values) {
+    let bestIdx = -1;
+    let bestVal = Infinity;
+    for (let i = 0; i < values.length; i++) {
+      const v = values[i];
+      if (Number.isFinite(v) && v < bestVal) {
+        bestVal = v;
+        bestIdx = i;
+      }
+    }
+    if (bestIdx === -1) return null;
+    return { label: labels[bestIdx], value: bestVal };
+  }
+
+  function render() {
+    const pollutant = document.getElementById("pollutant").value;
+    const windowSel = document.getElementById("window").value;
+    const windowSize = windowSel === "3hour" ? 3 : (windowSel === "2hour" ? 2 : 1);
+
+    const out = computeAverages(pollutant, windowSize);
+    if (!out) {
+      document.getElementById("status").textContent = "Could not compute averages (missing required columns).";
+      return;
+    }
+
+    const best = findBestWindow(out.labels, out.values);
+    const units = "µg/m³";
+    const pollutantLabel = pollutant === "pm10" ? "PM10" : "PM2.5";
+    document.getElementById("best").textContent =
+      best ? `Lowest average ${pollutantLabel} occurs around ${best.label} (mean ≈ ${best.value.toFixed(1)} ${units}).`
+           : `Not enough data to identify a lowest-average time window.`;
+
+    const ctx = document.getElementById("chart");
+    if (chart) chart.destroy();
+
+    chart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: out.labels,
+        datasets: [{
+          label: `Mean ${pollutantLabel} by time of day (Kampala)`,
+          data: out.values,
+          spanGaps: true,
+          borderWidth: 2,
+          pointRadius: 2,
+          tension: 0.25
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, position: "top" },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => {
+                const v = ctx.parsed.y;
+                return Number.isFinite(v) ? `${v.toFixed(1)} µg/m³` : "No data";
+              }
+            }
+          }
+        },
+        scales: {
+          x: { title: { display: true, text: "Time of day (Africa/Kampala)" } },
+          y: { beginAtZero: true, title: { display: true, text: `${pollutantLabel} (µg/m³, calibrated)` } }
+        }
+      }
+    });
+
+    document.getElementById("status").textContent = "";
+  }
+
+  async function load() {
+    try {
+      const res = await fetch(ARCHIVE_CSV_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error(`Archive CSV not found: ${ARCHIVE_CSV_URL} (HTTP ${res.status})`);
+
+      const text = await res.text();
+      const rows = parseCsv(text);
+      if (rows.length < 2) throw new Error("Archive CSV is empty");
+
+      header = rows[0].map(h => h.trim());
+      allRows = rows.slice(1);
+
+      document.getElementById("pollutant").addEventListener("change", render);
+      document.getElementById("window").addEventListener("change", render);
+
+      render();
+    } catch (e) {
+      console.error(e);
+      document.getElementById("status").textContent = "Could not load historical data for time-of-day averages.";
+    }
+  }
+
+  load();
+</script>
+</body>
+</html>
