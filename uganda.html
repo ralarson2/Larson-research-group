@@ -687,7 +687,16 @@
         return;
       }
 
-      const measurements = (data.measurements || data.results || []).slice(0, 15);
+          const measurementsRaw =
+            data?.measurements ??
+            data?.results ??
+            data?.data?.measurements ??
+            data?.data?.results ??
+            data?.data ??
+            [];
+          
+          const measurements = (Array.isArray(measurementsRaw) ? measurementsRaw : []).slice(0, 15);
+
 
       if (!measurements.length) {
         statusEl.textContent = "No recent measurements available.";
