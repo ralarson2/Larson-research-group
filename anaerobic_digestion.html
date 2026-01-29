@@ -382,9 +382,7 @@
   <main class="page">
     <div class="layout">
 
-const res = await fetch("/Larson-research-group/partials/research_sidebar.html", { cache: "no-store" });
-
-
+      <div id="research-sidebar"></div>
 
       <div>
         <section class="hero">
@@ -516,5 +514,25 @@ const res = await fetch("/Larson-research-group/partials/research_sidebar.html",
       <div>Hosted on GitHub Pages</div>
     </div>
   </footer>
+
+  <script>
+    (async function () {
+      const target = document.getElementById("research-sidebar");
+      if (!target) return;
+
+      const res = await fetch("/Larson-research-group/partials/research_sidebar.html", { cache: "no-store" });
+      if (!res.ok) {
+        target.innerHTML = "<aside class='side'><h2>Research topics</h2><p style='color:#4b5c67;margin-top:0.5rem'>Sidebar failed to load.</p></aside>";
+        return;
+      }
+
+      target.innerHTML = await res.text();
+
+      const current = location.pathname.split("/").pop() || "index.html";
+      const link = target.querySelector(`[data-page="${current}"]`);
+      if (link) link.classList.add("active");
+    })();
+  </script>
 </body>
 </html>
+
