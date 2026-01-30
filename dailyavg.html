@@ -26,7 +26,7 @@
 <body>
   <div class="wrap">
     <h1>PM2.5 average concentrations by day of the week</h1>
-    <p>This page uses the archived AirQo dataset on this site and plots calibrated PM2.5 (pm2_5_calibrated_value). Missing values are left blank.</p>
+    <p>This page uses the archived AirQo dataset on this site and plots calibrated PM2.5 (pm2_5_calibrated_value). Missing values are left blank. All day-of-week calculations use Uganda local time (Africa/Kampala).</p>
 
     <div class="card">
       <div>
@@ -57,17 +57,35 @@
   </div>
 
 <script>
-  const CSV_URL = "data/uganda_pm25_archive.csv"; // commit the merged file here
+  const CSV_URL = "data/uganda_pm25_archive.csv";
   const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const UGANDA_TZ = "Africa/Kampala";
+
+  function normalizeIso(dt) {
+    // Make parsing tolerant of "YYYY-MM-DD HH:MM:SSZ" and "YYYY-MM-DD HH:MM:SS"
+    // AirQo API timestamps are documented as UTC; if no timezone marker exists, assume UTC.
+    // If your CSV truly contains already-local times without timezone info, remove the 'Z' append below.
+    let s = String(dt || "").trim();
+    if (!s) return "";
+
+    // Replace space between date/time with 'T' for ISO compatibility
+    if (s.includes(" ") && !s.includes("T")) s = s.replace(" ", "T");
+
+    // If it ends with 'Z' or contains an offset, keep it
+    const hasTz = /Z$/.test(s) || /[+\-]\d{2}:\d{2}$/.test(s) || /[+\-]\d{4}$/.test(s);
+    if (!hasTz) s = s + "Z";
+
+    return s;
+  }
 
   function parseTimeMs(isoLike) {
-    const d = new Date(isoLike);
-    const ms = d.getTime();
+    const s = normalizeIso(isoLike);
+    const ms = Date.parse(s);
     return Number.isFinite(ms) ? ms : null;
   }
 
-  function dayOfWeek(ms) {
-    return new Date(ms).toLocaleDateString("en-US", { weekday: "long" });
+  function dayOfWeekUganda(ms) {
+    return new Date(ms).toLocaleDateString("en-US", { weekday: "long", timeZone: UGANDA_TZ });
   }
 
   function fmtNumber(v) {
@@ -115,18 +133,17 @@
   }
 
   let chart = null;
-  let bySensor = {}; // device_name -> [{ datetime, pm25 }]
-  let sensorLabelByDevice = {}; // device_name -> site_name (fallback device_name)
+  let bySensor = {};              // device_name -> [{ datetime, pm25 }]
+  let sensorLabelByDevice = {};   // device_name -> site_name (fallback device_name)
 
   function buildDropdown(items) {
-    // items: [{ device, label }]
     const sel = document.getElementById("sensor-select");
     sel.innerHTML = "";
 
     items.forEach(it => {
       const opt = document.createElement("option");
-      opt.value = it.device;       // internal key stays device_name
-      opt.textContent = it.label;  // display label is site_name (or fallback)
+      opt.value = it.device;
+      opt.textContent = it.label;
       sel.appendChild(opt);
     });
 
@@ -144,7 +161,8 @@
       const ms = parseTimeMs(r.datetime);
       if (ms === null) return;
       if (!Number.isFinite(r.pm25)) return;
-      const d = dayOfWeek(ms);
+
+      const d = dayOfWeekUganda(ms);
       if (buckets[d]) buckets[d].push(r.pm25);
     });
 
@@ -156,7 +174,7 @@
     });
 
     const label = sensorLabelByDevice[sensorDeviceName] || sensorDeviceName;
-    status.textContent = `Loaded ${rows.length.toLocaleString()} records for ${label}.`;
+    status.textContent = `Loaded ${rows.length.toLocaleString()} records for ${label}. Times grouped in Uganda local time.`;
 
     const ctx = document.getElementById("pm25-daily-chart").getContext("2d");
     if (chart) chart.destroy();
