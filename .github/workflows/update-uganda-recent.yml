@@ -14,13 +14,51 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch recent JSON from AirQo
+      - name: Fetch recent JSON from AirQo (filter zeros)
         env:
           TOKEN: ${{ secrets.AIRQO_TOKEN }}
         run: |
           mkdir -p data
           curl -fsSL "https://api.airqo.net/api/v2/devices/measurements/cohorts/68d4e669670d2e0013c85375/recent?token=${TOKEN}" \
-            -o data/uganda_recent.json
+            -o data/uganda_recent_raw.json
+
+          python3 - <<'PY'
+          import json
+
+          inp = "data/uganda_recent_raw.json"
+          out = "data/uganda_recent.json"
+
+          with open(inp, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+          def pm25_val(item):
+            try:
+              v = item.get("pm2_5", {}).get("value", None)
+              return float(v)
+            except Exception:
+              return None
+
+          def filter_list(items):
+            keep = []
+            for it in items:
+              v = pm25_val(it) if isinstance(it, dict) else None
+              if v is not None and v > 0:
+                keep.append(it)
+            return keep
+
+          if isinstance(data, dict):
+            for key in ("measurements", "results", "data"):
+              if isinstance(data.get(key), list):
+                data[key] = filter_list(data[key])
+                break
+          elif isinstance(data, list):
+            data = filter_list(data)
+
+          with open(out, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False)
+          PY
+
+          rm -f data/uganda_recent_raw.json
 
       - name: Commit if changed
         run: |
