@@ -500,10 +500,10 @@
               <a href="dailyavg.html">View daily averages</a>
               <br><br>
               See average concentrations by time of day (Kampala time):
-             <a href="timeofdayavg.html">View time-of-day averages</a>
+              <a href="timeofdayavg.html">View time-of-day averages</a>
+            </div>
           </div>
-        </div>
-          
+
           <div class="card" style="margin-top:1.2rem; font-size:0.9rem;">
             <div style="font-size:1rem; color: var(--dark); margin-bottom:0.35rem;">Data description and licensing</div>
             <div style="color:var(--muted);">
@@ -544,13 +544,80 @@
   </footer>
 
 <script>
-  // If you're serving recent data from your DigitalOcean droplet (recommended for IP allowlisting),
-  // set COHORT_URL to the droplet URL, e.g.:
-  // const COHORT_URL = "https://YOUR_DROPLET_DOMAIN_OR_IP/uganda_recent.json";
+  const KAMPALA_TZ = "Africa/Kampala";
 
-const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
-
+  const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
   const ARCHIVE_CSV_URL = "data/uganda_pm25_archive.csv";
+
+  function normalizeIso(dt) {
+    let s = String(dt || "").trim();
+    if (!s) return "";
+    if (s.includes(" ") && !s.includes("T")) s = s.replace(" ", "T");
+    const hasTz = /Z$/.test(s) || /[+\-]\d{2}:\d{2}$/.test(s) || /[+\-]\d{4}$/.test(s);
+    if (!hasTz) s = s + "Z";
+    return s;
+  }
+
+  function parseTimeMs(dtRaw) {
+    const s = normalizeIso(dtRaw);
+    const ms = Date.parse(s);
+    return Number.isFinite(ms) ? ms : null;
+  }
+
+  function fmtNumber(v) {
+    const n = Number(v);
+    if (!Number.isFinite(n)) return "";
+    return n.toFixed(1);
+  }
+
+  function fmtDateTimeKampala(dtRaw) {
+    const ms = parseTimeMs(dtRaw);
+    if (ms === null) return dtRaw ? String(dtRaw) : "";
+    return new Date(ms).toLocaleString("en-GB", {
+      timeZone: KAMPALA_TZ,
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false
+    }).replace(",", "");
+  }
+
+  function formatKampalaTick(ms) {
+    return new Date(ms).toLocaleString("en-GB", {
+      timeZone: KAMPALA_TZ,
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false
+    }).replace(",", "");
+  }
+
+  function kampalaBucketKey(ms, resolution) {
+    const parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone: KAMPALA_TZ,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      hour12: false
+    }).formatToParts(new Date(ms));
+
+    const get = (t) => parts.find(p => p.type === t)?.value;
+    const y = get("year");
+    const m = get("month");
+    const d = get("day");
+    const h = get("hour");
+
+    if (!y || !m) return null;
+
+    if (resolution === "monthly") return `${y}-${m}`;
+    if (resolution === "daily") return `${y}-${m}-${d}`;
+    return `${y}-${m}-${d}-${h}`;
+  }
 
   function normalizeDeviceId(raw) {
     if (!raw) return "";
@@ -583,46 +650,6 @@ const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
   function siteLabel(id) {
     const s = sites[id];
     return s ? s.name : id;
-  }
-
-  function fmtNumber(v) {
-    const n = Number(v);
-    if (!Number.isFinite(n)) return "";
-    return n.toFixed(1);
-  }
-
-  function fmtDateTimeKampala(isoLike) {
-    if (!isoLike) return "";
-    const d = new Date(isoLike);
-    if (isNaN(d.getTime())) return String(isoLike);
-    return d.toLocaleString("en-GB", {
-      timeZone: "Africa/Kampala",
-      year: "numeric",
-      month: "short",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false
-    }).replace(",", "");
-  }
-
-  function parseTimeMs(isoLike) {
-    const d = new Date(isoLike);
-    const ms = d.getTime();
-    return Number.isFinite(ms) ? ms : null;
-  }
-
-  function formatKampalaTick(ms) {
-    const d = new Date(ms);
-    return d.toLocaleString("en-GB", {
-      timeZone: "Africa/Kampala",
-      month: "short",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false
-    }).replace(",", "");
   }
 
   function whoClass(pm25) {
@@ -685,16 +712,15 @@ const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
         return;
       }
 
-          const measurementsRaw =
-            data?.measurements ??
-            data?.results ??
-            data?.data?.measurements ??
-            data?.data?.results ??
-            data?.data ??
-            [];
-          
-          const measurements = (Array.isArray(measurementsRaw) ? measurementsRaw : []).slice(0, 15);
+      const measurementsRaw =
+        data?.measurements ??
+        data?.results ??
+        data?.data?.measurements ??
+        data?.data?.results ??
+        data?.data ??
+        [];
 
+      const measurements = (Array.isArray(measurementsRaw) ? measurementsRaw : []).slice(0, 15);
 
       if (!measurements.length) {
         statusEl.textContent = "No recent measurements available.";
@@ -714,7 +740,8 @@ const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
 
         const pm25 = Number(item?.pm2_5?.value);
         const pm10 = Number(item?.pm10?.value);
-        const when = fmtDateTimeKampala(item.time || item.created_at || item.createdAt || item.timestamp);
+        const timeRaw = item.time || item.created_at || item.createdAt || item.timestamp || "";
+        const when = fmtDateTimeKampala(timeRaw);
 
         const cls = whoClass(pm25);
 
@@ -844,6 +871,7 @@ const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
 
   function buildDatasets() {
     const datasets = [];
+    const download = [];
 
     Object.keys(sites).forEach(id => {
       if (!selected.has(id)) return;
@@ -858,28 +886,34 @@ const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
         const value = selectedPollutant === "pm10" ? Number(p.pm10) : Number(p.pm25);
         if (!Number.isFinite(value) || value <= 0) return;
 
-        const d = new Date(ms);
-        let key;
-
-        if (selectedResolution === "monthly") {
-          key = `${d.getUTCFullYear()}-${d.getUTCMonth()}`;
-        } else if (selectedResolution === "daily") {
-          key = `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}`;
-        } else {
-          key = `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}-${d.getUTCHours()}`;
-        }
+        const key = kampalaBucketKey(ms, selectedResolution);
+        if (!key) return;
 
         if (!buckets.has(key)) buckets.set(key, { sum: 0, count: 0, time: ms });
 
         const b = buckets.get(key);
         b.sum += value;
         b.count += 1;
+
+        if (ms < b.time) b.time = ms;
       });
 
       const points = Array.from(buckets.values())
         .filter(b => b.count > 0)
         .map(b => ({ x: b.time, y: b.sum / b.count }))
         .sort((a, b) => a.x - b.x);
+
+      points.forEach(pt => {
+        download.push({
+          datetime_local_kampala: fmtDateTimeKampala(pt.x),
+          datetime_ms: pt.x,
+          device_name: id,
+          site_name: siteLabel(id),
+          pollutant: selectedPollutant,
+          resolution: selectedResolution,
+          value: pt.y
+        });
+      });
 
       datasets.push({
         label: siteLabel(id),
@@ -892,6 +926,7 @@ const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
       });
     });
 
+    lastDownloadRows = download;
     return datasets;
   }
 
@@ -944,6 +979,8 @@ const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
         }
       }
     });
+
+    updateDownloadButton();
   }
 
   function updateDownloadButton() {
@@ -953,8 +990,7 @@ const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
 
   function makeCsv() {
     const headerCols = [
-      "datetime","device_name","frequency","humidity","latitude","longitude","network",
-      "pm10","pm10_calibrated_value","pm2_5","pm2_5_calibrated_value","site_name","temperature"
+      "datetime_local_kampala","datetime_ms","device_name","site_name","pollutant","resolution","value"
     ];
 
     const esc = (v) => {
@@ -967,7 +1003,7 @@ const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
     const lines = [headerCols.join(",")];
 
     lastDownloadRows
-      .filter(r => selected.has(r._device_id))
+      .filter(r => selected.has(r.device_name))
       .forEach(r => {
         const row = headerCols.map(c => esc(r[c]));
         lines.push(row.join(","));
@@ -987,7 +1023,7 @@ const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
 
       const a = document.createElement("a");
       a.href = url;
-      a.download = "airqo_historical_plotted_data.csv";
+      a.download = "airqo_historical_plotted_data_kampala_time.csv";
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -1024,7 +1060,6 @@ const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
       }
 
       const series = {};
-      const downloadRows = [];
       const allTimes = [];
 
       for (let r = 1; r < rows.length; r++) {
@@ -1038,11 +1073,6 @@ const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
 
         const pm25Cal = Number(cols[idxPm25Cal]);
         const pm10Cal = (idxPm10Cal >= 0) ? Number(cols[idxPm10Cal]) : NaN;
-
-        const obj = {};
-        header.forEach((h, i) => { obj[h] = (cols[i] ?? ""); });
-        obj._device_id = id;
-        downloadRows.push(obj);
 
         const valid25 = Number.isFinite(pm25Cal) && pm25Cal > 0;
         const valid10 = Number.isFinite(pm10Cal) && pm10Cal > 0;
@@ -1065,7 +1095,6 @@ const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
       });
 
       histSeries = series;
-      lastDownloadRows = downloadRows;
 
       statusEl.textContent = "";
       buildControls();
@@ -1084,13 +1113,11 @@ const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
       });
 
       renderChart();
-      updateDownloadButton();
 
       if (allTimes.length && metaEl) {
-        const min = new Date(Math.min(...allTimes));
-        const max = new Date(Math.max(...allTimes));
-        metaEl.textContent =
-          `Time range: ${fmtDateTimeKampala(min.toISOString())} to ${fmtDateTimeKampala(max.toISOString())} (EAT)`;
+        const minMs = Math.min(...allTimes);
+        const maxMs = Math.max(...allTimes);
+        metaEl.textContent = `Time range: ${fmtDateTimeKampala(minMs)} to ${fmtDateTimeKampala(maxMs)} (EAT)`;
       }
     } catch (e) {
       console.error(e);
@@ -1131,6 +1158,7 @@ const COHORT_URL = "/Larson-research-group/data/uganda_recent.json";
 
 </body>
 </html>
+
 
 
 
