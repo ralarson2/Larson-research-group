@@ -14,10 +14,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch latest JSON from droplet
+      - name: Fetch recent JSON from AirQo
+        env:
+          TOKEN: ${{ secrets.AIRQO_TOKEN }}
         run: |
           mkdir -p data
-          curl -fsSL "http://159.203.110.200/data/uganda_recent.json" -o data/uganda_recent.json
+          curl -fsSL "https://api.airqo.net/api/v2/devices/measurements/cohorts/68d4e669670d2e0013c85375/recent?token=${TOKEN}" \
+            -o data/uganda_recent.json
 
       - name: Commit if changed
         run: |
