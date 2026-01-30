@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -267,6 +266,7 @@
 
   <script>
     const ARCHIVE_CSV_URL = "data/uganda_pm25_archive.csv";
+    const KAMPALA_TZ = "Africa/Kampala";
 
     const sites = {
       "airqo_g5564": { name: "Busabala, Makindye", district: "Kampala", lat: 0.2182, lon: 32.6176 },
@@ -338,12 +338,31 @@
       return rows;
     }
 
-    function kampalaParts(isoLike) {
-      const d = new Date(isoLike);
-      if (isNaN(d.getTime())) return null;
+    function normalizeIso(dt) {
+      let s = String(dt || "").trim();
+      if (!s) return "";
+
+      if (s.includes(" ") && !s.includes("T")) s = s.replace(" ", "T");
+
+      const hasTz = /Z$/.test(s) || /[+\-]\d{2}:\d{2}$/.test(s) || /[+\-]\d{4}$/.test(s);
+      if (!hasTz) s = s + "Z";
+
+      return s;
+    }
+
+    function parseTimeMs(dt) {
+      const s = normalizeIso(dt);
+      const ms = Date.parse(s);
+      return Number.isFinite(ms) ? ms : null;
+    }
+
+    function kampalaParts(dtRaw) {
+      const ms = parseTimeMs(dtRaw);
+      if (ms === null) return null;
+      const d = new Date(ms);
 
       const parts = new Intl.DateTimeFormat("en-GB", {
-        timeZone: "Africa/Kampala",
+        timeZone: KAMPALA_TZ,
         weekday: "short",
         hour: "2-digit",
         hour12: false
@@ -410,13 +429,13 @@
 
       for (let r = 1; r < allRows.length; r++) {
         const cols = allRows[r];
-        const dt = cols[idxDatetime] ?? "";
+        const dtRaw = cols[idxDatetime] ?? "";
         const deviceName = cols[idxDeviceName] ?? "";
         const device = normalizeDeviceId(deviceName);
-        if (!dt || !device) continue;
+        if (!dtRaw || !device) continue;
         if (!selected.has(device)) continue;
 
-        const kp = kampalaParts(dt);
+        const kp = kampalaParts(dtRaw);
         if (!kp) continue;
 
         if (dowFilter !== "all") {
@@ -433,8 +452,8 @@
 
         addPoint(device, kp.hour, val);
 
-        const t = new Date(dt).getTime();
-        if (Number.isFinite(t)) {
+        const t = parseTimeMs(dtRaw);
+        if (t !== null) {
           if (minT === null || t < minT) minT = t;
           if (maxT === null || t > maxT) maxT = t;
         }
@@ -509,7 +528,7 @@
       });
 
       const fmt = (ms) => new Date(ms).toLocaleString("en-GB", {
-        timeZone: "Africa/Kampala",
+        timeZone: KAMPALA_TZ,
         year: "numeric",
         month: "short",
         day: "2-digit",
