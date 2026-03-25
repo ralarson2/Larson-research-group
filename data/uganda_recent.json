@@ -1,7 +1,7 @@
 {
   "success": true,
-  "isCache": true,
-  "message": "Successfully retrieved the measurements",
+  "isCache": false,
+  "message": "successfully returned the measurements",
   "meta": {
     "total": 13,
     "page": 1,
@@ -10,8 +10,8 @@
     "skip": 0,
     "hasNextPage": false,
     "hasPrevPage": false,
-    "startTime": "2026-03-22T10:05:00.564Z",
-    "endTime": "2026-03-25T10:05:00.564Z",
+    "startTime": "2026-03-22T11:06:59.873Z",
+    "endTime": "2026-03-25T11:06:59.873Z",
     "optimized": false
   },
   "measurements": [
@@ -27,23 +27,27 @@
         "value": 4.090906803933368
       },
       "frequency": "hourly",
-      "no2": {},
+      "no2": {
+        "value": null
+      },
       "deviceDetails": {
         "_id": "61b73214a1c2cb001ebd5658",
         "name": "aq_g5_48",
         "latitude": 0.3004549375030546,
         "longitude": 32.60469721631874,
         "isOnline": false,
-        "lastRawData": "2026-03-25T09:34:08.000Z",
+        "lastRawData": "2026-03-25T09:53:49.000Z",
         "rawOnlineStatus": true,
         "latest_pm2_5": {
           "raw": {
-            "value": 38.07,
-            "time": "2026-03-25T09:34:08.000Z"
+            "value": 25.88,
+            "time": "2026-03-25T09:53:49.000Z"
           },
           "calibrated": {
             "value": 8.108599999999992,
-            "time": "2026-03-24T11:00:00.000Z"
+            "time": "2026-03-24T11:00:00.000Z",
+            "uncertainty": null,
+            "standardDeviation": null
           }
         }
       },
@@ -61,15 +65,16 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
+        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "a",
-          "o",
-          "a"
+          "airqo",
+          "lowcost",
+          "static"
         ],
         "category_hierarchy": [
           {
@@ -84,10 +89,11 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
+          "mobile_is_subcategory_of": null
         }
       },
-      "timeDifferenceHours": 23.08349,
+      "timeDifferenceHours": 24.116631388888887,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -110,7 +116,8 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491
+          "min": 225.491,
+          "max": null
         }
       },
       "aqi_color": "34C759",
@@ -129,23 +136,27 @@
         "value": 2.216093854047688
       },
       "frequency": "hourly",
-      "no2": {},
+      "no2": {
+        "value": null
+      },
       "deviceDetails": {
         "_id": "60a81edac01cec5f7fa4d1be",
         "name": "aq_g520",
         "latitude": 0.30991,
         "longitude": 32.60045,
         "isOnline": false,
-        "lastRawData": "2026-03-24T18:00:26.000Z",
+        "lastRawData": "2026-03-24T21:55:55.000Z",
         "rawOnlineStatus": false,
         "latest_pm2_5": {
           "raw": {
-            "value": 55.75,
-            "time": "2026-03-24T18:00:26.000Z"
+            "value": 50.08,
+            "time": "2026-03-24T21:55:55.000Z"
           },
           "calibrated": {
             "value": 12.606600000000045,
-            "time": "2026-03-24T10:00:00.000Z"
+            "time": "2026-03-24T10:00:00.000Z",
+            "uncertainty": null,
+            "standardDeviation": null
           }
         }
       },
@@ -189,15 +200,16 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
+        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "a",
-          "o",
-          "a"
+          "airqo",
+          "lowcost",
+          "static"
         ],
         "category_hierarchy": [
           {
@@ -212,10 +224,11 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
+          "mobile_is_subcategory_of": null
         }
       },
-      "timeDifferenceHours": 24.08349,
+      "timeDifferenceHours": 25.116631388888887,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -238,7 +251,8 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491
+          "min": 225.491,
+          "max": null
         }
       },
       "aqi_color": "ECAA06",
@@ -257,23 +271,27 @@
         "value": 34.17990127639713
       },
       "frequency": "hourly",
-      "no2": {},
+      "no2": {
+        "value": null
+      },
       "deviceDetails": {
         "_id": "61960c7139ae8a002ae72d7c",
         "name": "aq_g5_43",
         "latitude": 0.2969255477613093,
         "longitude": 32.57664109478158,
         "isOnline": false,
-        "lastRawData": "2026-03-24T17:37:19.000Z",
+        "lastRawData": "2026-03-24T20:06:01.000Z",
         "rawOnlineStatus": false,
         "latest_pm2_5": {
           "raw": {
-            "value": 60.12,
-            "time": "2026-03-24T17:37:19.000Z"
+            "value": 68.8,
+            "time": "2026-03-24T20:06:01.000Z"
           },
           "calibrated": {
             "value": 17.55199999999997,
-            "time": "2026-03-24T10:00:00.000Z"
+            "time": "2026-03-24T10:00:00.000Z",
+            "uncertainty": null,
+            "standardDeviation": null
           }
         }
       },
@@ -317,15 +335,16 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
+        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "a",
-          "o",
-          "a"
+          "airqo",
+          "lowcost",
+          "static"
         ],
         "category_hierarchy": [
           {
@@ -340,10 +359,11 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
+          "mobile_is_subcategory_of": null
         }
       },
-      "timeDifferenceHours": 24.08349,
+      "timeDifferenceHours": 25.116631388888887,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -366,7 +386,8 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491
+          "min": 225.491,
+          "max": null
         }
       },
       "aqi_color": "ECAA06",
@@ -385,7 +406,9 @@
         "value": 6.791486389660751
       },
       "frequency": "hourly",
-      "no2": {},
+      "no2": {
+        "value": null
+      },
       "deviceDetails": {
         "_id": "61b73277a1c2cb001ebd56c4",
         "name": "aq_g5_53",
@@ -401,7 +424,9 @@
           },
           "calibrated": {
             "value": 7.453000000000003,
-            "time": "2026-03-24T10:00:00.000Z"
+            "time": "2026-03-24T10:00:00.000Z",
+            "uncertainty": null,
+            "standardDeviation": null
           }
         }
       },
@@ -419,15 +444,16 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
+        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "a",
-          "o",
-          "a"
+          "airqo",
+          "lowcost",
+          "static"
         ],
         "category_hierarchy": [
           {
@@ -442,10 +468,11 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
+          "mobile_is_subcategory_of": null
         }
       },
-      "timeDifferenceHours": 24.08349,
+      "timeDifferenceHours": 25.116631388888887,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -468,7 +495,8 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491
+          "min": 225.491,
+          "max": null
         }
       },
       "aqi_color": "34C759",
@@ -487,23 +515,27 @@
         "value": 26.56857142857143
       },
       "frequency": "hourly",
-      "no2": {},
+      "no2": {
+        "value": null
+      },
       "deviceDetails": {
         "_id": "6332a879d8a1ef001e01384e",
         "name": "aq_g5_97",
         "isOnline": false,
         "latitude": 0.32292449765953846,
         "longitude": 32.628504975120066,
-        "lastRawData": "2026-03-24T18:24:11.000Z",
+        "lastRawData": "2026-03-24T22:19:26.000Z",
         "rawOnlineStatus": false,
         "latest_pm2_5": {
           "raw": {
-            "value": 41.12,
-            "time": "2026-03-24T18:24:11.000Z"
+            "value": 55.5,
+            "time": "2026-03-24T22:19:26.000Z"
           },
           "calibrated": {
             "value": 24.805714285714284,
-            "time": "2026-03-24T10:00:00.000Z"
+            "time": "2026-03-24T10:00:00.000Z",
+            "uncertainty": null,
+            "standardDeviation": null
           }
         }
       },
@@ -547,15 +579,16 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
+        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "a",
-          "o",
-          "a"
+          "airqo",
+          "lowcost",
+          "static"
         ],
         "category_hierarchy": [
           {
@@ -570,10 +603,11 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
+          "mobile_is_subcategory_of": null
         }
       },
-      "timeDifferenceHours": 24.08349,
+      "timeDifferenceHours": 25.116631388888887,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -596,7 +630,8 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491
+          "min": 225.491,
+          "max": null
         }
       },
       "aqi_color": "ECAA06",
@@ -615,25 +650,32 @@
         "value": 3.667535297198471
       },
       "frequency": "hourly",
-      "no2": {},
+      "no2": {
+        "value": null
+      },
       "deviceDetails": {
         "_id": "686387370aef8b001385ceba",
         "isOnline": false,
+        "owner_id": null,
         "claim_status": "unclaimed",
+        "assigned_organization_id": null,
         "name": "airqo_g5564",
         "deployment_type": "static",
+        "grid_id": null,
         "latitude": 0.22185039139708557,
         "longitude": 32.62021710459539,
-        "lastRawData": "2026-03-24T18:42:10.000Z",
+        "lastRawData": "2026-03-24T22:41:23.000Z",
         "rawOnlineStatus": false,
         "latest_pm2_5": {
           "raw": {
-            "value": 32.65,
-            "time": "2026-03-24T18:42:10.000Z"
+            "value": 26.73,
+            "time": "2026-03-24T22:41:23.000Z"
           },
           "calibrated": {
             "value": 7.77399999999999,
-            "time": "2026-03-24T10:00:00.000Z"
+            "time": "2026-03-24T10:00:00.000Z",
+            "uncertainty": null,
+            "standardDeviation": null
           }
         }
       },
@@ -651,15 +693,16 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
+        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "a",
-          "o",
-          "a"
+          "airqo",
+          "lowcost",
+          "static"
         ],
         "category_hierarchy": [
           {
@@ -674,10 +717,11 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
+          "mobile_is_subcategory_of": null
         }
       },
-      "timeDifferenceHours": 24.08349,
+      "timeDifferenceHours": 25.116631388888887,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -700,7 +744,8 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491
+          "min": 225.491,
+          "max": null
         }
       },
       "aqi_color": "34C759",
@@ -719,25 +764,32 @@
         "value": 28.66942350582833
       },
       "frequency": "hourly",
-      "no2": {},
+      "no2": {
+        "value": null
+      },
       "deviceDetails": {
         "_id": "68638317fe855700134d6f1d",
         "isOnline": false,
+        "owner_id": null,
         "claim_status": "unclaimed",
+        "assigned_organization_id": null,
         "name": "airqo_g5548",
-        "lastRawData": "2026-03-24T18:12:28.000Z",
+        "lastRawData": "2026-03-24T22:42:45.000Z",
         "rawOnlineStatus": false,
         "deployment_type": "static",
+        "grid_id": null,
         "latitude": 0.3232013699891734,
         "longitude": 32.63197194130845,
         "latest_pm2_5": {
           "raw": {
-            "value": 32.08,
-            "time": "2026-03-24T18:12:28.000Z"
+            "value": 40.95,
+            "time": "2026-03-24T22:42:45.000Z"
           },
           "calibrated": {
             "value": 17.793999999999993,
-            "time": "2026-03-24T03:00:00.000Z"
+            "time": "2026-03-24T03:00:00.000Z",
+            "uncertainty": null,
+            "standardDeviation": null
           }
         }
       },
@@ -781,15 +833,16 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
+        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "a",
-          "o",
-          "a"
+          "airqo",
+          "lowcost",
+          "static"
         ],
         "category_hierarchy": [
           {
@@ -804,10 +857,11 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
+          "mobile_is_subcategory_of": null
         }
       },
-      "timeDifferenceHours": 31.08349,
+      "timeDifferenceHours": 32.11663138888889,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -830,7 +884,8 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491
+          "min": 225.491,
+          "max": null
         }
       },
       "aqi_color": "ECAA06",
@@ -849,7 +904,9 @@
         "value": 6.429147215648688
       },
       "frequency": "hourly",
-      "no2": {},
+      "no2": {
+        "value": null
+      },
       "deviceDetails": {
         "_id": "67d1445c13e5ea001494f37b",
         "isOnline": false,
@@ -857,6 +914,7 @@
         "lastRawData": "2026-03-24T06:49:47.000Z",
         "rawOnlineStatus": false,
         "deployment_type": "static",
+        "grid_id": null,
         "latitude": 0.3156788593479292,
         "longitude": 32.635063348773784,
         "latest_pm2_5": {
@@ -866,7 +924,9 @@
           },
           "calibrated": {
             "value": 12.99290000000003,
-            "time": "2026-03-24T06:00:00.000Z"
+            "time": "2026-03-24T06:00:00.000Z",
+            "uncertainty": null,
+            "standardDeviation": null
           }
         }
       },
@@ -910,15 +970,16 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
+        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "a",
-          "o",
-          "a"
+          "airqo",
+          "lowcost",
+          "static"
         ],
         "category_hierarchy": [
           {
@@ -933,10 +994,11 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
+          "mobile_is_subcategory_of": null
         }
       },
-      "timeDifferenceHours": 28.08349,
+      "timeDifferenceHours": 29.116631388888887,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -959,7 +1021,8 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491
+          "min": 225.491,
+          "max": null
         }
       },
       "aqi_color": "ECAA06",
@@ -978,25 +1041,32 @@
         "value": 93.4109786308093
       },
       "frequency": "hourly",
-      "no2": {},
+      "no2": {
+        "value": null
+      },
       "deviceDetails": {
         "_id": "6863872c339f1b0013a7edbc",
         "isOnline": false,
+        "owner_id": null,
         "claim_status": "unclaimed",
+        "assigned_organization_id": null,
         "name": "airqo_g5563",
-        "lastRawData": "2026-03-24T18:27:35.000Z",
+        "lastRawData": "2026-03-24T22:35:54.000Z",
         "rawOnlineStatus": false,
         "deployment_type": "static",
+        "grid_id": null,
         "latitude": 0.3118744185161481,
         "longitude": 32.56235063213467,
         "latest_pm2_5": {
           "raw": {
-            "value": 49.98,
-            "time": "2026-03-24T18:27:35.000Z"
+            "value": 35.78,
+            "time": "2026-03-24T22:35:54.000Z"
           },
           "calibrated": {
             "value": 59.34480000000018,
-            "time": "2026-03-24T04:00:00.000Z"
+            "time": "2026-03-24T04:00:00.000Z",
+            "uncertainty": null,
+            "standardDeviation": null
           }
         }
       },
@@ -1014,15 +1084,16 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
+        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "a",
-          "o",
-          "a"
+          "airqo",
+          "lowcost",
+          "static"
         ],
         "category_hierarchy": [
           {
@@ -1037,10 +1108,11 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
+          "mobile_is_subcategory_of": null
         }
       },
-      "timeDifferenceHours": 30.08349,
+      "timeDifferenceHours": 31.116631388888887,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -1063,7 +1135,8 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491
+          "min": 225.491,
+          "max": null
         }
       },
       "aqi_color": "F7453C",
@@ -1082,25 +1155,32 @@
         "value": 8.063803351426044
       },
       "frequency": "hourly",
-      "no2": {},
+      "no2": {
+        "value": null
+      },
       "deviceDetails": {
         "_id": "68638eae0aef8b001385d467",
         "isOnline": false,
+        "owner_id": null,
         "claim_status": "unclaimed",
+        "assigned_organization_id": null,
         "name": "airqo_g5567",
-        "lastRawData": "2026-03-24T18:06:23.000Z",
+        "lastRawData": "2026-03-24T21:33:22.000Z",
         "rawOnlineStatus": false,
         "deployment_type": "static",
+        "grid_id": null,
         "latitude": 0.3468257915673872,
         "longitude": 32.58904740585272,
         "latest_pm2_5": {
           "raw": {
-            "value": 33.87,
-            "time": "2026-03-24T18:06:23.000Z"
+            "value": 39.82,
+            "time": "2026-03-24T21:33:22.000Z"
           },
           "calibrated": {
             "value": 9.31180000000001,
-            "time": "2026-03-24T11:00:00.000Z"
+            "time": "2026-03-24T11:00:00.000Z",
+            "uncertainty": null,
+            "standardDeviation": null
           }
         }
       },
@@ -1118,15 +1198,16 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
+        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "a",
-          "o",
-          "a"
+          "airqo",
+          "lowcost",
+          "static"
         ],
         "category_hierarchy": [
           {
@@ -1141,10 +1222,11 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
+          "mobile_is_subcategory_of": null
         }
       },
-      "timeDifferenceHours": 23.08349,
+      "timeDifferenceHours": 24.116631388888887,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -1167,7 +1249,8 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491
+          "min": 225.491,
+          "max": null
         }
       },
       "aqi_color": "ECAA06",
@@ -1186,24 +1269,29 @@
         "value": 6.93648055798452
       },
       "frequency": "hourly",
-      "no2": {},
+      "no2": {
+        "value": null
+      },
       "deviceDetails": {
         "_id": "67d1436d0008850013050fd4",
         "isOnline": false,
         "name": "airqo_g5438",
         "deployment_type": "static",
+        "grid_id": null,
         "latitude": 0.25811888345721734,
         "longitude": 32.60911233898054,
-        "lastRawData": "2026-03-24T18:21:24.000Z",
+        "lastRawData": "2026-03-24T20:28:36.000Z",
         "rawOnlineStatus": false,
         "latest_pm2_5": {
           "raw": {
-            "value": 56.1,
-            "time": "2026-03-24T18:21:24.000Z"
+            "value": 58.05,
+            "time": "2026-03-24T20:28:36.000Z"
           },
           "calibrated": {
             "value": 8.590900000000023,
-            "time": "2026-03-24T10:00:00.000Z"
+            "time": "2026-03-24T10:00:00.000Z",
+            "uncertainty": null,
+            "standardDeviation": null
           }
         }
       },
@@ -1221,15 +1309,16 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
+        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "a",
-          "o",
-          "a"
+          "airqo",
+          "lowcost",
+          "static"
         ],
         "category_hierarchy": [
           {
@@ -1244,10 +1333,11 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
+          "mobile_is_subcategory_of": null
         }
       },
-      "timeDifferenceHours": 24.08349,
+      "timeDifferenceHours": 25.116631388888887,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -1270,7 +1360,8 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491
+          "min": 225.491,
+          "max": null
         }
       },
       "aqi_color": "34C759",
@@ -1289,23 +1380,27 @@
         "value": 4.276284581043162
       },
       "frequency": "hourly",
-      "no2": {},
+      "no2": {
+        "value": null
+      },
       "deviceDetails": {
         "_id": "61960cf5d9e5ce0029d2613e",
         "name": "aq_g5_46",
         "latitude": 0.25776,
         "longitude": 32.63686,
         "isOnline": false,
-        "lastRawData": "2026-03-24T17:48:52.000Z",
+        "lastRawData": "2026-03-24T22:09:45.000Z",
         "rawOnlineStatus": false,
         "latest_pm2_5": {
           "raw": {
-            "value": 87.7,
-            "time": "2026-03-24T17:48:52.000Z"
+            "value": 49.63,
+            "time": "2026-03-24T22:09:45.000Z"
           },
           "calibrated": {
             "value": 8.791100000000021,
-            "time": "2026-03-24T10:00:00.000Z"
+            "time": "2026-03-24T10:00:00.000Z",
+            "uncertainty": null,
+            "standardDeviation": null
           }
         }
       },
@@ -1323,15 +1418,16 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
+        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "a",
-          "o",
-          "a"
+          "airqo",
+          "lowcost",
+          "static"
         ],
         "category_hierarchy": [
           {
@@ -1346,10 +1442,11 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
+          "mobile_is_subcategory_of": null
         }
       },
-      "timeDifferenceHours": 24.08349,
+      "timeDifferenceHours": 25.116631388888887,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -1372,7 +1469,8 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491
+          "min": 225.491,
+          "max": null
         }
       },
       "aqi_color": "34C759",
@@ -1391,23 +1489,27 @@
         "value": 6.556436914272851
       },
       "frequency": "hourly",
-      "no2": {},
+      "no2": {
+        "value": null
+      },
       "deviceDetails": {
         "_id": "5f2036bc70223655545a8b80",
         "latitude": 0.2689,
         "longitude": 32.588,
         "name": "aq_72",
         "isOnline": false,
-        "lastRawData": "2026-03-24T18:05:27.000Z",
+        "lastRawData": "2026-03-24T22:17:19.000Z",
         "rawOnlineStatus": false,
         "latest_pm2_5": {
           "raw": {
-            "value": 66.57,
-            "time": "2026-03-24T18:05:27.000Z"
+            "value": 42.55,
+            "time": "2026-03-24T22:17:19.000Z"
           },
           "calibrated": {
             "value": 8.761599999999989,
-            "time": "2026-03-24T11:00:00.000Z"
+            "time": "2026-03-24T11:00:00.000Z",
+            "uncertainty": null,
+            "standardDeviation": null
           }
         }
       },
@@ -1432,10 +1534,10 @@
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "a",
-          "o",
-          "b",
-          "t"
+          "airqo",
+          "lowcost",
+          "mobile",
+          "static"
         ],
         "category_hierarchy": [
           {
@@ -1454,7 +1556,7 @@
           "mobile_is_subcategory_of": "lowcost"
         }
       },
-      "timeDifferenceHours": 23.08349,
+      "timeDifferenceHours": 24.116631388888887,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -1477,7 +1579,8 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491
+          "min": 225.491,
+          "max": null
         }
       },
       "aqi_color": "34C759",
