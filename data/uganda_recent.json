@@ -1,1 +1,18 @@
-{"success": true, "isCache": false, "message": "no measurements for this search", "meta": {"total": 0, "page": 1, "pages": 1, "limit": 30, "skip": 0, "hasNextPage": false, "hasPrevPage": false, "startTime": "2026-05-07T22:03:44.561Z", "endTime": "2026-05-10T22:03:44.561Z", "optimized": false}, "measurements": []}
+{
+  "success": true,
+  "isCache": true,
+  "message": "no measurements for this search",
+  "meta": {
+    "total": 0,
+    "page": 1,
+    "pages": 1,
+    "limit": 30,
+    "skip": 0,
+    "hasNextPage": false,
+    "hasPrevPage": false,
+    "startTime": "2026-05-07T21:40:01.443Z",
+    "endTime": "2026-05-10T21:40:01.443Z",
+    "optimized": false
+  },
+  "measurements": []
+}
