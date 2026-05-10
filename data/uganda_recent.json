@@ -1,6 +1,6 @@
 {
   "success": true,
-  "isCache": false,
+  "isCache": true,
   "message": "no measurements for this search",
   "meta": {
     "total": 0,
@@ -10,8 +10,8 @@
     "skip": 0,
     "hasNextPage": false,
     "hasPrevPage": false,
-    "startTime": "2026-05-07T17:12:57.262Z",
-    "endTime": "2026-05-10T17:12:57.262Z",
+    "startTime": "2026-05-07T17:55:00.356Z",
+    "endTime": "2026-05-10T17:55:00.356Z",
     "optimized": false
   },
   "measurements": []
