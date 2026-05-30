@@ -1,7 +1,7 @@
 {
   "success": true,
-  "isCache": false,
-  "message": "successfully returned the measurements",
+  "isCache": true,
+  "message": "Successfully retrieved the measurements",
   "meta": {
     "total": 11,
     "page": 1,
@@ -10,678 +10,11 @@
     "skip": 0,
     "hasNextPage": false,
     "hasPrevPage": false,
-    "startTime": "2026-05-23T21:13:54.576Z",
-    "endTime": "2026-05-30T21:13:54.576Z",
+    "startTime": "2026-05-23T21:45:00.394Z",
+    "endTime": "2026-05-30T21:45:00.394Z",
     "optimized": false
   },
   "measurements": [
-    {
-      "device": "airqo_g5548",
-      "device_id": "68638317fe855700134d6f1d",
-      "site_id": "68d657764d739f001352c12c",
-      "time": "2026-05-30T18:00:00.000Z",
-      "pm2_5": {
-        "value": 14.196100000000047
-      },
-      "pm10": {
-        "value": 17.69287624481683
-      },
-      "frequency": "hourly",
-      "no2": {
-        "value": null
-      },
-      "deviceDetails": {
-        "_id": "68638317fe855700134d6f1d",
-        "isOnline": true,
-        "owner_id": null,
-        "claim_status": "unclaimed",
-        "assigned_organization_id": null,
-        "name": "airqo_g5548",
-        "lastRawData": "2028-04-30T03:04:28.000Z",
-        "rawOnlineStatus": true,
-        "deployment_type": "static",
-        "grid_id": null,
-        "latitude": 0.3232013699891734,
-        "longitude": 32.63197194130845,
-        "latest_pm2_5": {
-          "raw": {
-            "value": 40.22,
-            "time": "2028-04-30T03:04:28.000Z"
-          },
-          "calibrated": {
-            "value": 14.196100000000047,
-            "time": "2026-05-30T18:00:00.000Z",
-            "uncertainty": null,
-            "standardDeviation": null
-          }
-        }
-      },
-      "is_reading_primary": false,
-      "health_tips": [
-        {
-          "_id": "64283ce9e82a77001e55c0b5",
-          "title": "Moderate Air Quality - Elderly People",
-          "description": "Take it easy and limit the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "64283d37b2e9e5001e69c872",
-          "title": "For pregnant women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "64283d749c7eaf001ea5e99d",
-          "title": "For elderly people",
-          "description": "Reduce the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "6833213e306187693c1a3cc8",
-          "title": "Moderate Air Quality - Everyone",
-          "description": "Pace yourself during outdoor work and avoid overexertion.",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "6833213e306187693c1a3cc9",
-          "title": "Moderate Air Quality - Pregnant Women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "tag_line": "The air quality today is moderate."
-        }
-      ],
-      "device_categories": {
-        "primary_category": "lowcost",
-        "deployment_category": "static",
-        "ownership_category": "airqo",
-        "mobile_category": null,
-        "is_mobile": false,
-        "is_static": true,
-        "is_lowcost": true,
-        "is_bam": false,
-        "is_gas": false,
-        "all_categories": [
-          "airqo",
-          "lowcost",
-          "static"
-        ],
-        "category_hierarchy": [
-          {
-            "level": "equipment",
-            "category": "lowcost",
-            "description": "Low-cost sensor device"
-          },
-          {
-            "level": "deployment",
-            "category": "static",
-            "description": "Static deployment (fixed location, site-based)"
-          }
-        ],
-        "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
-          "mobile_is_subcategory_of": null
-        }
-      },
-      "timeDifferenceHours": 3.2318269444444443,
-      "aqi_ranges": {
-        "good": {
-          "min": 0,
-          "max": 9.1
-        },
-        "moderate": {
-          "min": 9.101,
-          "max": 35.49
-        },
-        "u4sg": {
-          "min": 35.491,
-          "max": 55.49
-        },
-        "unhealthy": {
-          "min": 55.491,
-          "max": 125.49
-        },
-        "very_unhealthy": {
-          "min": 125.491,
-          "max": 225.49
-        },
-        "hazardous": {
-          "min": 225.491,
-          "max": null
-        }
-      },
-      "aqi_color": "ECAA06",
-      "aqi_category": "Moderate",
-      "aqi_color_name": "Yellow",
-      "aqi_index": 60
-    },
-    {
-      "device": "aq_g5_48",
-      "device_id": "61b73214a1c2cb001ebd5658",
-      "site_id": "62b310512e0eca001e0aab11",
-      "time": "2026-05-30T08:00:00.000Z",
-      "pm2_5": {
-        "value": 22.651666666666664
-      },
-      "pm10": {
-        "value": 23.793333333333333
-      },
-      "frequency": "hourly",
-      "no2": {
-        "value": null
-      },
-      "deviceDetails": {
-        "_id": "61b73214a1c2cb001ebd5658",
-        "name": "aq_g5_48",
-        "latitude": 0.3004549375030546,
-        "longitude": 32.60469721631874,
-        "isOnline": false,
-        "lastRawData": "2026-05-30T11:48:36.000Z",
-        "rawOnlineStatus": false,
-        "latest_pm2_5": {
-          "raw": {
-            "value": 20.02,
-            "time": "2026-05-30T08:26:56.000Z"
-          },
-          "calibrated": {
-            "value": 22.651666666666664,
-            "time": "2026-05-30T08:00:00.000Z",
-            "uncertainty": null,
-            "standardDeviation": null
-          }
-        },
-        "deployment_type": "static"
-      },
-      "is_reading_primary": false,
-      "health_tips": [
-        {
-          "_id": "64283ce9e82a77001e55c0b5",
-          "title": "Moderate Air Quality - Elderly People",
-          "description": "Take it easy and limit the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "64283d37b2e9e5001e69c872",
-          "title": "For pregnant women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "64283d749c7eaf001ea5e99d",
-          "title": "For elderly people",
-          "description": "Reduce the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "6833213e306187693c1a3cc8",
-          "title": "Moderate Air Quality - Everyone",
-          "description": "Pace yourself during outdoor work and avoid overexertion.",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "6833213e306187693c1a3cc9",
-          "title": "Moderate Air Quality - Pregnant Women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "tag_line": "The air quality today is moderate."
-        }
-      ],
-      "device_categories": {
-        "primary_category": "lowcost",
-        "deployment_category": "static",
-        "ownership_category": "airqo",
-        "mobile_category": null,
-        "is_mobile": false,
-        "is_static": true,
-        "is_lowcost": true,
-        "is_bam": false,
-        "is_gas": false,
-        "all_categories": [
-          "airqo",
-          "lowcost",
-          "static"
-        ],
-        "category_hierarchy": [
-          {
-            "level": "equipment",
-            "category": "lowcost",
-            "description": "Low-cost sensor device"
-          },
-          {
-            "level": "deployment",
-            "category": "static",
-            "description": "Static deployment (fixed location, site-based)"
-          }
-        ],
-        "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
-          "mobile_is_subcategory_of": null
-        }
-      },
-      "timeDifferenceHours": 13.231826944444444,
-      "aqi_ranges": {
-        "good": {
-          "min": 0,
-          "max": 9.1
-        },
-        "moderate": {
-          "min": 9.101,
-          "max": 35.49
-        },
-        "u4sg": {
-          "min": 35.491,
-          "max": 55.49
-        },
-        "unhealthy": {
-          "min": 55.491,
-          "max": 125.49
-        },
-        "very_unhealthy": {
-          "min": 125.491,
-          "max": 225.49
-        },
-        "hazardous": {
-          "min": 225.491,
-          "max": null
-        }
-      },
-      "aqi_color": "ECAA06",
-      "aqi_category": "Moderate",
-      "aqi_color_name": "Yellow",
-      "aqi_index": 76
-    },
-    {
-      "device": "airqo_g5564",
-      "device_id": "686387370aef8b001385ceba",
-      "site_id": "60d058c8048305120d2d615a",
-      "time": "2026-05-30T12:00:00.000Z",
-      "pm2_5": {
-        "value": 12.253200000000016
-      },
-      "pm10": {
-        "value": 20.860817243628027
-      },
-      "frequency": "hourly",
-      "no2": {
-        "value": null
-      },
-      "deviceDetails": {
-        "_id": "686387370aef8b001385ceba",
-        "isOnline": false,
-        "owner_id": null,
-        "claim_status": "unclaimed",
-        "assigned_organization_id": null,
-        "name": "airqo_g5564",
-        "deployment_type": "static",
-        "grid_id": null,
-        "latitude": 0.22185039139708557,
-        "longitude": 32.62021710459539,
-        "lastRawData": "2026-05-30T12:04:55.000Z",
-        "rawOnlineStatus": false,
-        "latest_pm2_5": {
-          "raw": {
-            "value": 0,
-            "time": "2026-05-30T12:04:55.000Z"
-          },
-          "calibrated": {
-            "value": 12.253200000000016,
-            "time": "2026-05-30T12:00:00.000Z",
-            "uncertainty": null,
-            "standardDeviation": null
-          }
-        }
-      },
-      "is_reading_primary": true,
-      "health_tips": [
-        {
-          "_id": "64283ce9e82a77001e55c0b5",
-          "title": "Moderate Air Quality - Elderly People",
-          "description": "Take it easy and limit the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "64283d37b2e9e5001e69c872",
-          "title": "For pregnant women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "64283d749c7eaf001ea5e99d",
-          "title": "For elderly people",
-          "description": "Reduce the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "6833213e306187693c1a3cc8",
-          "title": "Moderate Air Quality - Everyone",
-          "description": "Pace yourself during outdoor work and avoid overexertion.",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "6833213e306187693c1a3cc9",
-          "title": "Moderate Air Quality - Pregnant Women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "tag_line": "The air quality today is moderate."
-        }
-      ],
-      "device_categories": {
-        "primary_category": "lowcost",
-        "deployment_category": "static",
-        "ownership_category": "airqo",
-        "mobile_category": null,
-        "is_mobile": false,
-        "is_static": true,
-        "is_lowcost": true,
-        "is_bam": false,
-        "is_gas": false,
-        "all_categories": [
-          "airqo",
-          "lowcost",
-          "static"
-        ],
-        "category_hierarchy": [
-          {
-            "level": "equipment",
-            "category": "lowcost",
-            "description": "Low-cost sensor device"
-          },
-          {
-            "level": "deployment",
-            "category": "static",
-            "description": "Static deployment (fixed location, site-based)"
-          }
-        ],
-        "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
-          "mobile_is_subcategory_of": null
-        }
-      },
-      "timeDifferenceHours": 9.231826944444444,
-      "aqi_ranges": {
-        "good": {
-          "min": 0,
-          "max": 9.1
-        },
-        "moderate": {
-          "min": 9.101,
-          "max": 35.49
-        },
-        "u4sg": {
-          "min": 35.491,
-          "max": 55.49
-        },
-        "unhealthy": {
-          "min": 55.491,
-          "max": 125.49
-        },
-        "very_unhealthy": {
-          "min": 125.491,
-          "max": 225.49
-        },
-        "hazardous": {
-          "min": 225.491,
-          "max": null
-        }
-      },
-      "aqi_color": "ECAA06",
-      "aqi_category": "Moderate",
-      "aqi_color_name": "Yellow",
-      "aqi_index": 57
-    },
-    {
-      "device": "aq_g5_46",
-      "device_id": "61960cf5d9e5ce0029d2613e",
-      "site_id": "623d84340e8054001eaaaa13",
-      "time": "2026-05-30T18:00:00.000Z",
-      "pm2_5": {
-        "value": 115.235
-      },
-      "pm10": {
-        "value": 126.7225
-      },
-      "frequency": "hourly",
-      "no2": {
-        "value": null
-      },
-      "deviceDetails": {
-        "_id": "61960cf5d9e5ce0029d2613e",
-        "name": "aq_g5_46",
-        "latitude": 0.25776,
-        "longitude": 32.63686,
-        "isOnline": true,
-        "lastRawData": "2026-05-30T18:07:40.000Z",
-        "rawOnlineStatus": false,
-        "latest_pm2_5": {
-          "raw": {
-            "value": 68.32,
-            "time": "2026-05-30T18:07:40.000Z"
-          },
-          "calibrated": {
-            "value": 115.235,
-            "time": "2026-05-30T18:00:00.000Z",
-            "uncertainty": null,
-            "standardDeviation": null
-          }
-        },
-        "deployment_type": "static"
-      },
-      "is_reading_primary": true,
-      "health_tips": [
-        {
-          "_id": "64283ec79c7eaf001ea5e9c9",
-          "title": "Unhealthy Air Quality",
-          "description": "Everyone should limit the intensity of outdoor activities. Poor air quality can increase respiratory discomfort and dehydration. Stay hydrated by drinking plenty of water.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
-          "tag_line": "The air quality today might irritate your lungs."
-        }
-      ],
-      "device_categories": {
-        "primary_category": "lowcost",
-        "deployment_category": "static",
-        "ownership_category": "airqo",
-        "mobile_category": null,
-        "is_mobile": false,
-        "is_static": true,
-        "is_lowcost": true,
-        "is_bam": false,
-        "is_gas": false,
-        "all_categories": [
-          "airqo",
-          "lowcost",
-          "static"
-        ],
-        "category_hierarchy": [
-          {
-            "level": "equipment",
-            "category": "lowcost",
-            "description": "Low-cost sensor device"
-          },
-          {
-            "level": "deployment",
-            "category": "static",
-            "description": "Static deployment (fixed location, site-based)"
-          }
-        ],
-        "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
-          "mobile_is_subcategory_of": null
-        }
-      },
-      "timeDifferenceHours": 3.2318269444444443,
-      "aqi_ranges": {
-        "good": {
-          "min": 0,
-          "max": 9.1
-        },
-        "moderate": {
-          "min": 9.101,
-          "max": 35.49
-        },
-        "u4sg": {
-          "min": 35.491,
-          "max": 55.49
-        },
-        "unhealthy": {
-          "min": 55.491,
-          "max": 125.49
-        },
-        "very_unhealthy": {
-          "min": 125.491,
-          "max": 225.49
-        },
-        "hazardous": {
-          "min": 225.491,
-          "max": null
-        }
-      },
-      "aqi_color": "F7453C",
-      "aqi_category": "Unhealthy",
-      "aqi_color_name": "Red",
-      "aqi_index": 193
-    },
-    {
-      "device": "aq_g5_53",
-      "device_id": "61b73277a1c2cb001ebd56c4",
-      "site_id": "624d2f9a994194001ddccbb6",
-      "time": "2026-05-30T18:00:00.000Z",
-      "pm2_5": {
-        "value": 31.02642857142857
-      },
-      "pm10": {
-        "value": 33.511428571428574
-      },
-      "frequency": "hourly",
-      "no2": {
-        "value": null
-      },
-      "deviceDetails": {
-        "_id": "61b73277a1c2cb001ebd56c4",
-        "name": "aq_g5_53",
-        "latitude": 0.28863,
-        "longitude": 32.60297,
-        "isOnline": true,
-        "lastRawData": "2026-05-30T19:04:51.000Z",
-        "rawOnlineStatus": true,
-        "latest_pm2_5": {
-          "raw": {
-            "value": 64.5,
-            "time": "2026-05-30T19:04:51.000Z"
-          },
-          "calibrated": {
-            "value": 31.02642857142857,
-            "time": "2026-05-30T18:00:00.000Z",
-            "uncertainty": null,
-            "standardDeviation": null
-          }
-        },
-        "deployment_type": "static"
-      },
-      "is_reading_primary": true,
-      "health_tips": [
-        {
-          "_id": "64283ce9e82a77001e55c0b5",
-          "title": "Moderate Air Quality - Elderly People",
-          "description": "Take it easy and limit the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "64283d37b2e9e5001e69c872",
-          "title": "For pregnant women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "64283d749c7eaf001ea5e99d",
-          "title": "For elderly people",
-          "description": "Reduce the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "6833213e306187693c1a3cc8",
-          "title": "Moderate Air Quality - Everyone",
-          "description": "Pace yourself during outdoor work and avoid overexertion.",
-          "tag_line": "The air quality today is moderate."
-        },
-        {
-          "_id": "6833213e306187693c1a3cc9",
-          "title": "Moderate Air Quality - Pregnant Women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "tag_line": "The air quality today is moderate."
-        }
-      ],
-      "device_categories": {
-        "primary_category": "lowcost",
-        "deployment_category": "static",
-        "ownership_category": "airqo",
-        "mobile_category": null,
-        "is_mobile": false,
-        "is_static": true,
-        "is_lowcost": true,
-        "is_bam": false,
-        "is_gas": false,
-        "all_categories": [
-          "airqo",
-          "lowcost",
-          "static"
-        ],
-        "category_hierarchy": [
-          {
-            "level": "equipment",
-            "category": "lowcost",
-            "description": "Low-cost sensor device"
-          },
-          {
-            "level": "deployment",
-            "category": "static",
-            "description": "Static deployment (fixed location, site-based)"
-          }
-        ],
-        "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
-          "mobile_is_subcategory_of": null
-        }
-      },
-      "timeDifferenceHours": 3.2318269444444443,
-      "aqi_ranges": {
-        "good": {
-          "min": 0,
-          "max": 9.1
-        },
-        "moderate": {
-          "min": 9.101,
-          "max": 35.49
-        },
-        "u4sg": {
-          "min": 35.491,
-          "max": 55.49
-        },
-        "unhealthy": {
-          "min": 55.491,
-          "max": 125.49
-        },
-        "very_unhealthy": {
-          "min": 125.491,
-          "max": 225.49
-        },
-        "hazardous": {
-          "min": 225.491,
-          "max": null
-        }
-      },
-      "aqi_color": "ECAA06",
-      "aqi_category": "Moderate",
-      "aqi_color_name": "Yellow",
-      "aqi_index": 92
-    },
     {
       "device": "aq_g520",
       "device_id": "60a81edac01cec5f7fa4d1be",
@@ -694,27 +27,23 @@
         "value": 49.203
       },
       "frequency": "hourly",
-      "no2": {
-        "value": null
-      },
+      "no2": {},
       "deviceDetails": {
         "_id": "60a81edac01cec5f7fa4d1be",
         "name": "aq_g520",
         "latitude": 0.30991,
         "longitude": 32.60045,
         "isOnline": true,
-        "lastRawData": "2026-05-30T18:32:38.000Z",
-        "rawOnlineStatus": false,
+        "lastRawData": "2026-05-30T21:00:42.000Z",
+        "rawOnlineStatus": true,
         "latest_pm2_5": {
           "raw": {
-            "value": 39.55,
-            "time": "2026-05-30T18:32:38.000Z"
+            "value": 44.87,
+            "time": "2026-05-30T21:00:42.000Z"
           },
           "calibrated": {
             "value": 41.150000000000006,
-            "time": "2026-05-30T18:00:00.000Z",
-            "uncertainty": null,
-            "standardDeviation": null
+            "time": "2026-05-30T18:00:00.000Z"
           }
         },
         "deployment_type": "static"
@@ -754,16 +83,15 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
-        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "airqo",
-          "lowcost",
-          "static"
+          "a",
+          "o",
+          "a"
         ],
         "category_hierarchy": [
           {
@@ -778,11 +106,10 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
-          "mobile_is_subcategory_of": null
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
         }
       },
-      "timeDifferenceHours": 3.2318269444444443,
+      "timeDifferenceHours": 3.750109722222222,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -805,8 +132,7 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491,
-          "max": null
+          "min": 225.491
         }
       },
       "aqi_color": "FF851F",
@@ -826,32 +152,25 @@
         "value": 28.43852638522635
       },
       "frequency": "hourly",
-      "no2": {
-        "value": null
-      },
+      "no2": {},
       "deviceDetails": {
         "_id": "68638eae0aef8b001385d467",
         "isOnline": true,
-        "owner_id": null,
         "claim_status": "unclaimed",
-        "assigned_organization_id": null,
         "name": "airqo_g5567",
-        "lastRawData": "2026-05-30T18:34:18.000Z",
-        "rawOnlineStatus": false,
+        "lastRawData": "2026-05-30T20:17:50.000Z",
+        "rawOnlineStatus": true,
         "deployment_type": "static",
-        "grid_id": null,
         "latitude": 0.3468257915673872,
         "longitude": 32.58904740585272,
         "latest_pm2_5": {
           "raw": {
-            "value": 21.12,
-            "time": "2026-05-30T18:34:18.000Z"
+            "value": 43.1,
+            "time": "2026-05-30T20:17:50.000Z"
           },
           "calibrated": {
             "value": 18.55030000000001,
-            "time": "2026-05-30T18:00:00.000Z",
-            "uncertainty": null,
-            "standardDeviation": null
+            "time": "2026-05-30T18:00:00.000Z"
           }
         }
       },
@@ -895,16 +214,15 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
-        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "airqo",
-          "lowcost",
-          "static"
+          "a",
+          "o",
+          "a"
         ],
         "category_hierarchy": [
           {
@@ -919,11 +237,10 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
-          "mobile_is_subcategory_of": null
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
         }
       },
-      "timeDifferenceHours": 3.2318269444444443,
+      "timeDifferenceHours": 3.750109722222222,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -946,14 +263,868 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491,
-          "max": null
+          "min": 225.491
         }
       },
       "aqi_color": "ECAA06",
       "aqi_category": "Moderate",
       "aqi_color_name": "Yellow",
       "aqi_index": 69
+    },
+    {
+      "device": "aq_g5_46",
+      "device_id": "61960cf5d9e5ce0029d2613e",
+      "site_id": "623d84340e8054001eaaaa13",
+      "time": "2026-05-30T18:00:00.000Z",
+      "pm2_5": {
+        "value": 115.235
+      },
+      "pm10": {
+        "value": 126.7225
+      },
+      "frequency": "hourly",
+      "no2": {},
+      "deviceDetails": {
+        "_id": "61960cf5d9e5ce0029d2613e",
+        "name": "aq_g5_46",
+        "latitude": 0.25776,
+        "longitude": 32.63686,
+        "isOnline": true,
+        "lastRawData": "2026-05-30T21:04:53.000Z",
+        "rawOnlineStatus": true,
+        "latest_pm2_5": {
+          "raw": {
+            "value": 46.02,
+            "time": "2026-05-30T21:04:53.000Z"
+          },
+          "calibrated": {
+            "value": 115.235,
+            "time": "2026-05-30T18:00:00.000Z"
+          }
+        },
+        "deployment_type": "static"
+      },
+      "is_reading_primary": true,
+      "health_tips": [
+        {
+          "_id": "64283ec79c7eaf001ea5e9c9",
+          "title": "Unhealthy Air Quality",
+          "description": "Everyone should limit the intensity of outdoor activities. Poor air quality can increase respiratory discomfort and dehydration. Stay hydrated by drinking plenty of water.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
+          "tag_line": "The air quality today might irritate your lungs."
+        }
+      ],
+      "device_categories": {
+        "primary_category": "lowcost",
+        "deployment_category": "static",
+        "ownership_category": "airqo",
+        "is_mobile": false,
+        "is_static": true,
+        "is_lowcost": true,
+        "is_bam": false,
+        "is_gas": false,
+        "all_categories": [
+          "a",
+          "o",
+          "a"
+        ],
+        "category_hierarchy": [
+          {
+            "level": "equipment",
+            "category": "lowcost",
+            "description": "Low-cost sensor device"
+          },
+          {
+            "level": "deployment",
+            "category": "static",
+            "description": "Static deployment (fixed location, site-based)"
+          }
+        ],
+        "category_relationships": {
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+        }
+      },
+      "timeDifferenceHours": 3.750109722222222,
+      "aqi_ranges": {
+        "good": {
+          "min": 0,
+          "max": 9.1
+        },
+        "moderate": {
+          "min": 9.101,
+          "max": 35.49
+        },
+        "u4sg": {
+          "min": 35.491,
+          "max": 55.49
+        },
+        "unhealthy": {
+          "min": 55.491,
+          "max": 125.49
+        },
+        "very_unhealthy": {
+          "min": 125.491,
+          "max": 225.49
+        },
+        "hazardous": {
+          "min": 225.491
+        }
+      },
+      "aqi_color": "F7453C",
+      "aqi_category": "Unhealthy",
+      "aqi_color_name": "Red",
+      "aqi_index": 193
+    },
+    {
+      "device": "aq_g5_53",
+      "device_id": "61b73277a1c2cb001ebd56c4",
+      "site_id": "624d2f9a994194001ddccbb6",
+      "time": "2026-05-30T18:00:00.000Z",
+      "pm2_5": {
+        "value": 31.02642857142857
+      },
+      "pm10": {
+        "value": 33.511428571428574
+      },
+      "frequency": "hourly",
+      "no2": {},
+      "deviceDetails": {
+        "_id": "61b73277a1c2cb001ebd56c4",
+        "name": "aq_g5_53",
+        "latitude": 0.28863,
+        "longitude": 32.60297,
+        "isOnline": true,
+        "lastRawData": "2026-05-30T20:26:22.000Z",
+        "rawOnlineStatus": true,
+        "latest_pm2_5": {
+          "raw": {
+            "value": 52.32,
+            "time": "2026-05-30T20:26:22.000Z"
+          },
+          "calibrated": {
+            "value": 31.02642857142857,
+            "time": "2026-05-30T18:00:00.000Z"
+          }
+        },
+        "deployment_type": "static"
+      },
+      "is_reading_primary": true,
+      "health_tips": [
+        {
+          "_id": "64283ce9e82a77001e55c0b5",
+          "title": "Moderate Air Quality - Elderly People",
+          "description": "Take it easy and limit the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d37b2e9e5001e69c872",
+          "title": "For pregnant women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d749c7eaf001ea5e99d",
+          "title": "For elderly people",
+          "description": "Reduce the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc8",
+          "title": "Moderate Air Quality - Everyone",
+          "description": "Pace yourself during outdoor work and avoid overexertion.",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc9",
+          "title": "Moderate Air Quality - Pregnant Women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "tag_line": "The air quality today is moderate."
+        }
+      ],
+      "device_categories": {
+        "primary_category": "lowcost",
+        "deployment_category": "static",
+        "ownership_category": "airqo",
+        "is_mobile": false,
+        "is_static": true,
+        "is_lowcost": true,
+        "is_bam": false,
+        "is_gas": false,
+        "all_categories": [
+          "a",
+          "o",
+          "a"
+        ],
+        "category_hierarchy": [
+          {
+            "level": "equipment",
+            "category": "lowcost",
+            "description": "Low-cost sensor device"
+          },
+          {
+            "level": "deployment",
+            "category": "static",
+            "description": "Static deployment (fixed location, site-based)"
+          }
+        ],
+        "category_relationships": {
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+        }
+      },
+      "timeDifferenceHours": 3.750109722222222,
+      "aqi_ranges": {
+        "good": {
+          "min": 0,
+          "max": 9.1
+        },
+        "moderate": {
+          "min": 9.101,
+          "max": 35.49
+        },
+        "u4sg": {
+          "min": 35.491,
+          "max": 55.49
+        },
+        "unhealthy": {
+          "min": 55.491,
+          "max": 125.49
+        },
+        "very_unhealthy": {
+          "min": 125.491,
+          "max": 225.49
+        },
+        "hazardous": {
+          "min": 225.491
+        }
+      },
+      "aqi_color": "ECAA06",
+      "aqi_category": "Moderate",
+      "aqi_color_name": "Yellow",
+      "aqi_index": 92
+    },
+    {
+      "device": "airqo_g5564",
+      "device_id": "686387370aef8b001385ceba",
+      "site_id": "60d058c8048305120d2d615a",
+      "time": "2026-05-30T12:00:00.000Z",
+      "pm2_5": {
+        "value": 12.253200000000016
+      },
+      "pm10": {
+        "value": 20.860817243628027
+      },
+      "frequency": "hourly",
+      "no2": {},
+      "deviceDetails": {
+        "_id": "686387370aef8b001385ceba",
+        "isOnline": false,
+        "claim_status": "unclaimed",
+        "name": "airqo_g5564",
+        "deployment_type": "static",
+        "latitude": 0.22185039139708557,
+        "longitude": 32.62021710459539,
+        "lastRawData": "2026-05-30T12:04:55.000Z",
+        "rawOnlineStatus": false,
+        "latest_pm2_5": {
+          "raw": {
+            "value": 0,
+            "time": "2026-05-30T12:04:55.000Z"
+          },
+          "calibrated": {
+            "value": 12.253200000000016,
+            "time": "2026-05-30T12:00:00.000Z"
+          }
+        }
+      },
+      "is_reading_primary": true,
+      "health_tips": [
+        {
+          "_id": "64283ce9e82a77001e55c0b5",
+          "title": "Moderate Air Quality - Elderly People",
+          "description": "Take it easy and limit the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d37b2e9e5001e69c872",
+          "title": "For pregnant women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d749c7eaf001ea5e99d",
+          "title": "For elderly people",
+          "description": "Reduce the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc8",
+          "title": "Moderate Air Quality - Everyone",
+          "description": "Pace yourself during outdoor work and avoid overexertion.",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc9",
+          "title": "Moderate Air Quality - Pregnant Women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "tag_line": "The air quality today is moderate."
+        }
+      ],
+      "device_categories": {
+        "primary_category": "lowcost",
+        "deployment_category": "static",
+        "ownership_category": "airqo",
+        "is_mobile": false,
+        "is_static": true,
+        "is_lowcost": true,
+        "is_bam": false,
+        "is_gas": false,
+        "all_categories": [
+          "a",
+          "o",
+          "a"
+        ],
+        "category_hierarchy": [
+          {
+            "level": "equipment",
+            "category": "lowcost",
+            "description": "Low-cost sensor device"
+          },
+          {
+            "level": "deployment",
+            "category": "static",
+            "description": "Static deployment (fixed location, site-based)"
+          }
+        ],
+        "category_relationships": {
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+        }
+      },
+      "timeDifferenceHours": 9.750109722222222,
+      "aqi_ranges": {
+        "good": {
+          "min": 0,
+          "max": 9.1
+        },
+        "moderate": {
+          "min": 9.101,
+          "max": 35.49
+        },
+        "u4sg": {
+          "min": 35.491,
+          "max": 55.49
+        },
+        "unhealthy": {
+          "min": 55.491,
+          "max": 125.49
+        },
+        "very_unhealthy": {
+          "min": 125.491,
+          "max": 225.49
+        },
+        "hazardous": {
+          "min": 225.491
+        }
+      },
+      "aqi_color": "ECAA06",
+      "aqi_category": "Moderate",
+      "aqi_color_name": "Yellow",
+      "aqi_index": 57
+    },
+    {
+      "device": "aq_72",
+      "device_id": "5f2036bc70223655545a8b80",
+      "site_id": "60d058c8048305120d2d616e",
+      "time": "2026-05-30T19:00:00.000Z",
+      "pm2_5": {
+        "value": 45.68166666666667
+      },
+      "pm10": {
+        "value": 57.25333333333333
+      },
+      "frequency": "hourly",
+      "no2": {},
+      "deviceDetails": {
+        "_id": "5f2036bc70223655545a8b80",
+        "latitude": 0.2689,
+        "longitude": 32.588,
+        "name": "aq_72",
+        "isOnline": true,
+        "lastRawData": "2026-05-30T21:07:56.000Z",
+        "rawOnlineStatus": true,
+        "latest_pm2_5": {
+          "raw": {
+            "value": 38.42,
+            "time": "2026-05-30T21:07:56.000Z"
+          },
+          "calibrated": {
+            "value": 45.68166666666667,
+            "time": "2026-05-30T19:00:00.000Z"
+          }
+        },
+        "deployment_type": "static"
+      },
+      "is_reading_primary": true,
+      "health_tips": [
+        {
+          "_id": "64283dc7e57ef7001e74007d",
+          "title": "Unhealthy for Sensitive Groups",
+          "description": "Sensitive individuals should reduce the intensity of their outdoor activities, especially if they experience symptoms like a cough or a sore throat.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
+          "tag_line": "The air quality is unhealthy for sensitive people."
+        },
+        {
+          "_id": "64283e11e57ef7001e74008c",
+          "title": "For pregnant women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
+          "tag_line": "The air quality is unhealthy for sensitive people."
+        },
+        {
+          "_id": "64283e529c7eaf001ea5e9b4",
+          "title": "For elderly people",
+          "description": "Reduce the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
+          "tag_line": "The air quality is unhealthy for sensitive people."
+        },
+        {
+          "_id": "64283e6e9c7eaf001ea5e9b7",
+          "title": "For Children",
+          "description": "Reduce the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fchild.png?alt=media&token=0c983e57-90df-425d-9bd4-294dc0eacada",
+          "tag_line": "The air quality is unhealthy for sensitive people."
+        }
+      ],
+      "device_categories": {
+        "primary_category": "lowcost",
+        "deployment_category": "static",
+        "ownership_category": "airqo",
+        "is_mobile": false,
+        "is_static": true,
+        "is_lowcost": true,
+        "is_bam": false,
+        "is_gas": false,
+        "all_categories": [
+          "a",
+          "o",
+          "a"
+        ],
+        "category_hierarchy": [
+          {
+            "level": "equipment",
+            "category": "lowcost",
+            "description": "Low-cost sensor device"
+          },
+          {
+            "level": "deployment",
+            "category": "static",
+            "description": "Static deployment (fixed location, site-based)"
+          }
+        ],
+        "category_relationships": {
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+        }
+      },
+      "timeDifferenceHours": 2.750109722222222,
+      "aqi_ranges": {
+        "good": {
+          "min": 0,
+          "max": 9.1
+        },
+        "moderate": {
+          "min": 9.101,
+          "max": 35.49
+        },
+        "u4sg": {
+          "min": 35.491,
+          "max": 55.49
+        },
+        "unhealthy": {
+          "min": 55.491,
+          "max": 125.49
+        },
+        "very_unhealthy": {
+          "min": 125.491,
+          "max": 225.49
+        },
+        "hazardous": {
+          "min": 225.491
+        }
+      },
+      "aqi_color": "FF851F",
+      "aqi_category": "Unhealthy for Sensitive Groups",
+      "aqi_color_name": "Orange",
+      "aqi_index": 126
+    },
+    {
+      "device": "airqo_g5548",
+      "device_id": "68638317fe855700134d6f1d",
+      "site_id": "68d657764d739f001352c12c",
+      "time": "2026-05-30T18:00:00.000Z",
+      "pm2_5": {
+        "value": 14.196100000000047
+      },
+      "pm10": {
+        "value": 17.69287624481683
+      },
+      "frequency": "hourly",
+      "no2": {},
+      "deviceDetails": {
+        "_id": "68638317fe855700134d6f1d",
+        "isOnline": true,
+        "claim_status": "unclaimed",
+        "name": "airqo_g5548",
+        "lastRawData": "2028-04-30T03:04:28.000Z",
+        "rawOnlineStatus": true,
+        "deployment_type": "static",
+        "latitude": 0.3232013699891734,
+        "longitude": 32.63197194130845,
+        "latest_pm2_5": {
+          "raw": {
+            "value": 40.22,
+            "time": "2028-04-30T03:04:28.000Z"
+          },
+          "calibrated": {
+            "value": 14.196100000000047,
+            "time": "2026-05-30T18:00:00.000Z"
+          }
+        }
+      },
+      "is_reading_primary": false,
+      "health_tips": [
+        {
+          "_id": "64283ce9e82a77001e55c0b5",
+          "title": "Moderate Air Quality - Elderly People",
+          "description": "Take it easy and limit the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d37b2e9e5001e69c872",
+          "title": "For pregnant women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d749c7eaf001ea5e99d",
+          "title": "For elderly people",
+          "description": "Reduce the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc8",
+          "title": "Moderate Air Quality - Everyone",
+          "description": "Pace yourself during outdoor work and avoid overexertion.",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc9",
+          "title": "Moderate Air Quality - Pregnant Women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "tag_line": "The air quality today is moderate."
+        }
+      ],
+      "device_categories": {
+        "primary_category": "lowcost",
+        "deployment_category": "static",
+        "ownership_category": "airqo",
+        "is_mobile": false,
+        "is_static": true,
+        "is_lowcost": true,
+        "is_bam": false,
+        "is_gas": false,
+        "all_categories": [
+          "a",
+          "o",
+          "a"
+        ],
+        "category_hierarchy": [
+          {
+            "level": "equipment",
+            "category": "lowcost",
+            "description": "Low-cost sensor device"
+          },
+          {
+            "level": "deployment",
+            "category": "static",
+            "description": "Static deployment (fixed location, site-based)"
+          }
+        ],
+        "category_relationships": {
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+        }
+      },
+      "timeDifferenceHours": 3.750109722222222,
+      "aqi_ranges": {
+        "good": {
+          "min": 0,
+          "max": 9.1
+        },
+        "moderate": {
+          "min": 9.101,
+          "max": 35.49
+        },
+        "u4sg": {
+          "min": 35.491,
+          "max": 55.49
+        },
+        "unhealthy": {
+          "min": 55.491,
+          "max": 125.49
+        },
+        "very_unhealthy": {
+          "min": 125.491,
+          "max": 225.49
+        },
+        "hazardous": {
+          "min": 225.491
+        }
+      },
+      "aqi_color": "ECAA06",
+      "aqi_category": "Moderate",
+      "aqi_color_name": "Yellow",
+      "aqi_index": 60
+    },
+    {
+      "device": "aq_g5_43",
+      "device_id": "61960c7139ae8a002ae72d7c",
+      "site_id": "62cd2d8ff49973002b21583f",
+      "time": "2026-05-30T18:00:00.000Z",
+      "pm2_5": {
+        "value": 61.13857142857144
+      },
+      "pm10": {
+        "value": 72.025
+      },
+      "frequency": "hourly",
+      "no2": {},
+      "deviceDetails": {
+        "_id": "61960c7139ae8a002ae72d7c",
+        "name": "aq_g5_43",
+        "latitude": 0.2969255477613093,
+        "longitude": 32.57664109478158,
+        "isOnline": true,
+        "lastRawData": "2026-05-30T21:28:52.000Z",
+        "rawOnlineStatus": true,
+        "latest_pm2_5": {
+          "raw": {
+            "value": 45.77,
+            "time": "2026-05-30T21:28:52.000Z"
+          },
+          "calibrated": {
+            "value": 61.13857142857144,
+            "time": "2026-05-30T18:00:00.000Z"
+          }
+        },
+        "deployment_type": "static"
+      },
+      "is_reading_primary": true,
+      "health_tips": [
+        {
+          "_id": "64283ec79c7eaf001ea5e9c9",
+          "title": "Unhealthy Air Quality",
+          "description": "Everyone should limit the intensity of outdoor activities. Poor air quality can increase respiratory discomfort and dehydration. Stay hydrated by drinking plenty of water.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
+          "tag_line": "The air quality today might irritate your lungs."
+        }
+      ],
+      "device_categories": {
+        "primary_category": "lowcost",
+        "deployment_category": "static",
+        "ownership_category": "airqo",
+        "is_mobile": false,
+        "is_static": true,
+        "is_lowcost": true,
+        "is_bam": false,
+        "is_gas": false,
+        "all_categories": [
+          "a",
+          "o",
+          "a"
+        ],
+        "category_hierarchy": [
+          {
+            "level": "equipment",
+            "category": "lowcost",
+            "description": "Low-cost sensor device"
+          },
+          {
+            "level": "deployment",
+            "category": "static",
+            "description": "Static deployment (fixed location, site-based)"
+          }
+        ],
+        "category_relationships": {
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+        }
+      },
+      "timeDifferenceHours": 3.750109722222222,
+      "aqi_ranges": {
+        "good": {
+          "min": 0,
+          "max": 9.1
+        },
+        "moderate": {
+          "min": 9.101,
+          "max": 35.49
+        },
+        "u4sg": {
+          "min": 35.491,
+          "max": 55.49
+        },
+        "unhealthy": {
+          "min": 55.491,
+          "max": 125.49
+        },
+        "very_unhealthy": {
+          "min": 125.491,
+          "max": 225.49
+        },
+        "hazardous": {
+          "min": 225.491
+        }
+      },
+      "aqi_color": "F7453C",
+      "aqi_category": "Unhealthy",
+      "aqi_color_name": "Red",
+      "aqi_index": 155
+    },
+    {
+      "device": "aq_g5_48",
+      "device_id": "61b73214a1c2cb001ebd5658",
+      "site_id": "62b310512e0eca001e0aab11",
+      "time": "2026-05-30T08:00:00.000Z",
+      "pm2_5": {
+        "value": 22.651666666666664
+      },
+      "pm10": {
+        "value": 23.793333333333333
+      },
+      "frequency": "hourly",
+      "no2": {},
+      "deviceDetails": {
+        "_id": "61b73214a1c2cb001ebd5658",
+        "name": "aq_g5_48",
+        "latitude": 0.3004549375030546,
+        "longitude": 32.60469721631874,
+        "isOnline": false,
+        "lastRawData": "2026-05-30T11:48:36.000Z",
+        "rawOnlineStatus": false,
+        "latest_pm2_5": {
+          "raw": {
+            "value": 20.02,
+            "time": "2026-05-30T08:26:56.000Z"
+          },
+          "calibrated": {
+            "value": 22.651666666666664,
+            "time": "2026-05-30T08:00:00.000Z"
+          }
+        },
+        "deployment_type": "static"
+      },
+      "is_reading_primary": false,
+      "health_tips": [
+        {
+          "_id": "64283ce9e82a77001e55c0b5",
+          "title": "Moderate Air Quality - Elderly People",
+          "description": "Take it easy and limit the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d37b2e9e5001e69c872",
+          "title": "For pregnant women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "64283d749c7eaf001ea5e99d",
+          "title": "For elderly people",
+          "description": "Reduce the intensity of your outdoor activities.",
+          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc8",
+          "title": "Moderate Air Quality - Everyone",
+          "description": "Pace yourself during outdoor work and avoid overexertion.",
+          "tag_line": "The air quality today is moderate."
+        },
+        {
+          "_id": "6833213e306187693c1a3cc9",
+          "title": "Moderate Air Quality - Pregnant Women",
+          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
+          "tag_line": "The air quality today is moderate."
+        }
+      ],
+      "device_categories": {
+        "primary_category": "lowcost",
+        "deployment_category": "static",
+        "ownership_category": "airqo",
+        "is_mobile": false,
+        "is_static": true,
+        "is_lowcost": true,
+        "is_bam": false,
+        "is_gas": false,
+        "all_categories": [
+          "a",
+          "o",
+          "a"
+        ],
+        "category_hierarchy": [
+          {
+            "level": "equipment",
+            "category": "lowcost",
+            "description": "Low-cost sensor device"
+          },
+          {
+            "level": "deployment",
+            "category": "static",
+            "description": "Static deployment (fixed location, site-based)"
+          }
+        ],
+        "category_relationships": {
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
+        }
+      },
+      "timeDifferenceHours": 13.750109722222222,
+      "aqi_ranges": {
+        "good": {
+          "min": 0,
+          "max": 9.1
+        },
+        "moderate": {
+          "min": 9.101,
+          "max": 35.49
+        },
+        "u4sg": {
+          "min": 35.491,
+          "max": 55.49
+        },
+        "unhealthy": {
+          "min": 55.491,
+          "max": 125.49
+        },
+        "very_unhealthy": {
+          "min": 125.491,
+          "max": 225.49
+        },
+        "hazardous": {
+          "min": 225.491
+        }
+      },
+      "aqi_color": "ECAA06",
+      "aqi_category": "Moderate",
+      "aqi_color_name": "Yellow",
+      "aqi_index": 76
     },
     {
       "device": "airqo_g5563",
@@ -967,32 +1138,25 @@
         "value": 21.46330874544601
       },
       "frequency": "hourly",
-      "no2": {
-        "value": null
-      },
+      "no2": {},
       "deviceDetails": {
         "_id": "6863872c339f1b0013a7edbc",
         "isOnline": true,
-        "owner_id": null,
         "claim_status": "unclaimed",
-        "assigned_organization_id": null,
         "name": "airqo_g5563",
-        "lastRawData": "2026-05-30T18:38:16.000Z",
+        "lastRawData": "2026-05-30T21:12:28.000Z",
         "rawOnlineStatus": true,
         "deployment_type": "static",
-        "grid_id": null,
         "latitude": 0.3118744185161481,
         "longitude": 32.56235063213467,
         "latest_pm2_5": {
           "raw": {
-            "value": 51.3,
-            "time": "2026-05-30T18:38:16.000Z"
+            "value": 27.55,
+            "time": "2026-05-30T21:12:28.000Z"
           },
           "calibrated": {
             "value": 17.91590000000006,
-            "time": "2026-05-30T18:00:00.000Z",
-            "uncertainty": null,
-            "standardDeviation": null
+            "time": "2026-05-30T18:00:00.000Z"
           }
         }
       },
@@ -1036,16 +1200,15 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
-        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "airqo",
-          "lowcost",
-          "static"
+          "a",
+          "o",
+          "a"
         ],
         "category_hierarchy": [
           {
@@ -1060,11 +1223,10 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
-          "mobile_is_subcategory_of": null
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
         }
       },
-      "timeDifferenceHours": 3.2318269444444443,
+      "timeDifferenceHours": 3.750109722222222,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -1087,8 +1249,7 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491,
-          "max": null
+          "min": 225.491
         }
       },
       "aqi_color": "ECAA06",
@@ -1108,29 +1269,24 @@
         "value": 73.1013568958457
       },
       "frequency": "hourly",
-      "no2": {
-        "value": null
-      },
+      "no2": {},
       "deviceDetails": {
         "_id": "67d1445c13e5ea001494f37b",
         "isOnline": false,
         "name": "airqo_g5446",
-        "lastRawData": "2026-05-30T10:27:31.000Z",
+        "lastRawData": "2026-05-30T12:27:52.000Z",
         "rawOnlineStatus": false,
         "deployment_type": "static",
-        "grid_id": null,
         "latitude": 0.3156788593479292,
         "longitude": 32.635063348773784,
         "latest_pm2_5": {
           "raw": {
             "value": 0,
-            "time": "2026-05-30T10:27:31.000Z"
+            "time": "2026-05-30T12:27:52.000Z"
           },
           "calibrated": {
             "value": 50.186900000000136,
-            "time": "2026-05-29T19:00:00.000Z",
-            "uncertainty": null,
-            "standardDeviation": null
+            "time": "2026-05-29T19:00:00.000Z"
           }
         }
       },
@@ -1169,16 +1325,15 @@
         "primary_category": "lowcost",
         "deployment_category": "static",
         "ownership_category": "airqo",
-        "mobile_category": null,
         "is_mobile": false,
         "is_static": true,
         "is_lowcost": true,
         "is_bam": false,
         "is_gas": false,
         "all_categories": [
-          "airqo",
-          "lowcost",
-          "static"
+          "a",
+          "o",
+          "a"
         ],
         "category_hierarchy": [
           {
@@ -1193,11 +1348,10 @@
           }
         ],
         "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
-          "mobile_is_subcategory_of": null
+          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)"
         }
       },
-      "timeDifferenceHours": 26.231826944444446,
+      "timeDifferenceHours": 26.750109722222223,
       "aqi_ranges": {
         "good": {
           "min": 0,
@@ -1220,257 +1374,13 @@
           "max": 225.49
         },
         "hazardous": {
-          "min": 225.491,
-          "max": null
+          "min": 225.491
         }
       },
       "aqi_color": "FF851F",
       "aqi_category": "Unhealthy for Sensitive Groups",
       "aqi_color_name": "Orange",
       "aqi_index": 137
-    },
-    {
-      "device": "aq_g5_43",
-      "device_id": "61960c7139ae8a002ae72d7c",
-      "site_id": "62cd2d8ff49973002b21583f",
-      "time": "2026-05-30T18:00:00.000Z",
-      "pm2_5": {
-        "value": 61.13857142857144
-      },
-      "pm10": {
-        "value": 72.025
-      },
-      "frequency": "hourly",
-      "no2": {
-        "value": null
-      },
-      "deviceDetails": {
-        "_id": "61960c7139ae8a002ae72d7c",
-        "name": "aq_g5_43",
-        "latitude": 0.2969255477613093,
-        "longitude": 32.57664109478158,
-        "isOnline": true,
-        "lastRawData": "2026-05-30T18:53:54.000Z",
-        "rawOnlineStatus": true,
-        "latest_pm2_5": {
-          "raw": {
-            "value": 48.53,
-            "time": "2026-05-30T18:53:54.000Z"
-          },
-          "calibrated": {
-            "value": 61.13857142857144,
-            "time": "2026-05-30T18:00:00.000Z",
-            "uncertainty": null,
-            "standardDeviation": null
-          }
-        },
-        "deployment_type": "static"
-      },
-      "is_reading_primary": true,
-      "health_tips": [
-        {
-          "_id": "64283ec79c7eaf001ea5e9c9",
-          "title": "Unhealthy Air Quality",
-          "description": "Everyone should limit the intensity of outdoor activities. Poor air quality can increase respiratory discomfort and dehydration. Stay hydrated by drinking plenty of water.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
-          "tag_line": "The air quality today might irritate your lungs."
-        }
-      ],
-      "device_categories": {
-        "primary_category": "lowcost",
-        "deployment_category": "static",
-        "ownership_category": "airqo",
-        "mobile_category": null,
-        "is_mobile": false,
-        "is_static": true,
-        "is_lowcost": true,
-        "is_bam": false,
-        "is_gas": false,
-        "all_categories": [
-          "airqo",
-          "lowcost",
-          "static"
-        ],
-        "category_hierarchy": [
-          {
-            "level": "equipment",
-            "category": "lowcost",
-            "description": "Low-cost sensor device"
-          },
-          {
-            "level": "deployment",
-            "category": "static",
-            "description": "Static deployment (fixed location, site-based)"
-          }
-        ],
-        "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
-          "mobile_is_subcategory_of": null
-        }
-      },
-      "timeDifferenceHours": 3.2318269444444443,
-      "aqi_ranges": {
-        "good": {
-          "min": 0,
-          "max": 9.1
-        },
-        "moderate": {
-          "min": 9.101,
-          "max": 35.49
-        },
-        "u4sg": {
-          "min": 35.491,
-          "max": 55.49
-        },
-        "unhealthy": {
-          "min": 55.491,
-          "max": 125.49
-        },
-        "very_unhealthy": {
-          "min": 125.491,
-          "max": 225.49
-        },
-        "hazardous": {
-          "min": 225.491,
-          "max": null
-        }
-      },
-      "aqi_color": "F7453C",
-      "aqi_category": "Unhealthy",
-      "aqi_color_name": "Red",
-      "aqi_index": 155
-    },
-    {
-      "device": "aq_72",
-      "device_id": "5f2036bc70223655545a8b80",
-      "site_id": "60d058c8048305120d2d616e",
-      "time": "2026-05-30T19:00:00.000Z",
-      "pm2_5": {
-        "value": 45.68166666666667
-      },
-      "pm10": {
-        "value": 57.25333333333333
-      },
-      "frequency": "hourly",
-      "no2": {
-        "value": null
-      },
-      "deviceDetails": {
-        "_id": "5f2036bc70223655545a8b80",
-        "latitude": 0.2689,
-        "longitude": 32.588,
-        "name": "aq_72",
-        "isOnline": true,
-        "lastRawData": "2026-05-30T18:38:08.000Z",
-        "rawOnlineStatus": true,
-        "latest_pm2_5": {
-          "raw": {
-            "value": 48.32,
-            "time": "2026-05-30T18:38:08.000Z"
-          },
-          "calibrated": {
-            "value": 61.57300000000001,
-            "time": "2026-05-30T18:00:00.000Z",
-            "uncertainty": null,
-            "standardDeviation": null
-          }
-        },
-        "deployment_type": "static"
-      },
-      "is_reading_primary": true,
-      "health_tips": [
-        {
-          "_id": "64283dc7e57ef7001e74007d",
-          "title": "Unhealthy for Sensitive Groups",
-          "description": "Sensitive individuals should reduce the intensity of their outdoor activities, especially if they experience symptoms like a cough or a sore throat.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Ffamily.png?alt=media&token=8cdc93c0-9f3f-42db-b9a1-7dbdf73c5519",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        },
-        {
-          "_id": "64283e11e57ef7001e74008c",
-          "title": "For pregnant women",
-          "description": "Reduce the intensity of your outdoor activities to keep you and your baby healthy.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fpregnant_woman.png?alt=media&token=1c46abad-d52d-4704-a977-71830e1c406a",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        },
-        {
-          "_id": "64283e529c7eaf001ea5e9b4",
-          "title": "For elderly people",
-          "description": "Reduce the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fold_man.png?alt=media&token=428ea46f-86e0-4425-b050-80d1440aace5",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        },
-        {
-          "_id": "64283e6e9c7eaf001ea5e9b7",
-          "title": "For Children",
-          "description": "Reduce the intensity of your outdoor activities.",
-          "image": "https://firebasestorage.googleapis.com/v0/b/airqo-250220.appspot.com/o/health-tip-images%2Fchild.png?alt=media&token=0c983e57-90df-425d-9bd4-294dc0eacada",
-          "tag_line": "The air quality is unhealthy for sensitive people."
-        }
-      ],
-      "device_categories": {
-        "primary_category": "lowcost",
-        "deployment_category": "static",
-        "ownership_category": "airqo",
-        "mobile_category": null,
-        "is_mobile": false,
-        "is_static": true,
-        "is_lowcost": true,
-        "is_bam": false,
-        "is_gas": false,
-        "all_categories": [
-          "airqo",
-          "lowcost",
-          "static"
-        ],
-        "category_hierarchy": [
-          {
-            "level": "equipment",
-            "category": "lowcost",
-            "description": "Low-cost sensor device"
-          },
-          {
-            "level": "deployment",
-            "category": "static",
-            "description": "Static deployment (fixed location, site-based)"
-          }
-        ],
-        "category_relationships": {
-          "note": "Mobile devices can belong to any equipment category (lowcost, bam, or gas)",
-          "mobile_is_subcategory_of": null
-        }
-      },
-      "timeDifferenceHours": 2.2318269444444443,
-      "aqi_ranges": {
-        "good": {
-          "min": 0,
-          "max": 9.1
-        },
-        "moderate": {
-          "min": 9.101,
-          "max": 35.49
-        },
-        "u4sg": {
-          "min": 35.491,
-          "max": 55.49
-        },
-        "unhealthy": {
-          "min": 55.491,
-          "max": 125.49
-        },
-        "very_unhealthy": {
-          "min": 125.491,
-          "max": 225.49
-        },
-        "hazardous": {
-          "min": 225.491,
-          "max": null
-        }
-      },
-      "aqi_color": "FF851F",
-      "aqi_category": "Unhealthy for Sensitive Groups",
-      "aqi_color_name": "Orange",
-      "aqi_index": 126
     }
   ]
 }
